@@ -8,7 +8,6 @@
 """
 import json
 import socket
-import os
 import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
@@ -31,6 +30,7 @@ channel = None
 #
 ##############################################################################
 
+
 def on_connected(connection):
     """
         Callback method when connection to broker has been
@@ -48,9 +48,13 @@ def on_channel_open(channel_):
     global channel
     channel = channel_
     log.debug("Declaring queue: {}".format(MESSAGE_QUEUE_NAME))
-    channel.queue_declare(queue=MESSAGE_QUEUE_NAME, durable=True,
-        exclusive=False, auto_delete=False,
-        callback=on_queue_declared)
+    channel.queue_declare(
+        queue=MESSAGE_QUEUE_NAME,
+        durable=True,
+        exclusive=False,
+        auto_delete=False,
+        callback=on_queue_declared
+    )
 
 
 def on_queue_declared(frame):
@@ -74,13 +78,13 @@ def handle_delivery(channel, method_frame, header_frame, body):
 
     json_body = json.loads(body)
     if json_body:
+        # TODO: Add action calls from here
         print json_body
-
 
 
 ##############################################################################
 #
-# main call method
+# main call methods
 #
 ##############################################################################
 

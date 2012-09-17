@@ -27,6 +27,7 @@ pika.log.setup(pika.log.INFO, color=True)
 #
 ##############################################################################
 
+
 def show_all_settings():
     """
         Show all configured settings
