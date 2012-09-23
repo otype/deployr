@@ -17,6 +17,8 @@ from config import MESSAGE_QUEUE_NAME
 #
 # Global connection object, used for connecting to the broker
 #
+from messagequeue.message_parser import parse_message
+
 connection = None
 
 #
@@ -70,16 +72,20 @@ def handle_delivery(channel, method_frame, header_frame, body):
     """
         Handle an incoming message.
     """
-    log.info("Incoming message: content-type=\"%s\", delivery-tag=\"%i\", body=%s",
+    log.info(
+        "Incoming message: content-type=\"%s\", delivery-tag=\"%i\", body=%s",
         header_frame.content_type,
         method_frame.delivery_tag,
-        body)
+        body
+    )
     channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
     json_body = json.loads(body)
     if json_body:
-        # TODO: Add action calls from here
-        print json_body
+        parse_message(json_body)
+    else:
+        log.error('Could not identify message as JSON: {}'.format(json_body))
+        # TODO: Send mail to admin that message error occurred
 
 
 ##############################################################################
@@ -87,6 +93,7 @@ def handle_delivery(channel, method_frame, header_frame, body):
 # main call methods
 #
 ##############################################################################
+
 
 def start_consumer(broker_host='127.0.0.1', broker_port=5672):
     global connection

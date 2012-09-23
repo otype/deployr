@@ -2,14 +2,25 @@ import json
 import sys
 import pika
 from pika import log
-import time
 
 pika.log.setup(color=True)
 
 connection = None
 channel = None
 
-queue='GENAPI_DEPLOYMENT'
+queue = 'GENAPI_DEPLOYMENT'
+deploy_message = {
+    'task_type': 'DEPLOY',
+    'api_id': '88sdhv98shdvlh123',
+    'db_host': 'db1.apitrary.net',
+    'db_port': 8098,
+    'genapi_version': 1,
+    'log_level': 'debug',
+    'entities': ['user', 'object', 'contact'],
+    'api_key': 'iis9nd9vnsdvoijsdvoin9s8dv',
+    'api_access_key': 'jjjoindv08988v88dh'
+}
+
 
 # Import all adapters for easier experimentation
 from pika.adapters import *
@@ -29,20 +40,36 @@ def on_channel_open(channel_):
         callback=on_queue_declared)
 
 
+#def on_queue_declared(frame):
+#    pika.log.info("demo_send: Queue Declared")
+#    for x in xrange(0, 100):
+#    #        message = "#%i: %.8f" % (x, time.time())
+#
+#        jdict = {"id": x, "time": time.time()}
+#        message = json.dumps(jdict)
+#        pika.log.info("Sending: %s" % message)
+#        channel.basic_publish(exchange='',
+#            routing_key=queue,
+#            body=message,
+#            properties=pika.BasicProperties(
+#                #                content_type="text/plain",
+#                content_type="application/json",
+#                delivery_mode=2))
+#
+#    # Close our connection
+#    connection.close()
+
 def on_queue_declared(frame):
     pika.log.info("demo_send: Queue Declared")
-    for x in xrange(0, 100):
-#        message = "#%i: %.8f" % (x, time.time())
-        jdict = { "id": x, "time": time.time()}
-        message = json.dumps(jdict)
-        pika.log.info("Sending: %s" % message)
-        channel.basic_publish(exchange='',
-            routing_key=queue,
-            body=message,
-            properties=pika.BasicProperties(
-#                content_type="text/plain",
-                content_type="application/json",
-                delivery_mode=2))
+    message = json.dumps(deploy_message)
+    pika.log.info("Sending: %s" % message)
+    channel.basic_publish(exchange='',
+        routing_key=queue,
+        body=message,
+        properties=pika.BasicProperties(
+            #                content_type="text/plain",
+            content_type="application/json",
+            delivery_mode=2))
 
     # Close our connection
     connection.close()
