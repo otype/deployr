@@ -73,7 +73,7 @@ def handle_delivery(channel, method_frame, header_frame, body):
         Handle an incoming message.
     """
     log.info(
-        "Incoming message: content-type=\"%s\", delivery-tag=\"%i\", body=%s",
+        "Received new task: content-type=\"%s\", delivery-tag=\"%i\", body=%s",
         header_frame.content_type,
         method_frame.delivery_tag,
         body

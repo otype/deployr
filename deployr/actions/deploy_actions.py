@@ -6,30 +6,21 @@
     Copyright (c) 2012 apitrary
 
 """
-from pika import log
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
 from ostools.port_acquisition import get_open_port
+from ostools.supervisorctl import supervisor_reread, supervisor_stop, supervisor_remove
+from ostools.supervisorctl import supervisor_add
+from ostools.supervisorctl import supervisor_start
+
 
 ##############################################################################
 #
-# helper functions and globals
+# helper functions
 #
 ##############################################################################
 
 
-def reread_supervisor_configs():
-    """
-        Reread the supervisor configuration files
-    """
-    log.info('DUMMY: Reread the supervisor configurations files now.')
-
-
-def start_genapi(genapi_api_id):
-    """
-        Start the GenAPI with given API ID
-    """
-    log.info('DUMMY: Start GenAPI with ID: {}'.format(genapi_api_id))
 
 ##############################################################################
 #
@@ -59,7 +50,26 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     )
 
     # Re-read the configuration files
-    reread_supervisor_configs()
+    supervisor_reread()
 
-    # Start the GenAPI
-    start_genapi(api_id)
+    # add the application to supervisor's context
+    supervisor_add(api_id)
+
+    # now, start the application
+    supervisor_start(api_id)
+
+
+def undeploy_api(api_id):
+    """
+        Undeploy a currently deployed API with given API ID
+    """
+    # stop the API
+    supervisor_stop(api_id)
+
+    # remove all configuration from supervisorctl context
+    supervisor_remove(api_id)
+
+    # reread config files
+    supervisor_reread()
+
+    # delete configuration file from file system
