@@ -19,9 +19,25 @@ from ostools import OS_CANNOT_INVOKE_COMMAND_ERROR
 ##############################################################################
 
 
+# the executable for calling supervisorctl
 #SUPERVISORCTL = 'supervisorctl'
 SUPERVISORCTL = '/Users/hgschmidt/bin/supervisorctl'
 
+# All supervisord commands as strings
+SUPERVISORCTL_START = 'start'
+SUPERVISORCTL_STOP = 'stop'
+SUPERVISORCTL_RESTART = 'restart'
+SUPERVISORCTL_ADD = 'add'
+SUPERVISORCTL_REMOVE = 'remove'
+SUPERVISORCTL_STATUS = 'status'
+SUPERVISORCTL_REREAD = 'reread'
+
+# The whole set of supervisord commands
+SUPERVISORCTL_COMMAND_LIST = [
+    SUPERVISORCTL_START, SUPERVISORCTL_STOP, SUPERVISORCTL_RESTART,
+    SUPERVISORCTL_ADD, SUPERVISORCTL_REMOVE, SUPERVISORCTL_STATUS,
+    SUPERVISORCTL_REREAD
+]
 
 ##############################################################################
 #
@@ -63,7 +79,7 @@ def run_supervisorctl_command(command, params=None):
     command = command.lower()
 
     # check if command is an acceptable one ...
-    if command not in ['reread', 'start', 'stop', 'restart', 'add', 'status']:
+    if command not in SUPERVISORCTL_COMMAND_LIST:
         log.error('Unknown supervisorctl command: {}'.format(command))
         return OS_CANNOT_INVOKE_COMMAND_ERROR
 
@@ -87,7 +103,7 @@ def supervisor_reread():
         Reread the supervisor configuration files
     """
     log.info('Reread the supervisor configurations files')
-    return run_supervisorctl_command('reread')
+    return run_supervisorctl_command(SUPERVISORCTL_REREAD)
 
 
 def supervisor_start(app_name):
@@ -95,7 +111,7 @@ def supervisor_start(app_name):
         Start given application via supervisor
     """
     log.info('Requesting start of application: {}'.format(app_name))
-    return run_supervisorctl_command('start', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_START, app_name)
 
 
 def supervisor_stop(app_name):
@@ -103,7 +119,7 @@ def supervisor_stop(app_name):
         Stop given application via supervisor
     """
     log.info('Requesting stop of application: {}'.format(app_name))
-    return run_supervisorctl_command('stop', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_STOP, app_name)
 
 
 def supervisor_restart(app_name):
@@ -111,7 +127,7 @@ def supervisor_restart(app_name):
         Start given application via supervisor
     """
     log.info('Requesting restart of application: {}'.format(app_name))
-    return run_supervisorctl_command('restart', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_RESTART, app_name)
 
 
 def supervisor_add(app_name):
@@ -119,7 +135,7 @@ def supervisor_add(app_name):
         Add new application to supervisor configuration
     """
     log.info('Requesting addition of application: {}'.format(app_name))
-    return run_supervisorctl_command('add', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_ADD, app_name)
 
 
 def supervisor_status(app_name):
@@ -127,7 +143,7 @@ def supervisor_status(app_name):
         Request status of given application
     """
     log.info('Requesting status of application: {}'.format(app_name))
-    return run_supervisorctl_command('status', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_STATUS, app_name)
 
 
 def supervisor_remove(app_name):
@@ -135,4 +151,4 @@ def supervisor_remove(app_name):
         Remove application from supervisor context
     """
     log.info('Requesting removal of application: {}'.format(app_name))
-    return run_supervisorctl_command('remove', app_name)
+    return run_supervisorctl_command(SUPERVISORCTL_REMOVE, app_name)
