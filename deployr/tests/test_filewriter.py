@@ -22,6 +22,7 @@ redirect_stderr=true
 stdout_logfile=/opt/genapis/genapi_88sdhv98shdvlh123.log
 loglevel=info"""
 
+
 def setup_func():
     global tpl
     tpl = genapi_template(

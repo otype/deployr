@@ -6,21 +6,13 @@
     Copyright (c) 2012 apitrary
 
 """
+from ostools import OS_SUCCESS
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
 from ostools.port_acquisition import get_open_port
 from ostools.supervisorctl import supervisor_reread, supervisor_stop, supervisor_remove
 from ostools.supervisorctl import supervisor_add
 from ostools.supervisorctl import supervisor_start
-
-
-##############################################################################
-#
-# helper functions
-#
-##############################################################################
-
-
 
 ##############################################################################
 #
@@ -58,6 +50,8 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     # now, start the application
     supervisor_start(api_id)
 
+    return OS_SUCCESS
+
 
 def undeploy_api(api_id):
     """
@@ -73,3 +67,5 @@ def undeploy_api(api_id):
     supervisor_reread()
 
     # delete configuration file from file system
+
+    return OS_SUCCESS

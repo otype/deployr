@@ -76,10 +76,10 @@ def run_supervisorctl_command(command, params=None):
         return OS_INVALID_ARGUMENT
 
     # all supervisorctl commands are lower case ... just in case:
-    command = command.lower()
+    command = command.lower().split()
 
     # check if command is an acceptable one ...
-    if command not in SUPERVISORCTL_COMMAND_LIST:
+    if command[0] not in SUPERVISORCTL_COMMAND_LIST:
         log.error('Unknown supervisorctl command: {}'.format(command))
         return OS_CANNOT_INVOKE_COMMAND_ERROR
 
@@ -89,7 +89,7 @@ def run_supervisorctl_command(command, params=None):
         command += checked_params
 
     log.debug('Running supervisorctl command: {}'.format(command))
-    return execute_shell_command([SUPERVISORCTL] + command.split())
+    return execute_shell_command([SUPERVISORCTL] + command)
 
 
 ##############################################################################

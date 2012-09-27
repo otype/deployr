@@ -11,6 +11,7 @@ from actions.deploy_actions import deploy_api
 from messagequeue.errors import UnacceptableMessageException
 from messagequeue.errors import MissingAttributeException
 from messagequeue.errors import UnknownTaskTypeException
+from ostools import OS_ERROR
 
 ##############################################################################
 #
@@ -47,7 +48,7 @@ def parse_deploy_message(incoming_message):
             raise MissingAttributeException('Missing attribute {} in message.'.format(item))
 
     # call the deploy action
-    deploy_api(
+    return deploy_api(
         api_id=incoming_message['api_id'],
         db_host=incoming_message['db_host'],
         genapi_version=incoming_message['genapi_version'],
@@ -65,10 +66,11 @@ def parse_task_type(incoming_message):
 
     task_type = incoming_message['task_type']
     if task_type.upper() == 'DEPLOY':
-        parse_deploy_message(incoming_message)
+        status = parse_deploy_message(incoming_message)
     else:
         raise UnknownTaskTypeException('Task type {} is unknown.'.format(task_type.upper()))
 
+    return status
 
 ##############################################################################
 #
@@ -82,8 +84,10 @@ def parse_message(incoming_message):
         Parse an incoming message for task type. Call the appropriate action.
     """
     try:
-        parse_task_type(incoming_message)
+        return parse_task_type(incoming_message)
     except UnacceptableMessageException, e:
         log.error(e)
     except UnknownTaskTypeException, e:
         log.error(e)
+
+    return OS_ERROR

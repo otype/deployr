@@ -11,6 +11,7 @@ from ostools.supervisorctl import parse_supervisorctl_params
 from ostools.supervisorctl import supervisor_reread
 from ostools.supervisorctl import run_supervisorctl_command
 
+
 def setup_func():
     "set up test fixtures"
 
@@ -27,11 +28,6 @@ def test_parse_supervisorctl_params():
 
 def test_run_supervisorctl_command_without_param():
     assert OS_INVALID_ARGUMENT == run_supervisorctl_command(None)
-
-
-#def test_run_supervisorctl_command():
-#    print run_supervisorctl_command(SUPERVISORCTL_START)
-#    assert SUPERVISORCTL_START == run_supervisorctl_command(SUPERVISORCTL_START)
 
 
 def test_supervisor_reread():
