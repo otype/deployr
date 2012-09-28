@@ -67,7 +67,6 @@ def on_queue_declared(frame):
         routing_key=queue,
         body=message,
         properties=pika.BasicProperties(
-            #                content_type="text/plain",
             content_type="application/json",
             delivery_mode=2))
 

@@ -80,11 +80,12 @@ def handle_delivery(channel, method_frame, header_frame, body):
     )
     channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
-    json_body = json.loads(body)
-    if json_body:
-        parse_message(json_body)
-    else:
-        log.error('Could not identify message as JSON: {}'.format(json_body))
+    try:
+        json_body = json.loads(body)
+        if json_body:
+            parse_message(json_body)
+    except ValueError, e:
+        log.error('Could not identify message as JSON: {}! Error: {}'.format(body, e))
         # TODO: Send mail to admin that message error occurred
 
 

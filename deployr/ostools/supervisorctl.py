@@ -103,7 +103,13 @@ def supervisor_reread():
         Reread the supervisor configuration files
     """
     log.info('Reread the supervisor configurations files')
-    return run_supervisorctl_command(SUPERVISORCTL_REREAD)
+#    return run_supervisorctl_command(SUPERVISORCTL_REREAD)
+    import xmlrpclib
+    server = xmlrpclib.Server('http://apis1.live.apitrary.net:9001/RPC2')
+    print server.supervisor.getState()
+    print server.system.listMethods()
+    print server.system.methodHelp('supervisor.shutdown')
+    return 0
 
 
 def supervisor_start(app_name):
