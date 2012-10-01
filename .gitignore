@@ -6,11 +6,17 @@
 
 .DS_Store
 
-# Ignore all logfiles and tempfiles.
+# Ignore all logfiles and temp files.
 /log/*.log
 /tmp
 
 # Ignore IDE files
 .idea/
 *.iml
+
+# Python build files
+*.pyc
+
+# By-products
+*.conf
 
