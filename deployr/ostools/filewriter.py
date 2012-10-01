@@ -10,8 +10,8 @@ from jinja2 import Environment
 from jinja2 import PackageLoader
 from pika import log
 from ostools import write_file
+from templates.template_definitions import GENAPI_CONFIG_TEMPLATE
 
-GENAPI_CONFIG_TEMPLATE = 'genapi_base.tpl'
 
 ##############################################################################
 #

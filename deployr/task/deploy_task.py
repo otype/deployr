@@ -10,6 +10,7 @@ from pika import log
 from actions.deploy_actions import deploy_api
 from messagequeue.errors import InvalidTaskTypeException
 
+
 class DeployTask(object):
     """
         Deploy task definition
