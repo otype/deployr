@@ -12,13 +12,12 @@ import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
 from config import MESSAGE_QUEUE_NAME
+from messagequeue.message_parser import parse_message
 
 
 #
 # Global connection object, used for connecting to the broker
 #
-from messagequeue.message_parser import parse_message
-
 connection = None
 
 #
