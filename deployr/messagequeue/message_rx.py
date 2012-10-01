@@ -6,13 +6,12 @@
     Copyright (c) 2012 apitrary
 
 """
-import json
 import socket
 import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
-from config import MESSAGE_QUEUE_NAME
-from messagequeue.message_parser import parse_message
+from actions.task_execution import run_task
+from config import DEPLOYMENT_QUEUE
 
 
 #
@@ -48,9 +47,9 @@ def on_channel_open(channel_):
     """
     global channel
     channel = channel_
-    log.debug("Declaring queue: {}".format(MESSAGE_QUEUE_NAME))
+    log.debug("Declaring queue: {}".format(DEPLOYMENT_QUEUE))
     channel.queue_declare(
-        queue=MESSAGE_QUEUE_NAME,
+        queue=DEPLOYMENT_QUEUE,
         durable=True,
         exclusive=False,
         auto_delete=False,
@@ -63,8 +62,8 @@ def on_queue_declared(frame):
         Queue has been declared. Now start to consume messages
         from the queue ...
     """
-    log.debug("Queue Declared")
-    channel.basic_consume(handle_delivery, queue=MESSAGE_QUEUE_NAME)
+    log.debug("Consuming message from queue \'{}\'".format(DEPLOYMENT_QUEUE))
+    channel.basic_consume(handle_delivery, queue=DEPLOYMENT_QUEUE)
 
 
 def handle_delivery(channel, method_frame, header_frame, body):
@@ -79,13 +78,8 @@ def handle_delivery(channel, method_frame, header_frame, body):
     )
     channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
-    try:
-        json_body = json.loads(body)
-        if json_body:
-            parse_message(json_body)
-    except ValueError, e:
-        log.error('Could not identify message as JSON: {}! Error: {}'.format(body, e))
-        # TODO: Send mail to admin that message error occurred
+    # Run the task from parsed message
+    run_task(body)
 
 
 ##############################################################################
@@ -96,6 +90,9 @@ def handle_delivery(channel, method_frame, header_frame, body):
 
 
 def start_consumer(broker_host='127.0.0.1', broker_port=5672):
+    """
+        Start the consumer IOLoop
+    """
     global connection
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port)
     try:

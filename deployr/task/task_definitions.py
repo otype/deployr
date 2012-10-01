@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+
+    <application_name>
+    
+    Copyright (c) 2012 apitrary
+
+"""
+DEPLOY_TASK = 'DEPLOY'
+DEPLOY_CONFIRMATION_TASK = 'DEPLOY_CONFIRMATION'
+UNDEPLOY_TASK = 'UNDEPLOY'
+UNDEPLOY_CONFIRMATION_TASK = 'UNDEPLOY_CONFIRMATION'

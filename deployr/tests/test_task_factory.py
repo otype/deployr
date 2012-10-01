@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 """
 
-    deployr
-
+    <application_name>
+    
     Copyright (c) 2012 apitrary
 
 """
+import json
 from nose.tools.nontrivial import with_setup
 from messagequeue.errors import UnacceptableMessageException
-from messagequeue.message_parser import parse_task_type
-from messagequeue.message_parser import parse_deploy_message
-
+from task.task_definitions import DEPLOY_TASK, UNDEPLOY_TASK
+from task.task_factory import TaskFactory
 
 def setup_func():
-    global message
-    message = {
+    global deploy_message
+    deploy_message = {
         "task_type": "DEPLOY",
         "api_id": "88sdhv98shdvlh123",
         "db_host": "db1.apitrary.net",
@@ -22,8 +22,13 @@ def setup_func():
         "genapi_version": 1,
         "log_level": "debug",
         "entities": ["user", "object", "contact"],
-        "api_key": "iis9nd9vnsdvoijsdvoin9s8dv",
-        "api_access_key": "jjjoindv08988v88dh"
+        "api_key": "iis9nd9vnsdvoijsdvoin9s8dv"
+    }
+
+    global undeploy_message
+    undeploy_message = {
+        "task_type": "UNDEPLOY",
+        "api_id": "88sdhv98shdvlh123"
     }
 
 
@@ -31,7 +36,7 @@ def teardown_func():
     "tear down test fixtures"
 
 
-def test_parse_task_type_missing_task_type():
+def test_constructor_with_missing_task_type():
     modified_message = {
         "api_id": "88sdhv98shdvlh123",
         "db_host": "db1.apitrary.net",
@@ -39,12 +44,11 @@ def test_parse_task_type_missing_task_type():
         "genapi_version": 1,
         "log_level": "debug",
         "entities": ["user", "object", "contact"],
-        "api_key": "iis9nd9vnsdvoijsdvoin9s8dv",
-        "api_access_key": "jjjoindv08988v88dh"
+        "api_key": "iis9nd9vnsdvoijsdvoin9s8dv"
     }
 
     try:
-        parse_task_type(modified_message)
+        TaskFactory(modified_message)
     except UnacceptableMessageException:
         return True
     except Exception:
@@ -52,5 +56,8 @@ def test_parse_task_type_missing_task_type():
 
 
 @with_setup(setup_func, teardown_func)
-def test_parse_deploy_message():
-    assert 0 == parse_deploy_message(message)
+def test_constructor_with_valid_message():
+    task_factory = TaskFactory(message=json.dumps(deploy_message))
+    assert task_factory.task_type() == DEPLOY_TASK
+    task_factory = TaskFactory(message=json.dumps(undeploy_message))
+    assert task_factory.task_type() == UNDEPLOY_TASK

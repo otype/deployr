@@ -46,6 +46,25 @@ class UnknownTaskTypeException(Exception):
         return self.message
 
 
+class InvalidTaskTypeException(Exception):
+    """
+        Thrown in case of an invalid task type passed via a message
+    """
+
+    def __init__(self, message, *args, **kwargs):
+        """
+            Log the message
+        """
+        super(InvalidTaskTypeException, self).__init__(*args, **kwargs)
+        self.message = message
+
+    def __str__(self):
+        """
+            Message as string
+        """
+        return self.message
+
+
 class MissingAttributeException(Exception):
     """
         Thrown in case of a missing attribute within a JSON object
