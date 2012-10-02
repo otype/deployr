@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
@@ -11,6 +11,7 @@ from nose.tools.nontrivial import with_setup
 from messagequeue.errors import UnacceptableMessageException
 from task.task_definitions import DEPLOY_TASK, UNDEPLOY_TASK
 from task.task_factory import TaskFactory
+
 
 def setup_func():
     global deploy_message

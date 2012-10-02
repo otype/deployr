@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
@@ -27,4 +27,3 @@ def run_task(message):
     log.info("Identified task type: {}".format(task.task_type()))
 
     return task.run()
-

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
@@ -28,24 +28,21 @@ class DeployTask(object):
         # parse the message for necessary parameters
         self.parse_parameters()
 
-
     def task_type(self):
         """
             Parse the message and read the task type
         """
         return self.message['task_type'].upper()
 
-
     def parse_parameters(self):
         """
             Read out all parameters needed to run the deploy task
         """
-        self.api_id=self.message['api_id']
-        self.db_host=self.message['db_host']
-        self.genapi_version=self.message['genapi_version']
-        self.log_level=self.message['log_level']
-        self.entities=self.message['entities']
-
+        self.api_id = self.message['api_id']
+        self.db_host = self.message['db_host']
+        self.genapi_version = self.message['genapi_version']
+        self.log_level = self.message['log_level']
+        self.entities = self.message['entities']
 
     def is_valid_deploy_message(self):
         """
@@ -75,7 +72,6 @@ class DeployTask(object):
                 return False
 
         return True
-
 
     def run(self):
         """

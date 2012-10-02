@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
@@ -32,7 +32,6 @@ class TaskFactory(object):
             log.error('Missing task type in message: {}'.format(self.message))
             raise UnacceptableMessageException('Missing task type in message')
 
-
     def create_task(self):
         """
             Create the corresponding task object
@@ -46,7 +45,6 @@ class TaskFactory(object):
             log.error('Could not create a valid task! Error: {}'.format(e))
             return None
 
-
     def _is_valid_task(self):
         """
             Is the incoming message a valid task?
@@ -55,7 +53,6 @@ class TaskFactory(object):
             return False
         else:
             return True
-
 
     def task_type(self):
         """

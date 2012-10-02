@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """

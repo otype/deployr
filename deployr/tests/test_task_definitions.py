@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
@@ -18,6 +18,7 @@ def setup_func():
 
 def teardown_func():
     pass
+
 
 def test_constants():
     assert 'DEPLOY' == DEPLOY_TASK

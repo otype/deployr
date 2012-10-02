@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
-    
+    deployr
+
     Copyright (c) 2012 apitrary
 
 """
 from pika import log
 from actions.deploy_actions import undeploy_api
 from messagequeue.errors import InvalidTaskTypeException
+
 
 class UndeployTask(object):
     """
@@ -27,20 +28,17 @@ class UndeployTask(object):
         # parse the message for necessary parameters
         self.parse_parameters()
 
-
     def task_type(self):
         """
             Parse the message and read the task type
         """
         return self.message['task_type'].upper()
 
-
     def parse_parameters(self):
         """
             Read out all parameters needed to run the deploy task
         """
-        self.api_id=self.message['api_id']
-
+        self.api_id = self.message['api_id']
 
     def is_valid_deploy_message(self):
         """
@@ -63,7 +61,6 @@ class UndeployTask(object):
                 return False
 
         return True
-
 
     def run(self):
         """
