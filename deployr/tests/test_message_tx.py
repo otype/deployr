@@ -33,11 +33,11 @@ def teardown_func():
 
 @with_setup(setup_func, teardown_func)
 def test_enqueue_message():
-    message = { "testing": "stuff" }
+    message = {"testing": "stuff"}
     assert OS_SUCCESS == enqueue_message(channel=channel, queue_message=message)
 
 
 @with_setup(setup_func, teardown_func)
 def test_send_message():
-    message = { "testing": "stuff" }
+    message = {"testing": "stuff"}
     assert OS_SUCCESS == send_message(queue_message=message)
