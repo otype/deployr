@@ -11,7 +11,7 @@ import socket
 import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
-from config import DEPLOYMENT_QUEUE
+from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 ##############################################################################
@@ -36,7 +36,7 @@ def enqueue_message(channel, queue_message):
     log.info("Sending message: {}".format(json_message))
     channel.basic_publish(
         exchange='',
-        routing_key=DEPLOYMENT_QUEUE,
+        routing_key=GENAPI_DEPLOYMENT_QUEUE,
         body=json_message,
         properties=pika.BasicProperties(content_type="application/json", delivery_mode=2)
     )
@@ -63,9 +63,9 @@ def send_message(queue_message, broker_host='127.0.0.1', broker_port=5672):
         channel = connection.channel()
 
         # declare the queue to use
-        log.debug("Declaring queue: {}".format(DEPLOYMENT_QUEUE))
+        log.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_QUEUE))
         channel.queue_declare(
-            queue=DEPLOYMENT_QUEUE,
+            queue=GENAPI_DEPLOYMENT_QUEUE,
             durable=True,
             exclusive=False,
             auto_delete=False

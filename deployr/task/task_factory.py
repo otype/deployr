@@ -8,11 +8,11 @@
 """
 import json
 from pika import log
-from messagequeue.errors import UnacceptableMessageException
-from messagequeue.errors import InvalidTaskTypeException
+from errors.exception_definitions import UnacceptableMessageException
+from errors.exception_definitions import InvalidTaskTypeException
 from task.deploy_task import DeployTask
-from task.task_definitions import DEPLOY_TASK
-from task.task_definitions import UNDEPLOY_TASK
+from config.task_settings import DEPLOY_TASK
+from config.task_settings import UNDEPLOY_TASK
 from task.undeploy_task import UndeployTask
 
 

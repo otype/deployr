@@ -8,7 +8,7 @@
 """
 from pika import log
 from actions.deploy_actions import deploy_api
-from messagequeue.errors import InvalidTaskTypeException
+from errors.exception_definitions import InvalidTaskTypeException
 
 
 class DeployTask(object):

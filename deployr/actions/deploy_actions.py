@@ -17,7 +17,7 @@ from ostools.port_acquisition import get_open_port
 from ostools.supervisorctl import supervisor_reread, supervisor_stop, supervisor_remove
 from ostools.supervisorctl import supervisor_add
 from ostools.supervisorctl import supervisor_start
-from templates.template_definitions import DEPLOY_CONFIRMATION_TEMPLATE
+from config.template_settings import DEPLOY_CONFIRMATION_TEMPLATE
 
 
 def send_deploy_confirmation(self, api_id, genapi_version, host, port, status):

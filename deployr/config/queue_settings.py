@@ -1,24 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 
-    deployr
+    <application_name>
+
+    by hgschmidt
 
     Copyright (c) 2012 apitrary
 
 """
-
-#
-# Application details
-#
-APP_DETAILS = {
-    'name': 'deployr',
-    'version': '0.1',
-    'company': 'apitrary',
-    'support': 'http://apitrary.com/support',
-    'contact': 'support@apitrary.com',
-    'copyright': '2012 apitrary.com'
-}
-
 
 #
 # Message Queue name
@@ -29,4 +18,4 @@ APP_DETAILS = {
 # distribution).
 #
 # DO NOT CHANGE THIS HERE WITHOUT THOUGHT!
-DEPLOYMENT_QUEUE = 'GENAPI_DEPLOYMENT'
+GENAPI_DEPLOYMENT_QUEUE = 'GENAPI_DEPLOYMENT'

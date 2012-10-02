@@ -10,8 +10,8 @@ import socket
 import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
-from actions.task_execution import run_task
-from config import DEPLOYMENT_QUEUE
+from task.task_execution import run_task
+from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 #
@@ -47,9 +47,9 @@ def on_channel_open(channel_):
     """
     global channel
     channel = channel_
-    log.debug("Declaring queue: {}".format(DEPLOYMENT_QUEUE))
+    log.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_QUEUE))
     channel.queue_declare(
-        queue=DEPLOYMENT_QUEUE,
+        queue=GENAPI_DEPLOYMENT_QUEUE,
         durable=True,
         exclusive=False,
         auto_delete=False,
@@ -62,8 +62,8 @@ def on_queue_declared(frame):
         Queue has been declared. Now start to consume messages
         from the queue ...
     """
-    log.debug("Consuming message from queue \'{}\'".format(DEPLOYMENT_QUEUE))
-    channel.basic_consume(handle_delivery, queue=DEPLOYMENT_QUEUE)
+    log.debug("Consuming message from queue \'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
+    channel.basic_consume(handle_delivery, queue=GENAPI_DEPLOYMENT_QUEUE)
 
 
 def handle_delivery(channel, method_frame, header_frame, body):
