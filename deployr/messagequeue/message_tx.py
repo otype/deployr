@@ -12,6 +12,7 @@ import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
 from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from ostools import OS_ERROR, OS_SUCCESS
 
 
 ##############################################################################
@@ -23,7 +24,7 @@ from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 def enqueue_message(channel, queue_message):
     """
-        Queue has been declared. Now start to sendings messages
+        Queue has been declared. Now start sending messages
         to the queue ...
     """
     log.debug('Parsing message for JSON encoding: {}'.format(queue_message))
@@ -31,7 +32,7 @@ def enqueue_message(channel, queue_message):
         json_message = json.dumps(queue_message)
     except ValueError, e:
         log.error('Cannot send message, it is not JSON parseable! Error: {}'.format(e))
-        return
+        return OS_ERROR
 
     log.info("Sending message: {}".format(json_message))
     channel.basic_publish(
@@ -41,8 +42,7 @@ def enqueue_message(channel, queue_message):
         properties=pika.BasicProperties(content_type="application/json", delivery_mode=2)
     )
 
-    # Close our connection
-    connection.close()
+    return OS_SUCCESS
 
 
 ##############################################################################
@@ -76,13 +76,16 @@ def send_message(queue_message, broker_host='127.0.0.1', broker_port=5672):
         enqueue_message(channel=channel, queue_message=queue_message)
     except socket.gaierror, e:
         log.error(e)
+        return OS_ERROR
     except socket.error, e:
         log.error(e)
+        return OS_ERROR
     except KeyboardInterrupt:
         log.info('Orderly shutting down ...')
-    else:
-        log.error('Unknown error! Better run away, now ...')
+        return OS_ERROR
     finally:
         if connection:
             connection.close()
             log.info('Connection closed.')
+
+    return OS_SUCCESS
