@@ -80,9 +80,6 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     # add the config (implicitly starts the genapi)
     supervisor_xmlrpc_add_group(api_id)
 
-    # now, start the application
-#    supervisor_xmlrpc_start(api_id)
-
     # Send out the confirmation message
     send_deploy_confirmation(
         api_id=api_id,
