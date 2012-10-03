@@ -7,9 +7,9 @@
 
 """
 from ostools import OS_SUCCESS, OS_INVALID_ARGUMENT
-from ostools.supervisorctl import parse_supervisorctl_params
-from ostools.supervisorctl import supervisor_reread
-from ostools.supervisorctl import run_supervisorctl_command
+from supervisor.supervisorctl_api import parse_supervisorctl_params
+from supervisor.supervisorctl_api import supervisorctl_reread
+from supervisor.supervisorctl_api import run_supervisorctl_command
 
 
 def setup_func():
@@ -31,4 +31,4 @@ def test_run_supervisorctl_command_without_param():
 
 
 def test_supervisor_reread():
-    assert OS_SUCCESS == supervisor_reread()
+    assert OS_SUCCESS == supervisorctl_reread()

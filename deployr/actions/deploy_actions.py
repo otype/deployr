@@ -14,9 +14,11 @@ from ostools import OS_SUCCESS
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
 from ostools.port_acquisition import get_open_port
-from ostools.supervisorctl import supervisor_reread, supervisor_stop, supervisor_remove
-from ostools.supervisorctl import supervisor_add
-from ostools.supervisorctl import supervisor_start
+from supervisor.supervisorctl_api import supervisorctl_reread
+from supervisor.supervisorctl_api import supervisorctl_stop
+from supervisor.supervisorctl_api import supervisorctl_remove
+from supervisor.supervisorctl_api import supervisorctl_add
+from supervisor.supervisorctl_api import supervisorctl_start
 from config.template_settings import DEPLOY_CONFIRMATION_TEMPLATE
 
 
@@ -65,13 +67,13 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     )
 
     # Re-read the configuration files
-    supervisor_reread()
+    supervisorctl_reread()
 
     # add the application to supervisor's context
-    supervisor_add(api_id)
+    supervisorctl_add(api_id)
 
     # now, start the application
-    supervisor_start(api_id)
+    supervisorctl_start(api_id)
 
     return OS_SUCCESS
 
@@ -81,13 +83,13 @@ def undeploy_api(api_id):
         Undeploy a currently deployed API with given API ID
     """
     # stop the API
-    supervisor_stop(api_id)
+    supervisorctl_stop(api_id)
 
     # remove all configuration from supervisorctl context
-    supervisor_remove(api_id)
+    supervisorctl_remove(api_id)
 
     # reread config files
-    supervisor_reread()
+    supervisorctl_reread()
 
     # delete configuration file from file system
 

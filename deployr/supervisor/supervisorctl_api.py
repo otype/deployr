@@ -20,8 +20,7 @@ from ostools import OS_CANNOT_INVOKE_COMMAND_ERROR
 
 
 # the executable for calling supervisorctl
-#SUPERVISORCTL = 'supervisorctl'
-SUPERVISORCTL = '/Users/hgschmidt/bin/supervisorctl'
+SUPERVISORCTL = 'supervisorctl'
 
 # All supervisord commands as strings
 SUPERVISORCTL_START = 'start'
@@ -94,67 +93,61 @@ def run_supervisorctl_command(command, params=None):
 
 ##############################################################################
 #
-# MAIN FUNCTIONS
+# API CALLS
 #
 ##############################################################################
 
-def supervisor_reread():
+def supervisorctl_reread():
     """
         Reread the supervisor configuration files
     """
-    log.info('Reread the supervisor configurations files')
-#    return run_supervisorctl_command(SUPERVISORCTL_REREAD)
-    import xmlrpclib
-    server = xmlrpclib.Server('http://apis1.live.apitrary.net:9001/RPC2')
-    print server.supervisor.getState()
-    print server.system.listMethods()
-    print server.system.methodHelp('supervisor.shutdown')
-    return 0
+    log.debug('SUPERVISORCTL: Reread the supervisor configurations files')
+    return run_supervisorctl_command(SUPERVISORCTL_REREAD)
 
 
-def supervisor_start(app_name):
+def supervisorctl_start(app_name):
     """
         Start given application via supervisor
     """
-    log.info('Requesting start of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_START, app_name)
 
 
-def supervisor_stop(app_name):
+def supervisorctl_stop(app_name):
     """
         Stop given application via supervisor
     """
-    log.info('Requesting stop of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_STOP, app_name)
 
 
-def supervisor_restart(app_name):
+def supervisorctl_restart(app_name):
     """
         Start given application via supervisor
     """
-    log.info('Requesting restart of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_RESTART, app_name)
 
 
-def supervisor_add(app_name):
+def supervisorctl_add(app_name):
     """
         Add new application to supervisor configuration
     """
-    log.info('Requesting addition of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_ADD, app_name)
 
 
-def supervisor_status(app_name):
+def supervisorctl_status(app_name):
     """
         Request status of given application
     """
-    log.info('Requesting status of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting status of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_STATUS, app_name)
 
 
-def supervisor_remove(app_name):
+def supervisorctl_remove(app_name):
     """
         Remove application from supervisor context
     """
-    log.info('Requesting removal of application: {}'.format(app_name))
+    log.info('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_REMOVE, app_name)
