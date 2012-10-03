@@ -14,13 +14,12 @@ exchange_name = 'genapi_deployment_exchange'
 deploy_message = {
     'task_type': 'DEPLOY',
     'api_id': '88sdhv98shdvlh123',
-    'db_host': 'db1.apitrary.net',
+    'db_host': 'riak1.apitrary.net',
     'db_port': 8098,
     'genapi_version': 1,
     'log_level': 'debug',
     'entities': ['user', 'object', 'contact'],
-    'api_key': 'iis9nd9vnsdvoijsdvoin9s8dv',
-    'api_access_key': 'jjjoindv08988v88dh'
+    'api_key': 'iis9nd9vnsdvoijsdvoin9s8dv'
 }
 
 confirmation_message = {
