@@ -6,6 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
+import sys
 from ostools import OS_SUCCESS
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
@@ -50,6 +51,13 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     assigned_port = get_open_port()
     this_host = 'some.awesome.host'
 
+    if sys.platform == 'darwin':
+        config_file_name = '/etc/supervisor/conf.d/{}.conf'.format(api_id)
+    elif sys.platform == 'linux2':
+        config_file_name = '{}.conf'.format(api_id)
+    else:
+        config_file_name = '{}.conf'.format(api_id)
+
     # Write the supervisor config
     write_supervisor_config_for_api(
         genapi_api_id=api_id,
@@ -63,7 +71,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         genapi_home_directory='/home/genapi',
         genapi_user='genapi',
         genapi_log_file='/home/genapi/log/genapi_{}.log'.format(api_id),
-        config_file_name='{}.conf'.format(api_id)
+        config_file_name=config_file_name
     )
 
     # Re-read the configuration files
