@@ -39,3 +39,6 @@ def run_task(message):
     except InvalidTaskTypeException, e:
         log.error(e)
         return OS_ERROR
+    except AttributeError, e:
+        log.error(e)
+        return OS_ERROR
