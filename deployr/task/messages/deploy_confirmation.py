@@ -11,7 +11,7 @@
 import time
 
 
-class DeployConfirmationMessage(object):
+class DeployConfirmation(object):
     """
         A message object that is used for confirming a successful deployment
     """
