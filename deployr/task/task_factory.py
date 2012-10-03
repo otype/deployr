@@ -44,6 +44,9 @@ class TaskFactory(object):
         except InvalidTaskTypeException, e:
             log.error('Could not create a valid task! Error: {}'.format(e))
             return None
+        except TypeError, e:
+            log.error('Task type is not identifiable! Error: {}'.format(e))
+            return None
 
     def _is_valid_task(self):
         """
