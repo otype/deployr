@@ -54,7 +54,7 @@ def supervisor_xmlrpc_start(app_name):
     """
     log.info('SUPERVISOR XML-RPC: Requesting start of application: {}'.format(app_name))
     try:
-        if SUPERVISOR_XML_RPC_SERVER.supervisor.start(app_name):
+        if SUPERVISOR_XML_RPC_SERVER.supervisor.startProcess(app_name):
             return OS_SUCCESS
     except xmlrpclib.Fault, e:
         log.error('Could not start process \'{}\'! Error: {}'.format(app_name, e))
@@ -70,7 +70,7 @@ def supervisor_xmlrpc_stop(app_name):
     """
     log.info('SUPERVISOR XML-RPC: Requesting stop of application: {}'.format(app_name))
     try:
-        if SUPERVISOR_XML_RPC_SERVER.supervisor.stop(app_name):
+        if SUPERVISOR_XML_RPC_SERVER.supervisor.stopProcess(app_name):
             return OS_SUCCESS
     except xmlrpclib.Fault, e:
         log.error('Could not stop process \'{}\'! Error: {}'.format(app_name, e))
