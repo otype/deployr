@@ -12,7 +12,7 @@ from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
 from ostools.port_acquisition import get_open_port
 from messagequeue.message_tx import send_message
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config, supervisor_xmlrpc_add_group
 from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_start
 from task.messages.deploy_confirmation import DeployConfirmation
 
@@ -76,6 +76,9 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
 
     # Re-read the configuration files
     supervisor_xmlrpc_reload_config()
+
+    # add the config
+    supervisor_xmlrpc_add_group(api_id)
 
     # now, start the application
     supervisor_xmlrpc_start(api_id)
