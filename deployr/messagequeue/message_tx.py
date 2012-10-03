@@ -70,7 +70,6 @@ def send_message(queue_message, broker_host=BROKER_HOST, broker_port=BROKER_PORT
     """
         Sending a given message on DEPLOYMENT_QUEUE
     """
-    global connection
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port)
     try:
         # create the connection
@@ -84,6 +83,9 @@ def send_message(queue_message, broker_host=BROKER_HOST, broker_port=BROKER_PORT
 
         # sending message
         enqueue_message(channel=channel, queue_message=queue_message)
+
+        # close the connection
+        connection.close()
     except socket.gaierror, e:
         log.error(e)
         return OS_ERROR
@@ -93,9 +95,5 @@ def send_message(queue_message, broker_host=BROKER_HOST, broker_port=BROKER_PORT
     except KeyboardInterrupt:
         log.info('Orderly shutting down ...')
         return OS_ERROR
-    finally:
-        if connection:
-            connection.close()
-            log.info('Connection closed.')
 
     return OS_SUCCESS
