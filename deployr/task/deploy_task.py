@@ -7,7 +7,7 @@
 
 """
 from pika import log
-from actions.deploy_actions import deploy_api
+from actions.deploy import deploy_api
 from errors.exception_definitions import InvalidTaskTypeException
 
 
