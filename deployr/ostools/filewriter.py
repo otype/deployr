@@ -11,6 +11,8 @@ from jinja2 import PackageLoader
 from pika import log
 from ostools import write_file
 from config.template_settings import GENAPI_CONFIG_TEMPLATE
+from config.template_settings import SUPERVISOR_TEMPLATES_DIR
+from config.template_settings import TEMPLATES_BASE_DIR
 
 
 ##############################################################################
@@ -29,7 +31,7 @@ def entity_list_as_csv(entity_list):
 
 def genapi_template(python_interpreter, genapi_start, logging_level, riak_host, app_port, genapi_api_id,
                     genapi_version, genapi_entity_list, genapi_home_directory, genapi_user, genapi_log_file):
-    env = Environment(loader=PackageLoader('templates', 'supervisor_templates'))
+    env = Environment(loader=PackageLoader(TEMPLATES_BASE_DIR, SUPERVISOR_TEMPLATES_DIR))
     template = env.get_template(GENAPI_CONFIG_TEMPLATE)
 
     return template.render(
