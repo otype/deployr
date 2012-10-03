@@ -52,9 +52,9 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     this_host = 'some.awesome.host'
 
     if sys.platform == 'darwin':
-        config_file_name = '/etc/supervisor/conf.d/{}.conf'.format(api_id)
-    elif sys.platform == 'linux2':
         config_file_name = '{}.conf'.format(api_id)
+    elif sys.platform == 'linux2':
+        config_file_name = '/etc/supervisor/conf.d/{}.conf'.format(api_id)
     else:
         config_file_name = '{}.conf'.format(api_id)
 
