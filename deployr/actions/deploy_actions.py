@@ -6,37 +6,31 @@
     Copyright (c) 2012 apitrary
 
 """
-import time
-from jinja2.environment import Environment
-from jinja2.loaders import PackageLoader
 from messagequeue.message_tx import send_message
 from ostools import OS_SUCCESS
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
 from ostools.port_acquisition import get_open_port
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reread, supervisor_xmlrpc_start
 from supervisor.supervisorctl_api import supervisorctl_reread
 from supervisor.supervisorctl_api import supervisorctl_stop
 from supervisor.supervisorctl_api import supervisorctl_remove
-from supervisor.supervisorctl_api import supervisorctl_add
-from supervisor.supervisorctl_api import supervisorctl_start
-from config.template_settings import DEPLOY_CONFIRMATION_TEMPLATE
+from task.deploy_confirmation_message import DeployConfirmationMessage
 
 
-def send_deploy_confirmation(self, api_id, genapi_version, host, port, status):
+def send_deploy_confirmation(api_id, genapi_version, host, port, status):
     """
         Send confirmation message
     """
-    env = Environment(loader=PackageLoader('templates', 'message_queue_templates'))
-    template = env.get_template(DEPLOY_CONFIRMATION_TEMPLATE)
-    message = template.render(
-        api_id=self.api_id,
+    deploy_confirmation_message = DeployConfirmationMessage(
+        api_id=api_id,
         genapi_version=genapi_version,
         host=host,
         port=port,
-        status=status,
-        created_at=time.time()
-    )
-    send_message(message)
+        status=status
+    ).to_json()
+
+    return send_message(deploy_confirmation_message)
 
 
 ##############################################################################
@@ -50,6 +44,9 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     """
         Deploy an GenAPI
     """
+    assigned_port = get_open_port()
+    this_host = 'some.awesome.host'
+
     # Write the supervisor config
     write_supervisor_config_for_api(
         genapi_api_id=api_id,
@@ -57,7 +54,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         genapi_start='/opt/genapis/genapi/start.py',
         logging_level=log_level,
         riak_host=db_host,
-        app_port=get_open_port(),
+        app_port=assigned_port,
         genapi_version=genapi_version,
         genapi_entity_list=entities,
         genapi_home_directory='/opt/genapi',
@@ -67,13 +64,19 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     )
 
     # Re-read the configuration files
-    supervisorctl_reread()
-
-    # add the application to supervisor's context
-    supervisorctl_add(api_id)
+    supervisor_xmlrpc_reread()
 
     # now, start the application
-    supervisorctl_start(api_id)
+    supervisor_xmlrpc_start(api_id)
+
+    # Send out the confirmation message
+    send_deploy_confirmation(
+        api_id=api_id,
+        genapi_version=genapi_version,
+        host=this_host,
+        port=assigned_port,
+        status=1
+    )
 
     return OS_SUCCESS
 
