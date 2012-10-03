@@ -42,5 +42,5 @@ FOR DEV
 
 1. pep8:
 
-    $ find . | grep ".py"$ | grep -v "misc" \
-      | xargs pep8 --max-line-length=120
+        $ find . | grep ".py"$ | grep -v "misc" \
+            | xargs pep8 --max-line-length=120
