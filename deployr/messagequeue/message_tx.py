@@ -11,7 +11,9 @@ import socket
 import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
-from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE, DEPLOY_CONFIRMATION_ROUTING_KEY
+from config.queue_settings import BROKER_HOST
+from config.queue_settings import BROKER_PORT
 from ostools import OS_ERROR, OS_SUCCESS
 
 
@@ -21,13 +23,26 @@ from ostools import OS_ERROR, OS_SUCCESS
 #
 ##############################################################################
 
+def declare_exchange(channel):
+    """
+        Declaring exchange for sending the deployment confirmation messages
+    """
+    log.debug('Declaring exchange: {}'.format(GENAPI_DEPLOYMENT_EXCHANGE))
+    channel.exchange_declare(
+        exchange=GENAPI_DEPLOYMENT_EXCHANGE,
+        type='topic',
+        durable=True,
+        auto_delete=False
+    )
+    return channel
+
 
 def enqueue_message(channel, queue_message):
     """
         Queue has been declared. Now start sending messages
         to the queue ...
     """
-    log.debug('Parsing message for JSON encoding: {}'.format(queue_message))
+    log.info('Parsed message for JSON encoding: {}'.format(queue_message))
     try:
         json_message = json.dumps(queue_message)
     except ValueError, e:
@@ -36,8 +51,8 @@ def enqueue_message(channel, queue_message):
 
     log.info("Sending message: {}".format(json_message))
     channel.basic_publish(
-        exchange='',
-        routing_key=GENAPI_DEPLOYMENT_QUEUE,
+        exchange=GENAPI_DEPLOYMENT_EXCHANGE,
+        routing_key=DEPLOY_CONFIRMATION_ROUTING_KEY,
         body=json_message,
         properties=pika.BasicProperties(content_type="application/json", delivery_mode=2)
     )
@@ -51,7 +66,7 @@ def enqueue_message(channel, queue_message):
 #
 ##############################################################################
 
-def send_message(queue_message, broker_host='127.0.0.1', broker_port=5672):
+def send_message(queue_message, broker_host=BROKER_HOST, broker_port=BROKER_PORT):
     """
         Sending a given message on DEPLOYMENT_QUEUE
     """
@@ -63,13 +78,8 @@ def send_message(queue_message, broker_host='127.0.0.1', broker_port=5672):
         channel = connection.channel()
 
         # declare the queue to use
-        log.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_QUEUE))
-        channel.queue_declare(
-            queue=GENAPI_DEPLOYMENT_QUEUE,
-            durable=True,
-            exclusive=False,
-            auto_delete=False
-        )
+        log.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_EXCHANGE))
+        channel = declare_exchange(channel)
         log.info('Connected to broker: {}:{}'.format(broker_host, broker_port))
 
         # sending message
