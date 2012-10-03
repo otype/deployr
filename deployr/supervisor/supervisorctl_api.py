@@ -6,6 +6,8 @@
     Copyright (c) 2012 apitrary
 
 """
+import os
+import sys
 from pika import log
 from ostools import execute_shell_command
 from ostools import OS_INVALID_ARGUMENT
@@ -20,7 +22,12 @@ from ostools import OS_CANNOT_INVOKE_COMMAND_ERROR
 
 
 # the executable for calling supervisorctl
-SUPERVISORCTL = 'supervisorctl'
+if sys.platform == 'darwin':
+    SUPERVISORCTL = '{}/bin/supervisorctl'.format(os.getenv('HOME'))
+elif sys.platform == 'linux2':
+    SUPERVISORCTL = '/usr/bin/supervisorctl'
+else:
+    SUPERVISORCTL = 'supervisorctl'
 
 # All supervisord commands as strings
 SUPERVISORCTL_START = 'start'

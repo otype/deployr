@@ -8,13 +8,18 @@
     Copyright (c) 2012 apitrary
 
 """
+import sys
 
 # SUPERVISORD HOST
 #
 # On which host to find the supervisord. This should always
 # be 'localhost' except for debugging/development reasons.
-#SUPERVISORD_HOST = '127.0.0.1'
-SUPERVISORD_HOST = 'apis1.live.apitrary.net'
+if sys.platform == 'darwin':
+    SUPERVISORD_HOST = 'apis1.live.apitrary.net'
+elif sys.platform == 'linux2':
+    SUPERVISORD_HOST = '127.0.0.1'
+else:
+    SUPERVISORD_HOST = '127.0.0.1'
 
 # SUPERVISORD WEB PORT
 #
