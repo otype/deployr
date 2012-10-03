@@ -15,9 +15,9 @@ import os
 import sys
 from distutils.core import setup
 from setuptools import find_packages
-from config.general_settings import __version__
-from config.general_settings import __name__
-from config.general_settings import __author__
+from deployr.config.general_settings import __version__
+from deployr.config.general_settings import __name__
+from deployr.config.general_settings import __author__
 
 required = ['pika', 'jinja2', 'nose']
 
