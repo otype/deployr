@@ -41,7 +41,7 @@ setup(
     install_requires=required,
     packages=find_packages('deployr'),
     package_dir={'' : 'deployr'},
-    scripts=['start.py'],
+    scripts=['deployr/start.py'],
     data_files=None,
     download_url='',
     license='Apache 2.0',
