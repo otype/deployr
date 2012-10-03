@@ -35,7 +35,7 @@ SUPERVISOR_XML_RPC_SERVER = xmlrpclib.Server(
 ##############################################################################
 
 
-def supervisor_xmlrpc_reread():
+def supervisor_xmlrpc_reload_config():
     """
         Reread the supervisor configuration files
     """
@@ -132,7 +132,7 @@ def supervisor_xmlrpc_status():
         return OS_ERROR
 
 
-def supervisor_xmlrpc_remove(group_name):
+def supervisor_xmlrpc_remove_group(group_name):
     """
         Remove application from supervisor context
     """
