@@ -8,10 +8,11 @@
     Copyright (c) 2012 apitrary
 
 """
+import json
 import time
 
 
-class DeployConfirmation(object):
+class DeployConfirmationMessage(object):
     """
         A message object that is used for confirming a successful deployment
     """
@@ -27,7 +28,7 @@ class DeployConfirmation(object):
         self.status = status
         self.created_at = time.time()
 
-    def to_json(self):
+    def to_dict(self):
         """
             Return a dictionary (JSON) from this object
         """
@@ -40,3 +41,9 @@ class DeployConfirmation(object):
             'status': self.status,
             'created_at': self.created_at
         }
+
+    def to_json(self):
+        """
+            Return a JSON object
+        """
+        return json.dumps(self.to_dict())

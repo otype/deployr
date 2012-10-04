@@ -14,7 +14,7 @@ from ostools.port_acquisition import get_open_port
 from messagequeue.message_tx import send_message
 from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
 from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_add_group
-from task.messages.deploy_confirmation import DeployConfirmation
+from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 
 ##############################################################################
 #
@@ -27,7 +27,7 @@ def send_deploy_confirmation(api_id, genapi_version, host, port, status):
     """
         Send confirmation message
     """
-    deploy_confirmation_message = DeployConfirmation(
+    deploy_confirmation_message = DeployConfirmationMessage(
         api_id=api_id,
         genapi_version=genapi_version,
         host=host,
