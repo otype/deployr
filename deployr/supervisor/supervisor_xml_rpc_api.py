@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
+    deployr
 
     by hgschmidt
 
@@ -10,7 +10,7 @@
 """
 import xmlrpclib
 from pika import log
-from config.supervisord_settings import SUPERVISORD_HOST, SUPERVISORD_WEB_PORT
+from config.supervisord_settings import SUPERVISOR_XML_RPC_SERVER_ADDRESS
 from ostools import OS_SUCCESS, OS_ERROR
 
 
@@ -21,12 +21,7 @@ from ostools import OS_SUCCESS, OS_ERROR
 ##############################################################################
 
 # Contact XML-RPC on given address
-SUPERVISOR_XML_RPC_SERVER = xmlrpclib.Server(
-    'http://{}:{}/RPC2'.format(
-        SUPERVISORD_HOST,
-        SUPERVISORD_WEB_PORT
-    )
-)
+SUPERVISOR_XML_RPC_SERVER = xmlrpclib.Server(SUPERVISOR_XML_RPC_SERVER_ADDRESS)
 
 ##############################################################################
 #
