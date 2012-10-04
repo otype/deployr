@@ -26,3 +26,8 @@ else:
 # XML-RPC web API of a running supervisord.
 # NEEDS TO BE ACTIVATED IN THE CONFIGS!
 SUPERVISORD_WEB_PORT = 9001
+
+# Contact XML-RPC on given address
+#
+#
+SUPERVISOR_XML_RPC_SERVER_ADDRESS = 'http://{}:{}/RPC2'.format(SUPERVISORD_HOST, SUPERVISORD_WEB_PORT)
