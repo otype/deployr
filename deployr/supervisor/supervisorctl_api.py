@@ -116,7 +116,7 @@ def supervisorctl_start(app_name):
     """
         Start given application via supervisor
     """
-    log.info('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_START, app_name)
 
 
@@ -124,7 +124,7 @@ def supervisorctl_stop(app_name):
     """
         Stop given application via supervisor
     """
-    log.info('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_STOP, app_name)
 
 
@@ -132,7 +132,7 @@ def supervisorctl_restart(app_name):
     """
         Start given application via supervisor
     """
-    log.info('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_RESTART, app_name)
 
 
@@ -140,7 +140,7 @@ def supervisorctl_add(app_name):
     """
         Add new application to supervisor configuration
     """
-    log.info('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_ADD, app_name)
 
 
@@ -148,7 +148,7 @@ def supervisorctl_status(app_name):
     """
         Request status of given application
     """
-    log.info('SUPERVISORCTL: Requesting status of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting status of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_STATUS, app_name)
 
 
@@ -156,5 +156,5 @@ def supervisorctl_remove(app_name):
     """
         Remove application from supervisor context
     """
-    log.info('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
+    log.debug('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_REMOVE, app_name)

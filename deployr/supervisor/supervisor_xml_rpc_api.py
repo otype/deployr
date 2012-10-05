@@ -34,7 +34,7 @@ def supervisor_xmlrpc_reload_config():
     """
         Reread the supervisor configuration files
     """
-    log.info('SUPERVISOR XML-RPC: Requesting reload of all configs')
+    log.debug('SUPERVISOR XML-RPC: Requesting reload of all configs')
     try:
         SUPERVISOR_XML_RPC_SERVER.supervisor.reloadConfig()
     except xmlrpclib.Fault, e:
@@ -47,7 +47,7 @@ def supervisor_xmlrpc_start(app_name):
     """
         Start given application via supervisor
     """
-    log.info('SUPERVISOR XML-RPC: Requesting start of application: {}'.format(app_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting start of application: {}'.format(app_name))
     try:
         if SUPERVISOR_XML_RPC_SERVER.supervisor.startProcess(app_name):
             return OS_SUCCESS
@@ -63,7 +63,7 @@ def supervisor_xmlrpc_stop(app_name):
     """
         Stop given application via supervisor
     """
-    log.info('SUPERVISOR XML-RPC: Requesting stop of application: {}'.format(app_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting stop of application: {}'.format(app_name))
     try:
         if SUPERVISOR_XML_RPC_SERVER.supervisor.stopProcess(app_name):
             return OS_SUCCESS
@@ -79,7 +79,7 @@ def supervisor_xmlrpc_restart(app_name):
     """
         Start given application via supervisor
     """
-    log.info('SUPERVISOR XML-RPC: Requesting restart of application: {}'.format(app_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting restart of application: {}'.format(app_name))
 
     stop_state = supervisor_xmlrpc_stop(app_name)
     start_state = supervisor_xmlrpc_start(app_name)
@@ -95,7 +95,7 @@ def supervisor_xmlrpc_add_group(group_name):
     """
         Add new application to supervisor configuration
     """
-    log.info('SUPERVISOR XML-RPC: Requesting addition of application: {}'.format(group_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting addition of application: {}'.format(group_name))
     try:
         if SUPERVISOR_XML_RPC_SERVER.supervisor.addProcessGroup(group_name):
             return OS_SUCCESS
@@ -111,7 +111,7 @@ def supervisor_xmlrpc_status():
     """
         Request status of given application
     """
-    log.info('SUPERVISOR XML-RPC: Requesting status')
+    log.debug('SUPERVISOR XML-RPC: Requesting status')
     try:
         response = SUPERVISOR_XML_RPC_SERVER.supervisor.getState()
         if 'statename' in response:
@@ -131,7 +131,7 @@ def supervisor_xmlrpc_get_all_process_info():
     """
         Request status of given application
     """
-    log.info('SUPERVISOR XML-RPC: Requesting all process info')
+    log.debug('SUPERVISOR XML-RPC: Requesting all process info')
     try:
         return SUPERVISOR_XML_RPC_SERVER.supervisor.getAllProcessInfo()
     except xmlrpclib.Fault, e:
@@ -146,7 +146,7 @@ def supervisor_xmlrpc_get_process_info(app_name):
     """
         Request status of given application
     """
-    log.info('SUPERVISOR XML-RPC: Requesting process info for api_id: {}'.format(app_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting process info for api_id: {}'.format(app_name))
     try:
         all_processes = SUPERVISOR_XML_RPC_SERVER.supervisor.getAllProcessInfo()
         for process in all_processes:
@@ -166,7 +166,7 @@ def supervisor_xmlrpc_remove_group(group_name):
     """
         Remove application from supervisor context
     """
-    log.info('SUPERVISOR XML-RPC: Requesting removal of group: {}'.format(group_name))
+    log.debug('SUPERVISOR XML-RPC: Requesting removal of group: {}'.format(group_name))
     try:
         if SUPERVISOR_XML_RPC_SERVER.supervisor.removeProcessGroup(group_name):
             return OS_SUCCESS
@@ -182,7 +182,7 @@ def supervisor_xmlrpc_get_all_config_info():
     """
         Remove application from supervisor context
     """
-    log.info('SUPERVISOR XML-RPC: Requesting all config info')
+    log.debug('SUPERVISOR XML-RPC: Requesting all config info')
     try:
         return SUPERVISOR_XML_RPC_SERVER.supervisor.getAllConfigInfo()
     except xmlrpclib.Fault, e:
@@ -197,7 +197,7 @@ def supervisor_xmlrpc_get_config_info(app_name):
     """
         Remove application from supervisor context
     """
-    log.info('SUPERVISOR XML-RPC: Requesting all config info')
+    log.debug('SUPERVISOR XML-RPC: Requesting all config info')
     try:
         all_configs = SUPERVISOR_XML_RPC_SERVER.supervisor.getAllConfigInfo()
         for config in all_configs:

@@ -78,7 +78,7 @@ def on_queue_declared(frame):
     log.debug("Consuming message from exchange=\'{}\' running on queue=\'{}\'".format(
         GENAPI_DEPLOYMENT_EXCHANGE, GENAPI_DEPLOYMENT_QUEUE)
     )
-    log.info('Frame: {}'.format(frame))
+    log.debug('Frame: {}'.format(frame))
 
     log.debug('Binding to queue: {}'.format(GENAPI_DEPLOYMENT_QUEUE))
     channel.queue_bind(
