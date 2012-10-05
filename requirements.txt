@@ -1,3 +1,4 @@
 pika
 jinja2
 nose
+configobj
