@@ -58,6 +58,7 @@ class BlockingMessageTx(object):
         self.broker_host = broker_host
         self.broker_port = broker_port
         self.parameters = pika.ConnectionParameters(host=broker_host, port=broker_port)
+        log.debug('Broker host = \'{}\', Broker port = {}'.format(self.broker_host, self.broker_port))
 
     def is_valid_message(self):
         """
