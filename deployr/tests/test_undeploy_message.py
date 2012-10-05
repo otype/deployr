@@ -9,7 +9,7 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE, UNDEPLOY_ROUTING_KEY
+from settings.queue_settings import UNDEPLOY_ROUTING_KEY
 from task.messages.undeploy_message import UndeployMessage
 
 undeploy_message_dict = {
@@ -38,11 +38,6 @@ def test_undeploy_message_dict():
 def test_undeploy_message_json():
     assert undeploy_message.to_json() != ''
     assert 'DEPLOY' in undeploy_message.to_json()
-
-
-@with_setup(setup_func, teardown_func)
-def test_undeploy_message_exchange():
-    assert undeploy_message.exchange == GENAPI_DEPLOYMENT_EXCHANGE
 
 
 @with_setup(setup_func, teardown_func)

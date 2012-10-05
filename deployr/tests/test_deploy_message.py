@@ -9,7 +9,7 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE, DEPLOY_ROUTING_KEY
+from settings.queue_settings import DEPLOY_ROUTING_KEY
 from task.messages.deploy_message import DeployMessage
 
 deploy_message_dict = {
@@ -50,11 +50,6 @@ def test_deploy_message_dict():
 def test_deploy_message_json():
     assert deploy_message.to_json() != ''
     assert 'DEPLOY' in deploy_message.to_json()
-
-
-@with_setup(setup_func, teardown_func)
-def test_deploy_message_exchange():
-    assert deploy_message.exchange == GENAPI_DEPLOYMENT_EXCHANGE
 
 
 @with_setup(setup_func, teardown_func)

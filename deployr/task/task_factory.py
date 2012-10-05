@@ -11,8 +11,8 @@ from pika import log
 from errors.exception_definitions import UnacceptableMessageException
 from errors.exception_definitions import InvalidTaskTypeException
 from task.task_types.deploy_task import DeployTask
-from config.task_settings import DEPLOY_TASK
-from config.task_settings import UNDEPLOY_TASK
+from settings.task_settings import DEPLOY_TASK
+from settings.task_settings import UNDEPLOY_TASK
 from task.task_types.undeploy_task import UndeployTask
 
 

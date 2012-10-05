@@ -10,7 +10,7 @@
 """
 import xmlrpclib
 from pika import log
-from config.supervisord_settings import SUPERVISOR_XML_RPC_SERVER_ADDRESS
+from settings.supervisord_settings import SUPERVISOR_XML_RPC_SERVER_ADDRESS
 from ostools import OS_SUCCESS, OS_ERROR
 
 

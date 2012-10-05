@@ -6,10 +6,10 @@
     Copyright (c) 2012 apitrary
 
 """
-from config.task_settings import DEPLOY_TASK
-from config.task_settings import DEPLOY_CONFIRMATION_TASK
-from config.task_settings import UNDEPLOY_TASK
-from config.task_settings import UNDEPLOY_CONFIRMATION_TASK
+from settings.task_settings import DEPLOY_TASK
+from settings.task_settings import DEPLOY_CONFIRMATION_TASK
+from settings.task_settings import UNDEPLOY_TASK
+from settings.task_settings import UNDEPLOY_CONFIRMATION_TASK
 
 
 def setup_func():

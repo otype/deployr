@@ -7,7 +7,7 @@
 
 """
 from pika import log
-from config.queue_settings import BROKER_HOST
+from settings.queue_settings import BROKER_HOST
 from errors.exception_definitions import InvalidTaskTypeException
 
 

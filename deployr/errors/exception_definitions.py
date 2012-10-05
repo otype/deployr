@@ -82,3 +82,22 @@ class MissingAttributeException(Exception):
             Message as string
         """
         return self.message
+
+
+class FileNotFoundException(Exception):
+    """
+        Thrown in case of not being able to find a given file
+    """
+
+    def __init__(self, message, *args, **kwargs):
+        """
+            Log the message
+        """
+        super(FileNotFoundException, self).__init__(*args, **kwargs)
+        self.message = message
+
+    def __str__(self):
+        """
+            Message as string
+        """
+        return self.message

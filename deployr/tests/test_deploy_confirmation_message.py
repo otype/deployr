@@ -9,7 +9,7 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE, DEPLOY_CONFIRMATION_ROUTING_KEY
+from settings.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 
 deploy_confirmation_message_dict = {
@@ -48,11 +48,6 @@ def test_deploy_confirmation_message_dict():
 def test_deploy_confirmation_message_json():
     assert deploy_confirmation_message.to_json() != ''
     assert 'DEPLOY_CONFIRMATION' in deploy_confirmation_message.to_json()
-
-
-@with_setup(setup_func, teardown_func)
-def test_deploy_confirmation_message_exchange():
-    assert deploy_confirmation_message.exchange == GENAPI_DEPLOYMENT_EXCHANGE
 
 
 @with_setup(setup_func, teardown_func)

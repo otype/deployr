@@ -11,9 +11,9 @@ import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
 from task.task_execution import run_task
-from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
-from config.queue_settings import BROKER_HOST
-from config.queue_settings import BROKER_PORT
+from settings.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from settings.queue_settings import BROKER_HOST
+from settings.queue_settings import BROKER_PORT
 
 
 #

@@ -8,7 +8,7 @@
 """
 from pika import log
 from actions.deploy import deploy_api
-from config.queue_settings import BROKER_HOST
+from settings.queue_settings import BROKER_HOST
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from ostools import OS_ERROR
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
