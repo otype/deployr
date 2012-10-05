@@ -36,5 +36,9 @@ def send(host, message):
 #
 if __name__ == '__main__':
     pika.log.setup(pika.log.DEBUG, color=True)
+
     host = (len(sys.argv) > 1) and sys.argv[1] or '127.0.0.1'
+    log.info('Connecting to broker: {}'.format(host))
+
+    log.info('Sending message from manual task deploy script')
     send(host=host, message=msg)
