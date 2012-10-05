@@ -10,7 +10,7 @@
 """
 import json
 from config.queue_settings import UNDEPLOY_ROUTING_KEY
-from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE
+from config.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 class UndeployMessage(object):
@@ -22,7 +22,7 @@ class UndeployMessage(object):
     routing_key = UNDEPLOY_ROUTING_KEY
 
     # the exchange to use
-    exchange = GENAPI_DEPLOYMENT_EXCHANGE
+    queue = GENAPI_DEPLOYMENT_QUEUE
 
     def __init__(self, api_id):
         """

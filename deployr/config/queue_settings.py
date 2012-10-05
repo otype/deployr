@@ -20,12 +20,6 @@ BROKER_HOST = 'rmq1.apitrary.net'
 # On which port the broker is listening.
 BROKER_PORT = 5672
 
-# Exchange name
-#
-#
-#GENAPI_DEPLOYMENT_EXCHANGE = 'genapi_deployment_exchange'
-
-
 # Message Queue name
 #
 #
@@ -36,8 +30,7 @@ GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE = 'genapi_deployment_confirmation_queue'
 # Routing keys
 #
 #
-#DEPLOY_ROUTING_KEY = 'apitrary.genapi.deploy.request'
 DEPLOY_ROUTING_KEY = GENAPI_DEPLOYMENT_QUEUE
-DEPLOY_CONFIRMATION_ROUTING_KEY = 'apitrary.genapi.deploy.confirmation'
-UNDEPLOY_ROUTING_KEY = 'apitrary.genapi.undeploy.request'
-UNDEPLOY_CONFIRMATION_ROUTING_KEY = 'apitrary.genapi.undeploy.confirmation'
+DEPLOY_CONFIRMATION_ROUTING_KEY = GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
+UNDEPLOY_ROUTING_KEY = GENAPI_DEPLOYMENT_QUEUE
+UNDEPLOY_CONFIRMATION_ROUTING_KEY = GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE

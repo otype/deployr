@@ -11,7 +11,7 @@
 import json
 import time
 from config.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
-from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE
+from config.queue_settings import GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
 
 
 class DeployConfirmationMessage(object):
@@ -23,7 +23,7 @@ class DeployConfirmationMessage(object):
     routing_key = DEPLOY_CONFIRMATION_ROUTING_KEY
 
     # the exchange to use
-    exchange = GENAPI_DEPLOYMENT_EXCHANGE
+    queue = GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
 
     def __init__(self, api_id, genapi_version, host, port, status):
         """
