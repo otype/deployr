@@ -12,7 +12,8 @@
 # BROKER HOST
 #
 # Where to find the broker.
-BROKER_HOST = '127.0.0.1'
+#BROKER_HOST = '127.0.0.1'
+BROKER_HOST = 'apis1.live.apitrary.net'
 
 # BROKER PORT
 #
