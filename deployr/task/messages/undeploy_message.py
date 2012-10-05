@@ -24,7 +24,6 @@ class UndeployMessage(object):
     # the exchange to use
     exchange = GENAPI_DEPLOYMENT_EXCHANGE
 
-
     def __init__(self, api_id):
         """
             Setting the base variables for this message object

@@ -19,6 +19,7 @@ from supervisor.supervisorctl_api import supervisorctl_reread
 #
 ##############################################################################
 
+
 def undeploy_api(api_id):
     """
         Undeploy a currently deployed API with given API ID

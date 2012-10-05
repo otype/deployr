@@ -25,6 +25,7 @@ from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_add_group
 #
 ##############################################################################
 
+
 def define_config_file_name(api_id):
     """
         Define the config file name depending on the platform.
@@ -70,7 +71,6 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
 
     config_file_name = define_config_file_name(api_id=api_id)
     log.debug('Configuration file name is {}'.format(config_file_name))
-
 
     # Write the supervisor config
     log.info('Writing configuration for API: {}'.format(api_id))

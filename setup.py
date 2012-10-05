@@ -40,7 +40,7 @@ setup(
     url='https://apitrary.com',
     install_requires=required,
     packages=find_packages('deployr'),
-    package_dir={'' : 'deployr'},
+    package_dir={'': 'deployr'},
     scripts=['deployr/start.py'],
     data_files=None,
     download_url='',

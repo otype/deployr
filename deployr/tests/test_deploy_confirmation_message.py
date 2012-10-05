@@ -30,6 +30,7 @@ deploy_confirmation_message = DeployConfirmationMessage(
     status=deploy_confirmation_message_dict['status']
 )
 
+
 def setup_func():
     pass
 

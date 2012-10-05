@@ -24,6 +24,7 @@ msg = DeployMessage(
     api_key='aksdfj09sdfj0sdjf09sjd0jsdv0js0dvj'
 )
 
+
 def send(host, message):
     """
         Simply send the message

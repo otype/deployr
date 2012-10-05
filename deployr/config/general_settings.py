@@ -22,5 +22,3 @@ APP_DETAILS = {
     'contact': 'support@apitrary.com',
     'copyright': '2012 apitrary.com'
 }
-
-

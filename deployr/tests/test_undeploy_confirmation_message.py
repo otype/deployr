@@ -23,6 +23,7 @@ undeploy_confirmation_message = UndeployConfirmationMessage(
     status=undeploy_confirmation_message_dict['status']
 )
 
+
 def setup_func():
     pass
 

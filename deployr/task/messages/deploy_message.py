@@ -24,7 +24,6 @@ class DeployMessage(object):
     # the exchange to use
     exchange = GENAPI_DEPLOYMENT_EXCHANGE
 
-
     def __init__(self, api_id, db_host, db_port, genapi_version, log_level, entities, api_key):
         """
             Setting the base variables for this message object

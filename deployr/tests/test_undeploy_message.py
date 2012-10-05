@@ -13,12 +13,13 @@ from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE, UNDEPLOY_ROUTING_K
 from task.messages.undeploy_message import UndeployMessage
 
 undeploy_message_dict = {
-    'api_id': '88sdhv98shdvlh123',    
+    'api_id': '88sdhv98shdvlh123',
 }
 
 undeploy_message = UndeployMessage(
     api_id='aoisdf8hjsd9vh8'
 )
+
 
 def setup_func():
     pass
