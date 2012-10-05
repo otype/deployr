@@ -127,6 +127,41 @@ def supervisor_xmlrpc_status():
         return OS_ERROR
 
 
+def supervisor_xmlrpc_get_all_process_info():
+    """
+        Request status of given application
+    """
+    log.info('SUPERVISOR XML-RPC: Requesting all process info')
+    try:
+        return SUPERVISOR_XML_RPC_SERVER.supervisor.getAllProcessInfo()
+    except xmlrpclib.Fault, e:
+        log.error('Could not get all process info! Error: {}'.format(e))
+        return OS_ERROR
+    except Exception, e:
+        log.error('Unknown error! Call the administrator! Error: {}'.format(e))
+        return OS_ERROR
+
+
+def supervisor_xmlrpc_get_process_info(app_name):
+    """
+        Request status of given application
+    """
+    log.info('SUPERVISOR XML-RPC: Requesting process info for api_id: {}'.format(app_name))
+    try:
+        all_processes = SUPERVISOR_XML_RPC_SERVER.supervisor.getAllProcessInfo()
+        for process in all_processes:
+            if 'name' in process:
+                if process['name'] == app_name:
+                    return process
+        return None
+    except xmlrpclib.Fault, e:
+        log.error('Could not get the process info for: {}! Error: {}'.format(app_name, e))
+        return OS_ERROR
+    except Exception, e:
+        log.error('Unknown error! Call the administrator! Error: {}'.format(e))
+        return OS_ERROR
+
+
 def supervisor_xmlrpc_remove_group(group_name):
     """
         Remove application from supervisor context
@@ -143,6 +178,41 @@ def supervisor_xmlrpc_remove_group(group_name):
         return OS_ERROR
 
 
+def supervisor_xmlrpc_get_all_config_info():
+    """
+        Remove application from supervisor context
+    """
+    log.info('SUPERVISOR XML-RPC: Requesting all config info')
+    try:
+        return SUPERVISOR_XML_RPC_SERVER.supervisor.getAllConfigInfo()
+    except xmlrpclib.Fault, e:
+        log.error('Could not get all config info! Error: {}'.format(e))
+        return OS_ERROR
+    except Exception, e:
+        log.error('Unknown error! Call the administrator! Error: {}'.format(e))
+        return OS_ERROR
+
+
+def supervisor_xmlrpc_get_config_info(app_name):
+    """
+        Remove application from supervisor context
+    """
+    log.info('SUPERVISOR XML-RPC: Requesting all config info')
+    try:
+        all_configs = SUPERVISOR_XML_RPC_SERVER.supervisor.getAllConfigInfo()
+        for config in all_configs:
+            if 'group' in config:
+                if config['group'] == app_name:
+                    return config
+        return None
+    except xmlrpclib.Fault, e:
+        log.error('Could not get config info for API: {}! Error: {}'.format(app_name, e))
+        return OS_ERROR
+    except Exception, e:
+        log.error('Unknown error! Call the administrator! Error: {}'.format(e))
+        return OS_ERROR
+
+
 def supervisor_xmlrpc_help_method(method_name):
     """
         Simple helper method to show the method's parameters and response values.
@@ -150,6 +220,18 @@ def supervisor_xmlrpc_help_method(method_name):
     """
     try:
         print SUPERVISOR_XML_RPC_SERVER.system.methodHelp(method_name)
+    except xmlrpclib.Fault, e:
+        log.warning('Received no result on given method! Error: {}'.format(e))
+        return OS_ERROR
+    return OS_SUCCESS
+
+
+def supervisor_xmlrpc_list_methods():
+    """
+        List all methods
+    """
+    try:
+        print SUPERVISOR_XML_RPC_SERVER.system.listMethods()
     except xmlrpclib.Fault, e:
         log.warning('Received no result on given method! Error: {}'.format(e))
         return OS_ERROR
