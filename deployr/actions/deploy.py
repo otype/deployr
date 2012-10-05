@@ -7,14 +7,17 @@
 
 """
 import sys
+from pika import log
 from ostools import OS_SUCCESS
+from ostools import get_local_public_ip_address
+from ostools import get_open_port
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
-from ostools.port_acquisition import get_open_port
-from messagequeue.message_tx import send_message
 from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_get_process_info
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_remove_group
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_stop
 from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_add_group
-from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 
 ##############################################################################
 #
@@ -22,20 +25,31 @@ from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 #
 ##############################################################################
 
-
-def send_deploy_confirmation(api_id, genapi_version, host, port, status):
+def define_config_file_name(api_id):
     """
-        Send confirmation message
+        Define the config file name depending on the platform.
     """
-    deploy_confirmation_message = DeployConfirmationMessage(
-        api_id=api_id,
-        genapi_version=genapi_version,
-        host=host,
-        port=port,
-        status=status
-    ).to_json()
+    if sys.platform == 'darwin':
+        config_file_name = '{}.conf'.format(api_id)
+    elif sys.platform == 'linux2':
+        config_file_name = '/etc/supervisor/conf.d/{}.conf'.format(api_id)
+    else:
+        config_file_name = '{}.conf'.format(api_id)
+    return config_file_name
 
-    return send_message(deploy_confirmation_message)
+
+def is_already_running(api_id):
+    """
+        Check if API with given API ID is running or not.
+    """
+    process_info = supervisor_xmlrpc_get_process_info(api_id)
+    if process_info is None:
+        return False
+
+    if process_info['statename'] != 'RUNNING':
+        return False
+
+    return True
 
 ##############################################################################
 #
@@ -49,16 +63,17 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         Deploy an GenAPI
     """
     assigned_port = get_open_port()
-    this_host = 'some.awesome.host'
+    log.debug('Assigning port: {}'.format(assigned_port))
 
-    if sys.platform == 'darwin':
-        config_file_name = '{}.conf'.format(api_id)
-    elif sys.platform == 'linux2':
-        config_file_name = '/etc/supervisor/conf.d/{}.conf'.format(api_id)
-    else:
-        config_file_name = '{}.conf'.format(api_id)
+    application_host = get_local_public_ip_address()
+    log.debug('Current host is {}'.format(application_host))
+
+    config_file_name = define_config_file_name(api_id=api_id)
+    log.debug('Configuration file name is {}'.format(config_file_name))
+
 
     # Write the supervisor config
+    log.info('Writing configuration for API: {}'.format(api_id))
     write_supervisor_config_for_api(
         genapi_api_id=api_id,
         python_interpreter=python_interpreter_path(),
@@ -74,19 +89,21 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         config_file_name=config_file_name
     )
 
+    # If an API with given API ID is already running, we stop that one, first.
+    if is_already_running(api_id=api_id):
+        log.info('An API with API ID=\'{}\' is already running! Stopping it, first.'.format(api_id))
+        supervisor_xmlrpc_stop(api_id)
+
+        log.info('Removing API ID=\'{}\''.format(api_id))
+        supervisor_xmlrpc_remove_group(api_id)
+
     # Re-read the configuration files
     supervisor_xmlrpc_reload_config()
 
     # add the config (implicitly starts the genapi)
+    log.info('Adding (deploying) new API with API ID=\'{}\' on host=\'{}\' on port=\'{}\''.format(
+        api_id, application_host, assigned_port)
+    )
     supervisor_xmlrpc_add_group(api_id)
 
-    # Send out the confirmation message
-    send_deploy_confirmation(
-        api_id=api_id,
-        genapi_version=genapi_version,
-        host=this_host,
-        port=assigned_port,
-        status=1
-    )
-
-    return OS_SUCCESS
+    return OS_SUCCESS, application_host, assigned_port
