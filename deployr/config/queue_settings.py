@@ -23,19 +23,21 @@ BROKER_PORT = 5672
 # Exchange name
 #
 #
-GENAPI_DEPLOYMENT_EXCHANGE = 'genapi_deployment_exchange'
+#GENAPI_DEPLOYMENT_EXCHANGE = 'genapi_deployment_exchange'
 
 
 # Message Queue name
 #
 #
-GENAPI_DEPLOYMENT_QUEUE = 'genapi_deployment_exchange_queue'
+GENAPI_DEPLOYMENT_QUEUE = 'genapi_deployment_queue'
+GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE = 'genapi_deployment_confirmation_queue'
 
 
 # Routing keys
 #
 #
-DEPLOY_ROUTING_KEY = 'apitrary.genapi.deploy.request'
+#DEPLOY_ROUTING_KEY = 'apitrary.genapi.deploy.request'
+DEPLOY_ROUTING_KEY = GENAPI_DEPLOYMENT_QUEUE
 DEPLOY_CONFIRMATION_ROUTING_KEY = 'apitrary.genapi.deploy.confirmation'
 UNDEPLOY_ROUTING_KEY = 'apitrary.genapi.undeploy.request'
 UNDEPLOY_CONFIRMATION_ROUTING_KEY = 'apitrary.genapi.undeploy.confirmation'

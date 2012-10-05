@@ -76,17 +76,13 @@ class BlockingMessageTx(object):
         self.channel = self.connection.channel()
         log.debug('Connection established to broker: {}'.format(self.broker_host))
 
-    def setup_exchange(self, exchange=None):
+    def setup_queue(self, queue_name):
         """
             Declaring exchange for sending the deployment confirmation messages
         """
-        if exchange:
-            self.exchange = exchange
-
-        log.debug('Declaring exchange=\'{}\', topic type=\'{}\''.format(self.exchange, self.topic_type))
-        self.channel.exchange_declare(
-            exchange=self.exchange,
-            type=self.topic_type,
+        log.debug('Declaring queue=\'{}\''.format(queue_name))
+        self.channel.queue_declare(
+            queue=queue_name,
             durable=self.durable,
             auto_delete=self.auto_delete
         )
@@ -115,7 +111,7 @@ class BlockingMessageTx(object):
 
         log.info("Sending message: {}".format(msg))
         self.channel.basic_publish(
-            exchange=self.exchange,
+            exchange='',
             routing_key=self.routing_key,
             body=msg,
             properties=pika.BasicProperties(
@@ -146,8 +142,8 @@ class BlockingMessageTx(object):
         # 1. setup everything for sending
         self.setup()
 
-        # 2. setup the exchange
-        self.setup_exchange(self.message.exchange)
+        # 2. setup the queue
+        self.setup_queue(self.message.queue)
 
         # 3. publish the message to the broker
         status = self.publish(self.message.routing_key)
