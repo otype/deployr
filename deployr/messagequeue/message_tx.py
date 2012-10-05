@@ -23,6 +23,7 @@ from ostools import OS_ERROR, OS_SUCCESS
 #
 ##############################################################################
 
+@DeprecationWarning
 def declare_exchange(channel):
     """
         Declaring exchange for sending the deployment confirmation messages
@@ -37,6 +38,7 @@ def declare_exchange(channel):
     return channel
 
 
+@DeprecationWarning
 def enqueue_message(channel, queue_message):
     """
         Queue has been declared. Now start sending messages
@@ -66,6 +68,7 @@ def enqueue_message(channel, queue_message):
 #
 ##############################################################################
 
+@DeprecationWarning
 def send_message(queue_message, broker_host=BROKER_HOST, broker_port=BROKER_PORT):
     """
         Sending a given message on DEPLOYMENT_QUEUE
