@@ -68,10 +68,10 @@ def on_queue_declared(frame):
     log.debug("Consuming message from queue=\'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
     log.debug('Frame: {}'.format(frame))
 
-    # Only accepting one message at a time ...
-    prefetch_count = 1
-    log.debug('Setting prefetch_count = {}'.format(prefetch_count))
-    channel.basic_qos(prefetch_count=prefetch_count)
+#    Only accepting one message at a time ...
+#    prefetch_count = 1
+#    log.debug('Setting prefetch_count = {}'.format(prefetch_count))
+#    channel.basic_qos(prefetch_count=prefetch_count)
 
     log.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=GENAPI_DEPLOYMENT_QUEUE)
