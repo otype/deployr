@@ -12,7 +12,6 @@ from nose.tools.nontrivial import with_setup
 import pika
 from pika.adapters.blocking_connection import BlockingConnection
 from messagequeue.message_tx import enqueue_message, send_message
-from ostools import OS_SUCCESS
 
 
 def setup_func():
@@ -34,10 +33,22 @@ def teardown_func():
 @with_setup(setup_func, teardown_func)
 def test_enqueue_message():
     message = {"testing": "stuff"}
-    assert OS_SUCCESS == enqueue_message(channel=channel, queue_message=message)
+    try:
+        # This is deprecated, therefore we are expecting a TypeError
+        enqueue_message(channel=channel, queue_message=message)
+    except TypeError:
+        return True
+    else:
+        return False
 
 
 @with_setup(setup_func, teardown_func)
 def test_send_message():
     message = {"testing": "stuff"}
-    assert OS_SUCCESS == send_message(queue_message=message)
+    try:
+        # This is deprecated, therefore we are expecting a TypeError
+        send_message(queue_message=message)
+    except TypeError:
+        return True
+    else:
+        return False
