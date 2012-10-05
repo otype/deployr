@@ -10,10 +10,10 @@ import json
 from pika import log
 from errors.exception_definitions import UnacceptableMessageException
 from errors.exception_definitions import InvalidTaskTypeException
-from task.deploy_task import DeployTask
+from task.task_types.deploy_task import DeployTask
 from config.task_settings import DEPLOY_TASK
 from config.task_settings import UNDEPLOY_TASK
-from task.undeploy_task import UndeployTask
+from task.task_types.undeploy_task import UndeployTask
 
 
 class TaskFactory(object):
@@ -21,18 +21,18 @@ class TaskFactory(object):
         A generic task as basis for all task type classes
     """
 
-    def __init__(self, message):
+    def load_message(self, message):
         """
-            Setup the basic task object
+           Loads the message.
+
+           Will throw ValueError if this is no valid JSON
         """
-        # will throw ValueError
         self.message = json.loads(message)
 
-        if not self._is_valid_task():
-            log.error('Missing task type in message: {}'.format(self.message))
-            raise UnacceptableMessageException('Missing task type in message')
+        # Validate the task! This fails if it's not a valid task.
+        self.validate_task()
 
-    def create_task(self):
+    def get_task(self):
         """
             Create the corresponding task object
         """
@@ -48,14 +48,15 @@ class TaskFactory(object):
             log.error('Task type is not identifiable! Error: {}'.format(e))
             return None
 
-    def _is_valid_task(self):
+    def validate_task(self):
         """
             Is the incoming message a valid task?
         """
         if 'task_type' not in self.message:
-            return False
-        else:
-            return True
+            log.error('Missing task type in message: {}'.format(self.message))
+            raise UnacceptableMessageException('Missing task type in message')
+
+        log.debug('Valid task of type: {}'.format(self.task_type()))
 
     def task_type(self):
         """

@@ -7,7 +7,7 @@
 
 """
 from pika import log
-from ostools import OS_ERROR
+from ostools import OS_ERROR, OS_SUCCESS
 from task.task_factory import TaskFactory
 from errors.exception_definitions import UnacceptableMessageException
 from errors.exception_definitions import InvalidTaskTypeException
@@ -25,14 +25,23 @@ def run_task(message):
         Run the task from the given message
     """
     try:
-        task_factory = TaskFactory(message)
+        # create the task factory
+        task_factory = TaskFactory()
+
+        # check if we have a valid task
+        task_factory.load_message(message)
+
+        # get the task object
+        task = task_factory.get_task()
+
         log.info('Running task: {}'.format(task_factory.message))
+        status = task.run()
 
-        task = task_factory.create_task()
-        log.info("Identified task type: {}".format(task.task_type()))
+        # Send out the confirmation message
+        log.info('Confirming task execution for API: {}'.format(task.api_id))
+        task.send_confirmation()
 
-        return task.run()
-
+        return OS_SUCCESS
     except UnacceptableMessageException, e:
         log.error('Could not create task factory for spawning tasks! Error: {}'.format(e))
         return OS_ERROR

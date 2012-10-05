@@ -9,12 +9,21 @@
 
 """
 import json
+from config.queue_settings import DEPLOY_ROUTING_KEY
+from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE
 
 
 class DeployMessage(object):
     """
         A Deploy message
     """
+
+    # the routing key for deploy confirmation
+    routing_key = DEPLOY_ROUTING_KEY
+
+    # the exchange to use
+    exchange = GENAPI_DEPLOYMENT_EXCHANGE
+
 
     def __init__(self, api_id, db_host, db_port, genapi_version, log_level, entities, api_key):
         """

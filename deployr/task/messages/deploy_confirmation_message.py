@@ -10,12 +10,20 @@
 """
 import json
 import time
+from config.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
+from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE
 
 
 class DeployConfirmationMessage(object):
     """
         A message object that is used for confirming a successful deployment
     """
+
+    # the routing key for deploy confirmation
+    routing_key = DEPLOY_CONFIRMATION_ROUTING_KEY
+
+    # the exchange to use
+    exchange = GENAPI_DEPLOYMENT_EXCHANGE
 
     def __init__(self, api_id, genapi_version, host, port, status):
         """

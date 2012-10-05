@@ -9,12 +9,21 @@
 
 """
 import json
+from config.queue_settings import UNDEPLOY_ROUTING_KEY
+from config.queue_settings import GENAPI_DEPLOYMENT_EXCHANGE
 
 
 class UndeployMessage(object):
     """
         An undeploy message
     """
+
+    # the routing key for deploy confirmation
+    routing_key = UNDEPLOY_ROUTING_KEY
+
+    # the exchange to use
+    exchange = GENAPI_DEPLOYMENT_EXCHANGE
+
 
     def __init__(self, api_id):
         """
