@@ -20,11 +20,13 @@ from settings.general_settings import __author__
 from settings.general_settings import __author_email__
 from settings.general_settings import __url__
 
+
 def read(fname):
     """
         Read the README.md file
     """
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 
 def read_requirements():
     """
@@ -34,13 +36,14 @@ def read_requirements():
         requirements = f.readlines()
     return [element.strip() for element in requirements]
 
+
 setup(
     name=__name__,
     version=__version__,
     description='deployr',
     author=__author__,
     author_email=__author_email__,
-    description = ('apitrary\'s deployr - the application node manager for GenAPIs'),
+    description=('apitrary\'s deployr - the application node manager for GenAPIs'),
     long_description=read('README.md'),
     url=__url__,
     install_requires=read_requirements(),

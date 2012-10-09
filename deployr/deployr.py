@@ -10,6 +10,7 @@
 import argparse
 import pika
 from pika import log
+from config.environment_configuration import ENVIRONMENT, GLOBAL_CONF, LOGGING_LEVEL
 from messagequeue.message_rx import start_consumer
 
 ##############################################################################
@@ -43,8 +44,10 @@ def set_log_level(log_level):
         Sets the log level (use colored logging output).
         This is a wrapper for python logging.
     """
-    if log_level.lower() == "debug":
+    if log_level.lower() == LOGGING_LEVEL.DEBUG:
         pika.log.setup(pika.log.DEBUG, color=True)
+    elif log_level.lower() == LOGGING_LEVEL.WARN:
+        pika.log.setup(pika.log.WARNING, color=True)
     else:
         pika.log.setup(pika.log.INFO, color=True)
 
@@ -56,10 +59,39 @@ def parse_shell_args():
     global args
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-B", "--broker_host", help="Hostname or IP of the broker", type=str, default='127.0.0.1')
-    parser.add_argument("-P", "--broker_port", help="Port of the broker", type=int, default=5672)
-    parser.add_argument("-E", "--env", help="Environment to run in", type=str, choices=['dev', 'live'], default='dev')
-    parser.add_argument("-L", "--logging", help="Logging level", type=str, choices=['debug', 'info'], default='info')
+    parser.add_argument(
+        "-B",
+        "--broker_host",
+        help="Hostname or IP of the broker",
+        type=str,
+        default=GLOBAL_CONF[ENVIRONMENT.DEV]['SUPERVISORD_HOST']
+    )
+
+    parser.add_argument(
+        "-P",
+        "--broker_port",
+        help="Port of the broker",
+        type=int,
+        default=GLOBAL_CONF[ENVIRONMENT.DEV]['BROKER_PORT']
+    )
+
+    parser.add_argument(
+        "-E",
+        "--env",
+        help="Environment to run in",
+        type=str,
+        choices=[ENVIRONMENT.DEV, ENVIRONMENT.LIVE, ENVIRONMENT.TEST],
+        default=ENVIRONMENT.DEV
+    )
+
+    parser.add_argument(
+        "-L",
+        "--logging",
+        help="Logging level",
+        type=str,
+        choices=[LOGGING_LEVEL.DEBUG, LOGGING_LEVEL.INFO, LOGGING_LEVEL.WARN],
+        default=GLOBAL_CONF[ENVIRONMENT.DEV]['LOGGING']
+    )
 
     args = parser.parse_args()
 

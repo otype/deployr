@@ -12,9 +12,9 @@ import json
 import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
+from errors import UnacceptableMessageException
 from settings.queue_settings import BROKER_HOST
 from settings.queue_settings import BROKER_PORT
-from errors.exception_definitions import UnacceptableMessageException
 from ostools import OS_SUCCESS, OS_ERROR
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 from task.messages.deploy_message import DeployMessage

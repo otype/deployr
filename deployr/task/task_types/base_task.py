@@ -7,8 +7,8 @@
 
 """
 from pika import log
+from errors import InvalidTaskTypeException
 from settings.queue_settings import BROKER_HOST
-from errors.exception_definitions import InvalidTaskTypeException
 
 
 class BaseTask(object):

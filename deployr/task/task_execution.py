@@ -7,10 +7,10 @@
 
 """
 from pika import log
+from errors import UnacceptableMessageException
+from errors import InvalidTaskTypeException
 from ostools import OS_ERROR, OS_SUCCESS
 from task.task_factory import TaskFactory
-from errors.exception_definitions import UnacceptableMessageException
-from errors.exception_definitions import InvalidTaskTypeException
 
 
 ##############################################################################
