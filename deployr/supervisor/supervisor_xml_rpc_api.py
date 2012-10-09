@@ -10,8 +10,9 @@
 """
 import xmlrpclib
 from pika import log
-from settings.supervisord_settings import SUPERVISOR_XML_RPC_SERVER_ADDRESS
-from ostools import OS_SUCCESS, OS_ERROR
+from config.environment import CURRENT_CONFIGURATION
+from ostools import OS_SUCCESS
+from ostools import OS_ERROR
 
 
 ##############################################################################
@@ -21,6 +22,9 @@ from ostools import OS_SUCCESS, OS_ERROR
 ##############################################################################
 
 # Contact XML-RPC on given address
+SUPERVISOR_XML_RPC_SERVER_ADDRESS = CURRENT_CONFIGURATION['SUPERVISOR_XML_RPC_SERVER_ADDRESS']
+
+# Supervisor server object
 SUPERVISOR_XML_RPC_SERVER = xmlrpclib.Server(SUPERVISOR_XML_RPC_SERVER_ADDRESS)
 
 ##############################################################################

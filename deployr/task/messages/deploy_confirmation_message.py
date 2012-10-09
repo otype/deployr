@@ -10,8 +10,8 @@
 """
 import json
 import time
-from settings.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
-from settings.queue_settings import GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
+from constants.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
+from constants.queue_settings import GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
 
 
 class DeployConfirmationMessage(object):

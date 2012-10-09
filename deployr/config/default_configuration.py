@@ -42,6 +42,9 @@ GLOBAL_CONF = {
     #
     #
     ENVIRONMENT.TEST: {
+        # Name of this environment
+        'NAME': ENVIRONMENT.TEST,
+
         # Configuration file for deployr
         'DEPLOYR_CONFIG_FILE': 'deployr.conf',
 
@@ -72,6 +75,9 @@ GLOBAL_CONF = {
     #
     #
     ENVIRONMENT.DEV: {
+        # Name of this environment
+        'NAME': ENVIRONMENT.DEV,
+
         # Configuration file for deployr
         'DEPLOYR_CONFIG_FILE': 'deployr.conf',
 
@@ -101,6 +107,9 @@ GLOBAL_CONF = {
     #
     #
     ENVIRONMENT.LIVE: {
+        # Name of this environment
+        'NAME': ENVIRONMENT.LIVE,
+
         # Configuration file for deployr
         'DEPLOYR_CONFIG_FILE': '/etc/deployr/deployr.conf',
 

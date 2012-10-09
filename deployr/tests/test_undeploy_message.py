@@ -9,7 +9,7 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from settings.queue_settings import UNDEPLOY_ROUTING_KEY
+from constants.queue_settings import UNDEPLOY_ROUTING_KEY
 from task.messages.undeploy_message import UndeployMessage
 
 undeploy_message_dict = {

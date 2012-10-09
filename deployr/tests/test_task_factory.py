@@ -9,7 +9,8 @@
 import json
 from nose.tools.nontrivial import with_setup
 from errors import UnacceptableMessageException
-from settings.task_settings import DEPLOY_TASK, UNDEPLOY_TASK
+from constants.task_settings import DEPLOY_TASK
+from constants.task_settings import UNDEPLOY_TASK
 from task.task_factory import TaskFactory
 
 

@@ -1,25 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
+    deployr
 
     by hgschmidt
 
     Copyright (c) 2012 apitrary
 
 """
-
-# BROKER HOST
-#
-# Where to find the broker.
-#BROKER_HOST = '127.0.0.1'
-BROKER_HOST = 'rmq1.apitrary.net'
-
-# BROKER PORT
-#
-# On which port the broker is listening.
-BROKER_PORT = 5672
-
 # Message Queue name
 #
 #

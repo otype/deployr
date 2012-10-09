@@ -7,8 +7,8 @@
 
 """
 from pika import log
+from config.environment import CURRENT_CONFIGURATION
 from errors import InvalidTaskTypeException
-from settings.queue_settings import BROKER_HOST
 
 
 class BaseTask(object):
@@ -64,7 +64,7 @@ class BaseTask(object):
         """
         pass
 
-    def send_confirmation(self, broker_host=BROKER_HOST):
+    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
         """
             Send confirmation message
 

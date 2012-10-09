@@ -12,9 +12,8 @@ import json
 import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
+from config.environment import CURRENT_CONFIGURATION
 from errors import UnacceptableMessageException
-from settings.queue_settings import BROKER_HOST
-from settings.queue_settings import BROKER_PORT
 from ostools import OS_SUCCESS, OS_ERROR
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 from task.messages.deploy_message import DeployMessage
@@ -51,7 +50,11 @@ class BlockingMessageTx(object):
         UndeployConfirmationMessage
     ]
 
-    def __init__(self, broker_host=BROKER_HOST, broker_port=BROKER_PORT):
+    def __init__(
+            self,
+            broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
+            broker_port=CURRENT_CONFIGURATION['BROKER_PORT']
+    ):
         """
             Initialize for message and broker parameters
         """

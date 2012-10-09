@@ -10,9 +10,9 @@ from jinja2 import Environment
 from jinja2 import PackageLoader
 from pika import log
 from ostools import write_file
-from settings.template_settings import GENAPI_CONFIG_TEMPLATE
-from settings.template_settings import SUPERVISOR_TEMPLATES_DIR
-from settings.template_settings import TEMPLATES_BASE_DIR
+from constants.template_settings import GENAPI_CONFIG_TEMPLATE
+from constants.template_settings import SUPERVISOR_TEMPLATES_DIR
+from constants.template_settings import TEMPLATES_BASE_DIR
 
 
 ##############################################################################

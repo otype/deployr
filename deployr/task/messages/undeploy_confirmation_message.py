@@ -9,8 +9,8 @@
 
 """
 import json
-from settings.queue_settings import GENAPI_DEPLOYMENT_QUEUE
-from settings.queue_settings import UNDEPLOY_CONFIRMATION_ROUTING_KEY
+from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from constants.queue_settings import UNDEPLOY_CONFIRMATION_ROUTING_KEY
 
 
 class UndeployConfirmationMessage(object):

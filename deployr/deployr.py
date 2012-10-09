@@ -10,7 +10,8 @@
 import argparse
 import pika
 from pika import log
-from config.environment_configuration import ENVIRONMENT, GLOBAL_CONF, LOGGING_LEVEL
+from config.default_configuration import LOGGING_LEVEL
+from config.environment import CURRENT_CONFIGURATION
 from messagequeue.message_rx import start_consumer
 
 ##############################################################################
@@ -31,11 +32,12 @@ pika.log.setup(pika.log.INFO, color=True)
 
 def show_all_settings():
     """
-        Show all configured settings
+        Show all configured constants
     """
     log.info('Starting service: deployr')
     log.info('Remote Broker: {}:{}'.format(args.broker_host, args.broker_port))
-    log.info('Environment: {}'.format(args.env))
+    log.info('Environment: {}'.format(CURRENT_CONFIGURATION['NAME']))
+    log.info('Configuration: {}'.format(CURRENT_CONFIGURATION))
     log.info('Logging level: {}'.format(args.logging))
 
 
@@ -64,7 +66,7 @@ def parse_shell_args():
         "--broker_host",
         help="Hostname or IP of the broker",
         type=str,
-        default=GLOBAL_CONF[ENVIRONMENT.DEV]['SUPERVISORD_HOST']
+        default=CURRENT_CONFIGURATION['BROKER_HOST']
     )
 
     parser.add_argument(
@@ -72,16 +74,7 @@ def parse_shell_args():
         "--broker_port",
         help="Port of the broker",
         type=int,
-        default=GLOBAL_CONF[ENVIRONMENT.DEV]['BROKER_PORT']
-    )
-
-    parser.add_argument(
-        "-E",
-        "--env",
-        help="Environment to run in",
-        type=str,
-        choices=[ENVIRONMENT.DEV, ENVIRONMENT.LIVE, ENVIRONMENT.TEST],
-        default=ENVIRONMENT.DEV
+        default=CURRENT_CONFIGURATION['BROKER_PORT']
     )
 
     parser.add_argument(
@@ -90,7 +83,7 @@ def parse_shell_args():
         help="Logging level",
         type=str,
         choices=[LOGGING_LEVEL.DEBUG, LOGGING_LEVEL.INFO, LOGGING_LEVEL.WARN],
-        default=GLOBAL_CONF[ENVIRONMENT.DEV]['LOGGING']
+        default=CURRENT_CONFIGURATION['LOGGING']
     )
 
     args = parser.parse_args()

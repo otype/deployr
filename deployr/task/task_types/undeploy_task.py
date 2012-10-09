@@ -7,7 +7,7 @@
 
 """
 from actions.undeploy import undeploy_api
-from settings.queue_settings import BROKER_HOST
+from config.environment import CURRENT_CONFIGURATION
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.undeploy_confirmation_message import UndeployConfirmationMessage
 from task.task_types.base_task import BaseTask
@@ -39,7 +39,7 @@ class UndeployTask(BaseTask):
         self.last_execution_status = undeploy_api(api_id=self.api_id)
         return self.last_execution_status
 
-    def send_confirmation(self, broker_host=BROKER_HOST):
+    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
         """
             Send confirmation message
         """

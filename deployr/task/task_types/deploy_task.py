@@ -7,10 +7,10 @@
 
 """
 from pika import log
-from actions.deploy import deploy_api
-from settings.queue_settings import BROKER_HOST
-from messagequeue.blocking_message_tx import BlockingMessageTx
+from config.environment import CURRENT_CONFIGURATION
 from ostools import OS_ERROR
+from actions.deploy import deploy_api
+from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 from task.task_types.base_task import BaseTask
 
@@ -69,7 +69,7 @@ class DeployTask(BaseTask):
 
         return self.last_execution_status
 
-    def send_confirmation(self, broker_host=BROKER_HOST):
+    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
         """
             Send confirmation message
         """

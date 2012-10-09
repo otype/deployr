@@ -10,10 +10,9 @@ import socket
 import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
+from config.environment import CURRENT_CONFIGURATION
 from task.task_execution import run_task
-from settings.queue_settings import GENAPI_DEPLOYMENT_QUEUE
-from settings.queue_settings import BROKER_HOST
-from settings.queue_settings import BROKER_PORT
+from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 #
@@ -102,7 +101,10 @@ def handle_delivery(channel, method_frame, header_frame, body):
 ##############################################################################
 
 
-def start_consumer(broker_host=BROKER_HOST, broker_port=BROKER_PORT):
+def start_consumer(
+        broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
+        broker_port=CURRENT_CONFIGURATION['BROKER_PORT']
+):
     """
         Start the consumer IOLoop
     """
