@@ -46,9 +46,5 @@ setup(
     install_requires=read_requirements(),
     keywords='deployr node manager apitrary application',
     packages=find_packages('deployr'),
-#    package_dir={'': 'deployr'},
-    scripts=['deployr/start.py'],
-#    data_files=None,
-    download_url='',
-    license='copyright',
+    scripts=['deployr/deployr.py']
 )
