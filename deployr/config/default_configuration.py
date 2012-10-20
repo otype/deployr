@@ -66,6 +66,12 @@ GLOBAL_CONF = {
         # Message Queue Broker port
         'BROKER_PORT': 5672,
 
+        # Message Queue User
+        'BROKER_USER': 'apitrary',
+
+        # Message Queue User
+        'BROKER_PASSWORD': 'hoephaihaeKeeYo7she8voo0a',
+
         # Default log level
         'LOGGING': LOGGING_LEVEL.DEBUG
 
@@ -82,7 +88,7 @@ GLOBAL_CONF = {
         'DEPLOYR_CONFIG_FILE': 'deployr.conf',
 
         # SUPERVISORD HOST
-        'SUPERVISORD_HOST': '127.0.0.1',
+        'SUPERVISORD_HOST': 'app1.dev.apitrary.net',
 
         # SUPERVISORD WEB PORT
         #
@@ -90,14 +96,23 @@ GLOBAL_CONF = {
         # NEEDS TO BE ACTIVATED IN THE CONFIGS!
         'SUPERVISORD_WEB_PORT': 9001,
 
-        # Contact XML-RPC on given address
-        'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://127.0.0.1:9001/RPC2',
+        # Contact XML-RPC on given address with given credentials
+        'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@app1.dev.apitrary.net:9001/RPC2'.format(
+            'Ic6eeyae9EeCeic',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'aipiet0Da7iedoh'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
+        ),
 
         # Message Queue Broker host
-        'BROKER_HOST': '127.0.0.1',
+        'BROKER_HOST': 'rmq1.dev.apitrary.net',
 
         # Message Queue Broker port
         'BROKER_PORT': 5672,
+
+        # Message Queue User
+        'BROKER_USER': 'apitrary',
+
+        # Message Queue User
+        'BROKER_PASSWORD': 'hoephaihaeKeeYo7she8voo0a',
 
         # Default log level
         'LOGGING': LOGGING_LEVEL.DEBUG
@@ -130,6 +145,12 @@ GLOBAL_CONF = {
 
         # Message Queue Broker port
         'BROKER_PORT': 5672,
+
+        # Message Queue User
+        'BROKER_USER': 'notsetyet',
+
+        # Message Queue User
+        'BROKER_PASSWORD': 'notsetyet',
 
         # Default log level
         'LOGGING': LOGGING_LEVEL.INFO
