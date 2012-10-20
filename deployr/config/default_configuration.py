@@ -57,6 +57,10 @@ GLOBAL_CONF = {
         # NEEDS TO BE ACTIVATED IN THE CONFIGS!
         'SUPERVISORD_WEB_PORT': 9001,
 
+        # Supervisor XML-RPC Credentials
+        'SUPERVISOR_XML_RPC_USERNAME': '',
+        'SUPERVISOR_XML_RPC_PASSWORD': '',
+
         # Contact XML-RPC on given address
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://127.0.0.1:9001/RPC2',
 
@@ -95,6 +99,10 @@ GLOBAL_CONF = {
         # XML-RPC web API of a running supervisord.
         # NEEDS TO BE ACTIVATED IN THE CONFIGS!
         'SUPERVISORD_WEB_PORT': 9001,
+
+        # Supervisor XML-RPC Credentials
+        'SUPERVISOR_XML_RPC_USERNAME': 'Ic6eeyae9EeCeic',
+        'SUPERVISOR_XML_RPC_PASSWORD': 'aipiet0Da7iedoh',
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@app1.dev.apitrary.net:9001/RPC2'.format(
@@ -137,8 +145,15 @@ GLOBAL_CONF = {
         # NEEDS TO BE ACTIVATED IN THE CONFIGS!
         'SUPERVISORD_WEB_PORT': 9001,
 
-        # Contact XML-RPC on given address
-        'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://127.0.0.1:9001/RPC2',
+        # Supervisor XML-RPC Credentials
+        'SUPERVISOR_XML_RPC_USERNAME': 'NOTSET',
+        'SUPERVISOR_XML_RPC_PASSWORD': 'NOTSET',
+
+        # Contact XML-RPC on given address with given credentials
+        'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@127.0.0.1:9001/RPC2'.format(
+            'NOTSET',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'NOTSET'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
+        ),
 
         # Message Queue Broker host
         'BROKER_HOST': '127.0.0.1',
