@@ -43,7 +43,7 @@ setup(
     description='deployr',
     author=__author__,
     author_email=__author_email__,
-    description=('apitrary\'s deployr - the application node manager for GenAPIs'),
+    description=('apitrary deployr - the application node manager for GenAPIs'),
     long_description=read('README.md'),
     url=__url__,
     install_requires=read_requirements(),
