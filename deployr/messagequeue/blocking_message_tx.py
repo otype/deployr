@@ -53,15 +53,28 @@ class BlockingMessageTx(object):
     def __init__(
             self,
             broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
-            broker_port=CURRENT_CONFIGURATION['BROKER_PORT']
+            broker_port=CURRENT_CONFIGURATION['BROKER_PORT'],
+            username=CURRENT_CONFIGURATION['BROKER_USER'],
+            password=CURRENT_CONFIGURATION['BROKER_PASSWORD']
     ):
         """
             Initialize for message and broker parameters
         """
         self.broker_host = broker_host
         self.broker_port = broker_port
-        self.parameters = pika.ConnectionParameters(host=broker_host, port=broker_port)
-        log.debug('Broker host = \'{}\', Broker port = {}'.format(self.broker_host, self.broker_port))
+        self.username = username
+        self.password = password
+        self.credentials = pika.PlainCredentials(username=self.username, password=self.password)
+        self.parameters = pika.ConnectionParameters(
+            host=self.broker_host,
+            port=self.broker_port,
+            credentials=self.credentials
+        )
+        log.debug('Broker host = \'{}\', Broker port = {}, Broker user = {}'.format(
+            self.broker_host,
+            self.broker_port,
+            self.username
+        ))
 
     def is_valid_message(self):
         """

@@ -11,6 +11,7 @@ import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
 from config.environment import CURRENT_CONFIGURATION
+from ostools import OS_ERROR, OS_SUCCESS
 from task.task_execution import run_task
 from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
@@ -88,10 +89,12 @@ def handle_delivery(channel, method_frame, header_frame, body):
     )
 
     # Run the task from parsed message
-    run_task(body)
-
-    log.debug('Acknowledging received message.')
-    channel.basic_ack(delivery_tag=method_frame.delivery_tag)
+    status = run_task(body)
+    if status == OS_SUCCESS:
+        log.debug('Acknowledging received message.')
+        channel.basic_ack(delivery_tag=method_frame.delivery_tag)
+    else:
+        log.error('Error running task!')
 
 
 ##############################################################################
@@ -103,13 +106,16 @@ def handle_delivery(channel, method_frame, header_frame, body):
 
 def start_consumer(
         broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
-        broker_port=CURRENT_CONFIGURATION['BROKER_PORT']
+        broker_port=CURRENT_CONFIGURATION['BROKER_PORT'],
+        username=CURRENT_CONFIGURATION['BROKER_USER'],
+        password=CURRENT_CONFIGURATION['BROKER_PASSWORD']
 ):
     """
         Start the consumer IOLoop
     """
     global connection
-    parameters = pika.ConnectionParameters(host=broker_host, port=broker_port)
+    credentials = pika.PlainCredentials(username=username, password=password)
+    parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)
     try:
         connection = SelectConnection(parameters, on_connected)
         log.info('Connected to broker: {}:{}'.format(broker_host, broker_port))
