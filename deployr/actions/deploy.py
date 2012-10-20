@@ -8,7 +8,7 @@
 """
 import sys
 from pika import log
-from ostools import OS_SUCCESS
+from ostools import OS_SUCCESS, OS_ERROR
 from ostools import get_local_public_ip_address
 from ostools import get_open_port
 from ostools.filewriter import write_supervisor_config_for_api
@@ -45,6 +45,10 @@ def is_already_running(api_id):
     """
     process_info = supervisor_xmlrpc_get_process_info(api_id)
     if process_info is None:
+        return False
+
+    if process_info == OS_ERROR:
+        log.error('API is not running or connection to supervisor failed!')
         return False
 
     if process_info['statename'] != 'RUNNING':
