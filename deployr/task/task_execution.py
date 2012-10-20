@@ -36,6 +36,7 @@ def run_task(message):
 
         log.info('Running task: {}'.format(task_factory.message))
         status = task.run()
+        log.info('Task status: {}'.format(status))
 
         # Send out the confirmation message
         log.info('Confirming task execution for API: {}'.format(task.api_id))
