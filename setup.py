@@ -14,11 +14,6 @@
 import os
 from distutils.core import setup
 from setuptools import find_packages
-from constants.general_settings import __version__
-from constants.general_settings import __name__
-from constants.general_settings import __author__
-from constants.general_settings import __author_email__
-from constants.general_settings import __url__
 
 
 def read(fname):
