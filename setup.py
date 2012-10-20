@@ -38,13 +38,13 @@ def read_requirements():
 
 
 setup(
-    name=__name__,
-    version=__version__,
-    author=__author__,
-    author_email=__author_email__,
+    name='deployr',
+    version='0.1',
+    author='Hans-Gunther Schmidt',
+    author_email='hgs@apitrary.com',
     description='apitrary deployr - the application node manager for GenAPIs',
     long_description=read('README.md'),
-    url=__url__,
+    url='http://apitrary.com',
     install_requires=read_requirements(),
     keywords='deployr node manager apitrary application',
     packages=find_packages('deployr'),
