@@ -40,7 +40,6 @@ def read_requirements():
 setup(
     name=__name__,
     version=__version__,
-    description='deployr',
     author=__author__,
     author_email=__author_email__,
     description='apitrary deployr - the application node manager for GenAPIs',
