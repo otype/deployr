@@ -11,7 +11,7 @@ import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
 from config.environment import CURRENT_CONFIGURATION
-from ostools import OS_ERROR, OS_SUCCESS
+from ostools import OS_SUCCESS
 from task.task_execution import run_task
 from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 

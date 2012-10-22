@@ -31,5 +31,9 @@ def test_run_supervisorctl_command_without_param():
     assert OS_INVALID_ARGUMENT == run_supervisorctl_command(None)
 
 
+@DeprecationWarning
 def test_supervisor_reread():
+    """
+        Not used anymore! We are using XML-RPC now!
+    """
     assert OS_SUCCESS == supervisorctl_reread()

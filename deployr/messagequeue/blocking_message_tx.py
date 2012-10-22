@@ -17,6 +17,8 @@ from errors import UnacceptableMessageException
 from ostools import OS_SUCCESS, OS_ERROR
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 from task.messages.deploy_message import DeployMessage
+from task.messages.loadbalance_update_confirmation_message import LoadbalanceUpdateConfirmationMessage
+from task.messages.loadbalance_update_message import LoadbalanceUpdateMessage
 from task.messages.undeploy_confirmation_message import UndeployConfirmationMessage
 from task.messages.undeploy_message import UndeployMessage
 
@@ -47,7 +49,9 @@ class BlockingMessageTx(object):
         DeployMessage,
         DeployConfirmationMessage,
         UndeployMessage,
-        UndeployConfirmationMessage
+        UndeployConfirmationMessage,
+        LoadbalanceUpdateMessage,
+        LoadbalanceUpdateConfirmationMessage
     ]
 
     def __init__(

@@ -12,7 +12,6 @@ import pika
 from pika import log
 from config.default_configuration import LOGGING_LEVEL
 from config.environment import CURRENT_CONFIGURATION
-from messagequeue.message_rx import start_consumer
 
 ##############################################################################
 #
@@ -36,6 +35,7 @@ def show_all_settings():
     """
     log.info('Starting service: deployr')
     log.info('Remote Broker: {}:{}'.format(args.broker_host, args.broker_port))
+    log.info('Deployr mode: {}'.format(args.mode))
     log.info('Environment: {}'.format(CURRENT_CONFIGURATION['NAME']))
 
     config_to_show = str(CURRENT_CONFIGURATION)
@@ -92,6 +92,15 @@ def parse_shell_args():
         default=CURRENT_CONFIGURATION['LOGGING']
     )
 
+    parser.add_argument(
+        "-M",
+        "--mode",
+        help="Deployr mode",
+        type=str,
+        choices=['deploy', 'balance'],
+        default='deploy'
+    )
+
     args = parser.parse_args()
 
 
@@ -113,6 +122,13 @@ def main():
     password = CURRENT_CONFIGURATION['BROKER_PASSWORD']
 
     # start the MQ consumer
+    if args.mode == 'deploy':
+        from messagequeue.deployment_rx import start_consumer
+    elif args.mode == 'balance':
+        from messagequeue.loadbalance_update_rx import start_consumer
+    else:
+        from messagequeue.loadbalance_update_rx import start_consumer
+
     start_consumer(
         broker_host=args.broker_host,
         broker_port=args.broker_port,

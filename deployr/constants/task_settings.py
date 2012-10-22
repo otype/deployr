@@ -30,3 +30,15 @@ UNDEPLOY_TASK = 'UNDEPLOY'
 # Used for responding back after undeployment of a GenAPI
 #
 UNDEPLOY_CONFIRMATION_TASK = 'UNDEPLOY_CONFIRMATION'
+
+# Loadbalance update task
+#
+# Used for registering a deployed GENAPI in the loadbalancer
+#
+LOADBALANCE_UPDATE_TASK = 'LOADBALANCE_UPDATE'
+
+# Loadbalance update confirmation task
+#
+# Used for registering a deployed GENAPI in the loadbalancer
+#
+LOADBALANCE_UPDATE_CONFIRMATION_TASK = 'LOADBALANCE_UPDATE_CONFIRMATION'

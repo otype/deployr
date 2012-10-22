@@ -11,8 +11,9 @@ from pika import log
 from errors import InvalidTaskTypeException
 from errors import UnacceptableMessageException
 from task.task_types.deploy_task import DeployTask
-from constants.task_settings import DEPLOY_TASK
+from constants.task_settings import DEPLOY_TASK, LOADBALANCE_UPDATE_TASK
 from constants.task_settings import UNDEPLOY_TASK
+from task.task_types.loadbalance_update_task import LoadbalanceUpdateTask
 from task.task_types.undeploy_task import UndeployTask
 
 
@@ -41,6 +42,8 @@ class TaskFactory(object):
                 return DeployTask(self.message)
             elif self.task_type() == UNDEPLOY_TASK:
                 return UndeployTask(self.message)
+            elif self.task_type() == LOADBALANCE_UPDATE_TASK:
+                return LoadbalanceUpdateTask(self.message)
         except InvalidTaskTypeException, e:
             log.error('Could not create a valid task! Error: {}'.format(e))
             return None

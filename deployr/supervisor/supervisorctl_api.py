@@ -23,8 +23,8 @@ from ostools import OS_CANNOT_INVOKE_COMMAND_ERROR
 
 # the executable for calling supervisorctl
 if sys.platform == 'darwin':
-    # TODO: Move supervisorctl shell mock script to this project and reference it here!
-    SUPERVISORCTL = '{}/bin/supervisorctl'.format(os.getenv('HOME'))
+    # Do nothing! Mac ain't got no supervisor! We are just faking it here.
+    SUPERVISORCTL = 'supervisorctl'
 elif sys.platform == 'linux2':
     SUPERVISORCTL = '/usr/bin/supervisorctl'
 else:

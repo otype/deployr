@@ -8,6 +8,8 @@
     Copyright (c) 2012 apitrary
 
 """
+from ostools import OS_SUCCESS
+from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
 
 
 def setup_func():
@@ -19,6 +21,8 @@ def teardown_func():
 
 
 def test_supervisor_xmlrpc_reload_config():
-    # TODO: This needs to be updated!
-#    assert OS_SUCCESS == supervisor_xmlrpc_reload_config()
-    pass
+    """
+        Works if the correct host settings and credentials are set in
+        the current configuration hash.
+    """
+    assert OS_SUCCESS == supervisor_xmlrpc_reload_config()
