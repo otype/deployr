@@ -146,26 +146,26 @@ GLOBAL_CONF = {
         'SUPERVISORD_WEB_PORT': 9001,
 
         # Supervisor XML-RPC Credentials
-        'SUPERVISOR_XML_RPC_USERNAME': 'NOTSET',
-        'SUPERVISOR_XML_RPC_PASSWORD': 'NOTSET',
+        'SUPERVISOR_XML_RPC_USERNAME': 'ohFupah2fei4Ief4sie1',
+        'SUPERVISOR_XML_RPC_PASSWORD': 'ieen2nuph4xah1Uo9ohFi',
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@127.0.0.1:9001/RPC2'.format(
-            'NOTSET',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
-            'NOTSET'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
+            'ohFupah2fei4Ief4sie1',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'ieen2nuph4xah1Uo9ohFi'      # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
         # Message Queue Broker host
-        'BROKER_HOST': '127.0.0.1',
+        'BROKER_HOST': 'rmq1.live.apitrary.net',
 
         # Message Queue Broker port
         'BROKER_PORT': 5672,
 
         # Message Queue User
-        'BROKER_USER': 'notsetyet',
+        'BROKER_USER': 'apitrarylive',
 
         # Message Queue User
-        'BROKER_PASSWORD': 'notsetyet',
+        'BROKER_PASSWORD': 'oofecooz2oTh8weeQu8kaipha',
 
         # Default log level
         'LOGGING': LOGGING_LEVEL.INFO
