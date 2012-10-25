@@ -89,7 +89,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         genapi_entity_list=entities,
         genapi_home_directory='/home/genapi',
         genapi_user='genapi',
-        genapi_log_file='/home/genapi/log/genapi_{}.log'.format(api_id),
+        genapi_log_file='/home/genapi/genapi_{}.log'.format(api_id),
         config_file_name=config_file_name
     )
 
