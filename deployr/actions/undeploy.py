@@ -9,9 +9,9 @@
 
 """
 from ostools import OS_SUCCESS
-from supervisor.supervisorctl_api import supervisorctl_stop
-from supervisor.supervisorctl_api import supervisorctl_remove
-from supervisor.supervisorctl_api import supervisorctl_reread
+from supervisor_api.supervisorctl_api import supervisorctl_stop
+from supervisor_api.supervisorctl_api import supervisorctl_remove
+from supervisor_api.supervisorctl_api import supervisorctl_reread
 
 ##############################################################################
 #

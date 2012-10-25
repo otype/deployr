@@ -76,7 +76,7 @@ def parse_supervisorctl_params(params):
 
 def run_supervisorctl_command(command, params=None):
     """
-        Reread the supervisor configuration files
+        Reread the supervisor_api configuration files
     """
     if command is None:
         log.error('Missing supervisorctl command as parameter!')
@@ -107,15 +107,15 @@ def run_supervisorctl_command(command, params=None):
 
 def supervisorctl_reread():
     """
-        Reread the supervisor configuration files
+        Reread the supervisor_api configuration files
     """
-    log.debug('SUPERVISORCTL: Reread the supervisor configurations files')
+    log.debug('SUPERVISORCTL: Reread the supervisor_api configurations files')
     return run_supervisorctl_command(SUPERVISORCTL_REREAD)
 
 
 def supervisorctl_start(app_name):
     """
-        Start given application via supervisor
+        Start given application via supervisor_api
     """
     log.debug('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_START, app_name)
@@ -123,7 +123,7 @@ def supervisorctl_start(app_name):
 
 def supervisorctl_stop(app_name):
     """
-        Stop given application via supervisor
+        Stop given application via supervisor_api
     """
     log.debug('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_STOP, app_name)
@@ -131,7 +131,7 @@ def supervisorctl_stop(app_name):
 
 def supervisorctl_restart(app_name):
     """
-        Start given application via supervisor
+        Start given application via supervisor_api
     """
     log.debug('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_RESTART, app_name)
@@ -139,7 +139,7 @@ def supervisorctl_restart(app_name):
 
 def supervisorctl_add(app_name):
     """
-        Add new application to supervisor configuration
+        Add new application to supervisor_api configuration
     """
     log.debug('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_ADD, app_name)
@@ -155,7 +155,7 @@ def supervisorctl_status(app_name):
 
 def supervisorctl_remove(app_name):
     """
-        Remove application from supervisor context
+        Remove application from supervisor_api context
     """
     log.debug('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
     return run_supervisorctl_command(SUPERVISORCTL_REMOVE, app_name)

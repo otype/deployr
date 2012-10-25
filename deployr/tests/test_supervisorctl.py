@@ -8,9 +8,9 @@
 """
 from ostools import OS_INVALID_ARGUMENT
 from ostools import OS_SUCCESS
-from supervisor.supervisorctl_api import parse_supervisorctl_params
-from supervisor.supervisorctl_api import supervisorctl_reread
-from supervisor.supervisorctl_api import run_supervisorctl_command
+from supervisor_api.supervisorctl_api import parse_supervisorctl_params
+from supervisor_api.supervisorctl_api import supervisorctl_reread
+from supervisor_api.supervisorctl_api import run_supervisorctl_command
 
 
 def setup_func():

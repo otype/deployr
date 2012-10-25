@@ -36,7 +36,7 @@ SUPERVISOR_XML_RPC_SERVER = xmlrpclib.Server(SUPERVISOR_XML_RPC_SERVER_ADDRESS)
 
 def supervisor_xmlrpc_reload_config():
     """
-        Reread the supervisor configuration files
+        Reread the supervisor_api configuration files
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting reload of all configs'.format(SUPERVISOR_XML_RPC_SERVER_ADDRESS))
     try:
@@ -49,7 +49,7 @@ def supervisor_xmlrpc_reload_config():
 
 def supervisor_xmlrpc_start(app_name):
     """
-        Start given application via supervisor
+        Start given application via supervisor_api
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting start of application: {}'.format(
         SUPERVISOR_XML_RPC_SERVER_ADDRESS, app_name)
@@ -67,7 +67,7 @@ def supervisor_xmlrpc_start(app_name):
 
 def supervisor_xmlrpc_stop(app_name):
     """
-        Stop given application via supervisor
+        Stop given application via supervisor_api
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting stop of application: {}'.format(
         SUPERVISOR_XML_RPC_SERVER_ADDRESS, app_name)
@@ -85,7 +85,7 @@ def supervisor_xmlrpc_stop(app_name):
 
 def supervisor_xmlrpc_restart(app_name):
     """
-        Start given application via supervisor
+        Start given application via supervisor_api
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting restart of application: {}'.format(
         SUPERVISOR_XML_RPC_SERVER_ADDRESS, app_name)
@@ -103,7 +103,7 @@ def supervisor_xmlrpc_restart(app_name):
 
 def supervisor_xmlrpc_add_group(group_name):
     """
-        Add new application to supervisor configuration
+        Add new application to supervisor_api configuration
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting addition of application: {}'.format(
         SUPERVISOR_XML_RPC_SERVER_ADDRESS, group_name)
@@ -178,7 +178,7 @@ def supervisor_xmlrpc_get_process_info(app_name):
 
 def supervisor_xmlrpc_remove_group(group_name):
     """
-        Remove application from supervisor context
+        Remove application from supervisor_api context
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting removal of group: {}'.format(
         SUPERVISOR_XML_RPC_SERVER_ADDRESS, group_name)
@@ -196,7 +196,7 @@ def supervisor_xmlrpc_remove_group(group_name):
 
 def supervisor_xmlrpc_get_all_config_info():
     """
-        Remove application from supervisor context
+        Remove application from supervisor_api context
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting all config info'.format(SUPERVISOR_XML_RPC_SERVER_ADDRESS))
     try:
@@ -211,7 +211,7 @@ def supervisor_xmlrpc_get_all_config_info():
 
 def supervisor_xmlrpc_get_config_info(app_name):
     """
-        Remove application from supervisor context
+        Remove application from supervisor_api context
     """
     log.debug('SUPERVISOR XML-RPC({}): Requesting all config info'.format(SUPERVISOR_XML_RPC_SERVER_ADDRESS))
     try:

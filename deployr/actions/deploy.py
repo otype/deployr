@@ -13,11 +13,11 @@ from ostools import get_local_public_ip_address
 from ostools import get_open_port
 from ostools.filewriter import write_supervisor_config_for_api
 from ostools.path_finders import python_interpreter_path
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_get_process_info
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_remove_group
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_stop
-from supervisor.supervisor_xml_rpc_api import supervisor_xmlrpc_add_group
+from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
+from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_get_process_info
+from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_remove_group
+from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_stop
+from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_add_group
 
 ##############################################################################
 #
