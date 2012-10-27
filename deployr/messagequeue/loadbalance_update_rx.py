@@ -10,7 +10,6 @@ import socket
 import pika
 from pika import log
 from pika.adapters.select_connection import SelectConnection
-from config.environment import CURRENT_CONFIGURATION
 from ostools import OS_SUCCESS
 from task.task_execution import run_task
 from constants.queue_settings import LOADBALANCE_UPDATE_QUEUE
@@ -25,6 +24,11 @@ connection = None
 # Global channel used in conjunction with the broker
 #
 channel = None
+
+#
+# Prefetch count
+#
+activate_prefetch_count = False
 
 
 ##############################################################################
@@ -60,6 +64,16 @@ def on_channel_open(channel_):
     )
 
 
+def set_prefetch_count():
+    """
+        Only accepting one message at a time ...
+    """
+
+prefetch_count = 1
+log.debug('Setting prefetch_count = {}'.format(prefetch_count))
+channel.basic_qos(prefetch_count=prefetch_count)
+
+
 def on_queue_declared(frame):
     """
         Queue has been declared. Now start to consume messages
@@ -68,10 +82,8 @@ def on_queue_declared(frame):
     log.debug("Consuming message from queue=\'{}\'".format(LOADBALANCE_UPDATE_QUEUE))
     log.debug('Frame: {}'.format(frame))
 
-#    Only accepting one message at a time ...
-#    prefetch_count = 1
-#    log.debug('Setting prefetch_count = {}'.format(prefetch_count))
-#    channel.basic_qos(prefetch_count=prefetch_count)
+    if activate_prefetch_count:
+        set_prefetch_count()
 
     log.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=LOADBALANCE_UPDATE_QUEUE)
@@ -104,16 +116,15 @@ def handle_delivery(channel, method_frame, header_frame, body):
 ##############################################################################
 
 
-def start_consumer(
-        broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
-        broker_port=CURRENT_CONFIGURATION['BROKER_PORT'],
-        username=CURRENT_CONFIGURATION['BROKER_USER'],
-        password=CURRENT_CONFIGURATION['BROKER_PASSWORD']
-):
+def start_consumer(broker_host, broker_port, username, password, activate_prefetch):
     """
         Start the consumer IOLoop
     """
     global connection
+    global activate_prefetch_count
+
+    activate_prefetch_count = activate_prefetch
+
     credentials = pika.PlainCredentials(username=username, password=password)
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)
     try:
@@ -126,8 +137,8 @@ def start_consumer(
         log.error(e)
     except KeyboardInterrupt:
         log.info('Orderly shutting down ...')
-    else:
-        log.error('Unknown error! Better run away, now ...')
+    except Exception, e:
+        log.error('Unknown error! Better run away, now! Error: {}'.format(e))
     finally:
         if connection:
             connection.close()

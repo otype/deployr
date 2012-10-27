@@ -10,8 +10,9 @@
 import argparse
 import pika
 from pika import log
-from config.default_configuration import LOGGING_LEVEL
-from config.environment import CURRENT_CONFIGURATION
+import sys
+from config.config_manager import strip_out_sensitive_data, load_configuration, write_configuration
+from config.default_configuration import LOGGING_LEVEL, ENVIRONMENT
 
 ##############################################################################
 #
@@ -29,22 +30,18 @@ pika.log.setup(pika.log.INFO, color=True)
 ##############################################################################
 
 
-def show_all_settings():
+def show_all_settings(config):
     """
         Show all configured constants
     """
     log.info('Starting service: deployr')
-    log.info('Remote Broker: {}:{}'.format(args.broker_host, args.broker_port))
+    log.info('Remote Broker: {}:{}'.format(config['BROKER_HOST'], config['BROKER_PORT']))
     log.info('Deployr mode: {}'.format(args.mode))
-    log.info('Environment: {}'.format(CURRENT_CONFIGURATION['NAME']))
+    log.info('Environment: {}'.format(config['NAME']))
 
-    config_to_show = str(CURRENT_CONFIGURATION)
-    config_to_show = config_to_show.replace(CURRENT_CONFIGURATION['BROKER_PASSWORD'], '<hidden>')
-    config_to_show = config_to_show.replace(CURRENT_CONFIGURATION['SUPERVISOR_XML_RPC_USERNAME'], '<hidden>')
-    config_to_show = config_to_show.replace(CURRENT_CONFIGURATION['SUPERVISOR_XML_RPC_PASSWORD'], '<hidden>')
-
+    config_to_show = strip_out_sensitive_data(config)
     log.info('Configuration: {}'.format(config_to_show))
-    log.info('Logging level: {}'.format(args.logging))
+    log.info('Logging level: {}'.format(config['LOGGING']))
 
 
 def set_log_level(log_level):
@@ -68,31 +65,6 @@ def parse_shell_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "-B",
-        "--broker_host",
-        help="Hostname or IP of the broker",
-        type=str,
-        default=CURRENT_CONFIGURATION['BROKER_HOST']
-    )
-
-    parser.add_argument(
-        "-P",
-        "--broker_port",
-        help="Port of the broker",
-        type=int,
-        default=CURRENT_CONFIGURATION['BROKER_PORT']
-    )
-
-    parser.add_argument(
-        "-L",
-        "--logging",
-        help="Logging level",
-        type=str,
-        choices=[LOGGING_LEVEL.DEBUG, LOGGING_LEVEL.INFO, LOGGING_LEVEL.WARN],
-        default=CURRENT_CONFIGURATION['LOGGING']
-    )
-
-    parser.add_argument(
         "-M",
         "--mode",
         help="Deployr mode",
@@ -101,7 +73,25 @@ def parse_shell_args():
         default='deploy'
     )
 
+    parser.add_argument(
+        "-w",
+        "--write_config",
+        help="Write the configuration file",
+        type=str,
+        choices=[ENVIRONMENT.DEV, ENVIRONMENT.LIVE]
+    )
+
     args = parser.parse_args()
+
+
+def check_for_config_write():
+    """
+        Write configuration file if called via shell param
+    """
+    config_env = args.write_config
+    write_configuration(config_env)
+    log.info("Configuration file written! Now, edit config file and start deployr!")
+    sys.exit(0)
 
 
 def main():
@@ -111,15 +101,18 @@ def main():
     # Parse the shell arguments, first.
     parse_shell_args()
 
+    # Check if config write has been requested. If yes, bail out afterwards.
+    if args.write_config:
+        check_for_config_write()
+
+    # Load configuration
+    config = load_configuration()
+
     # Show all configured handlers
-    show_all_settings()
+    show_all_settings(config)
 
     # Set the log level
-    set_log_level(args.logging)
-
-    # Queue credentials
-    username = CURRENT_CONFIGURATION['BROKER_USER']
-    password = CURRENT_CONFIGURATION['BROKER_PASSWORD']
+    set_log_level(config['LOGGING'])
 
     # start the MQ consumer
     if args.mode == 'deploy':
@@ -127,13 +120,14 @@ def main():
     elif args.mode == 'balance':
         from messagequeue.loadbalance_update_rx import start_consumer
     else:
-        from messagequeue.loadbalance_update_rx import start_consumer
+        from messagequeue.deployment_rx import start_consumer
 
     start_consumer(
-        broker_host=args.broker_host,
-        broker_port=args.broker_port,
-        username=username,
-        password=password
+        broker_host=config['BROKER_HOST'],
+        broker_port=int(config['BROKER_PORT']),
+        username=config['BROKER_USER'],
+        password=config['BROKER_PASSWORD'],
+        activate_prefetch=config['BROKER_PREFETCH_COUNT']
     )
 
 ##############################################################################

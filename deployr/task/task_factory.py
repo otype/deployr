@@ -8,6 +8,7 @@
 """
 import json
 from pika import log
+from config.config_manager import load_configuration
 from errors import InvalidTaskTypeException
 from errors import UnacceptableMessageException
 from task.task_types.deploy_task import DeployTask
@@ -21,6 +22,12 @@ class TaskFactory(object):
     """
         A generic task as basis for all task type classes
     """
+
+    def __init__(self):
+        """
+            We need the configuration upon task creation
+        """
+        self.config = load_configuration()
 
     def load_message(self, message):
         """
@@ -39,11 +46,11 @@ class TaskFactory(object):
         """
         try:
             if self.task_type() == DEPLOY_TASK:
-                return DeployTask(self.message)
+                return DeployTask(self.message, self.config)
             elif self.task_type() == UNDEPLOY_TASK:
-                return UndeployTask(self.message)
+                return UndeployTask(self.message, self.config)
             elif self.task_type() == LOADBALANCE_UPDATE_TASK:
-                return LoadbalanceUpdateTask(self.message)
+                return LoadbalanceUpdateTask(self.message, self.config)
         except InvalidTaskTypeException, e:
             log.error('Could not create a valid task! Error: {}'.format(e))
             return None

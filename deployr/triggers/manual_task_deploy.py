@@ -11,6 +11,7 @@
 import sys
 import pika
 from pika import log
+from config import load_configuration
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.deploy_message import DeployMessage
 
@@ -24,12 +25,14 @@ msg = DeployMessage(
     api_key='aksdfj09sdfj0sdjf09sjd0jsdv0js0dvj'
 )
 
+# Load the global configuration from config file
+config = load_configuration()
 
 def send(host, message):
     """
         Simply send the message
     """
-    message_tx = BlockingMessageTx(broker_host=host)
+    message_tx = BlockingMessageTx(config=config)
     message_tx.send(message=message)
 
 # MAIN

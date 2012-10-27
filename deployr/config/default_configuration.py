@@ -70,6 +70,9 @@ GLOBAL_CONF = {
         # Message Queue Broker port
         'BROKER_PORT': 5672,
 
+        # Only accepting one message at a time ...
+        'BROKER_PREFETCH_COUNT': False,
+
         # Message Queue User
         'BROKER_USER': 'apitrary',
 
@@ -78,7 +81,6 @@ GLOBAL_CONF = {
 
         # Default log level
         'LOGGING': LOGGING_LEVEL.DEBUG
-
     },
 
     # DEV ENVIRONMENT
@@ -106,7 +108,7 @@ GLOBAL_CONF = {
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@app1.dev.apitrary.net:9001/RPC2'.format(
-            'Ic6eeyae9EeCeic',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'Ic6eeyae9EeCeic', # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
             'aipiet0Da7iedoh'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
@@ -115,6 +117,9 @@ GLOBAL_CONF = {
 
         # Message Queue Broker port
         'BROKER_PORT': 5672,
+
+        # Only accepting one message at a time ...
+        'BROKER_PREFETCH_COUNT': False,
 
         # Message Queue User
         'BROKER_USER': 'apitrary',
@@ -151,7 +156,7 @@ GLOBAL_CONF = {
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@127.0.0.1:9001/RPC2'.format(
-            'ohFupah2fei4Ief4sie1',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'ohFupah2fei4Ief4sie1', # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
             'ieen2nuph4xah1Uo9ohFi'      # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
@@ -160,6 +165,9 @@ GLOBAL_CONF = {
 
         # Message Queue Broker port
         'BROKER_PORT': 5672,
+
+        # Only accepting one message at a time ...
+        'BROKER_PREFETCH_COUNT': False,
 
         # Message Queue User
         'BROKER_USER': 'apitrarylive',

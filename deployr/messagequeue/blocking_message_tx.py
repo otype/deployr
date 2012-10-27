@@ -12,7 +12,6 @@ import json
 import pika
 from pika import log
 from pika.adapters.blocking_connection import BlockingConnection
-from config.environment import CURRENT_CONFIGURATION
 from errors import UnacceptableMessageException
 from ostools import OS_SUCCESS, OS_ERROR
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
@@ -54,20 +53,16 @@ class BlockingMessageTx(object):
         LoadbalanceUpdateConfirmationMessage
     ]
 
-    def __init__(
-            self,
-            broker_host=CURRENT_CONFIGURATION['BROKER_HOST'],
-            broker_port=CURRENT_CONFIGURATION['BROKER_PORT'],
-            username=CURRENT_CONFIGURATION['BROKER_USER'],
-            password=CURRENT_CONFIGURATION['BROKER_PASSWORD']
-    ):
+    def __init__(self, config):
         """
             Initialize for message and broker parameters
         """
-        self.broker_host = broker_host
-        self.broker_port = broker_port
-        self.username = username
-        self.password = password
+        self.config = config
+        self.broker_host = self.config['BROKER_HOST'],
+        self.broker_port = self.config['BROKER_PORT'],
+        self.username = self.config['BROKER_USER'],
+        self.password = self.config['BROKER_PASSWORD']
+
         self.credentials = pika.PlainCredentials(username=self.username, password=self.password)
         self.parameters = pika.ConnectionParameters(
             host=self.broker_host,

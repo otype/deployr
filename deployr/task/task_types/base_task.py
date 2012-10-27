@@ -7,7 +7,6 @@
 
 """
 from pika import log
-from config.environment import CURRENT_CONFIGURATION
 from errors import InvalidTaskTypeException
 
 
@@ -16,11 +15,12 @@ class BaseTask(object):
         Undeploy task definition
     """
 
-    def __init__(self, message, attribute_list):
+    def __init__(self, message, attribute_list, config):
         """
             Initialize the Deploy task
         """
         self.message = message
+        self.config = config
         if not self.is_valid_deploy_message(attribute_list=attribute_list):
             log.error('Task type {} is unknown.'.format(self.get_task_type()))
             raise InvalidTaskTypeException('Task type {} is unknown.'.format(self.get_task_type()))
@@ -64,7 +64,7 @@ class BaseTask(object):
         """
         pass
 
-    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
+    def send_confirmation(self):
         """
             Send confirmation message
 

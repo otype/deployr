@@ -7,7 +7,6 @@
 
 """
 from pika import log
-from config.environment import CURRENT_CONFIGURATION
 from ostools import OS_ERROR
 from actions.deploy import deploy_api
 from messagequeue.blocking_message_tx import BlockingMessageTx
@@ -20,13 +19,13 @@ class DeployTask(BaseTask):
         Deploy task definition
     """
 
-    def __init__(self, message):
+    def __init__(self, message, config):
         """
             Initialize the Deploy task
         """
         attribute_list = ['task_type', 'api_id', 'db_host', 'db_port', 'genapi_version', 'log_level',
                           'entities', 'api_key']
-        super(DeployTask, self).__init__(message, attribute_list)
+        super(DeployTask, self).__init__(message, attribute_list, config)
 
     def parse_parameters(self):
         """
@@ -69,7 +68,7 @@ class DeployTask(BaseTask):
 
         return self.last_execution_status
 
-    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
+    def send_confirmation(self):
         """
             Send confirmation message
         """
@@ -85,5 +84,5 @@ class DeployTask(BaseTask):
             status=self.last_execution_status
         )
 
-        message_tx = BlockingMessageTx(broker_host=broker_host)
+        message_tx = BlockingMessageTx(config=self.config)
         return message_tx.send(message=deploy_confirmation_message)

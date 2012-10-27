@@ -32,9 +32,15 @@ def read_requirements():
     return [element.strip() for element in requirements]
 
 
+def scripts_list():
+    return [
+        'deployr/deployr.py',
+        'deployr/triggers/manual_task_deploy.py'
+    ]
+
 setup(
     name='deployr',
-    version='0.1',
+    version='0.1.1',
     author='Hans-Gunther Schmidt',
     author_email='hgs@apitrary.com',
     description='apitrary deployr - the application node manager for GenAPIs',
@@ -43,5 +49,6 @@ setup(
     install_requires=read_requirements(),
     keywords='deployr node manager apitrary application',
     packages=find_packages('deployr'),
-    scripts=['deployr/deployr.py']
+    package_dir={'': 'deployr'},
+    scripts=scripts_list()
 )

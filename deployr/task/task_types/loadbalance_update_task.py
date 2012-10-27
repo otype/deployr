@@ -6,7 +6,6 @@
     Copyright (c) 2012 apitrary
 
 """
-from config.environment import CURRENT_CONFIGURATION
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from ostools import OS_SUCCESS
 from task.messages.loadbalance_update_confirmation_message import LoadbalanceUpdateConfirmationMessage
@@ -18,12 +17,12 @@ class LoadbalanceUpdateTask(BaseTask):
         Undeploy task definition
     """
 
-    def __init__(self, message):
+    def __init__(self, message, config):
         """
             Initialize the Deploy task
         """
         attribute_list = ['task_type', 'api_id', 'api_host', 'api_port']
-        super(LoadbalanceUpdateTask, self).__init__(message, attribute_list)
+        super(LoadbalanceUpdateTask, self).__init__(message, attribute_list, config)
 
     def parse_parameters(self):
         """
@@ -42,7 +41,7 @@ class LoadbalanceUpdateTask(BaseTask):
         self.last_execution_status = OS_SUCCESS
         return self.last_execution_status
 
-    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
+    def send_confirmation(self):
         """
             Send confirmation message
         """
@@ -53,5 +52,5 @@ class LoadbalanceUpdateTask(BaseTask):
             api_domainname='fake.domain.apitrary.com'
         )
 
-        message_tx = BlockingMessageTx(broker_host=broker_host)
+        message_tx = BlockingMessageTx(self.config)
         return message_tx.send(message=loadbalance_update_confirmation_message)

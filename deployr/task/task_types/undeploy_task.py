@@ -7,7 +7,6 @@
 
 """
 from actions.undeploy import undeploy_api
-from config.environment import CURRENT_CONFIGURATION
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.undeploy_confirmation_message import UndeployConfirmationMessage
 from task.task_types.base_task import BaseTask
@@ -18,12 +17,12 @@ class UndeployTask(BaseTask):
         Undeploy task definition
     """
 
-    def __init__(self, message):
+    def __init__(self, message, config):
         """
             Initialize the Deploy task
         """
         attribute_list = ['task_type', 'api_id']
-        super(UndeployTask, self).__init__(message, attribute_list)
+        super(UndeployTask, self).__init__(message, attribute_list, config)
 
     def parse_parameters(self):
         """
@@ -39,7 +38,7 @@ class UndeployTask(BaseTask):
         self.last_execution_status = undeploy_api(api_id=self.api_id)
         return self.last_execution_status
 
-    def send_confirmation(self, broker_host=CURRENT_CONFIGURATION['BROKER_HOST']):
+    def send_confirmation(self):
         """
             Send confirmation message
         """
@@ -48,5 +47,5 @@ class UndeployTask(BaseTask):
             status=self.last_execution_status
         )
 
-        message_tx = BlockingMessageTx(broker_host=broker_host)
+        message_tx = BlockingMessageTx(config=self.config)
         return message_tx.send(message=undeploy_confirmation_message)
