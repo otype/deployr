@@ -14,6 +14,7 @@
 import os
 from distutils.core import setup
 from setuptools import find_packages
+import sys
 
 
 def read(fname):
@@ -38,6 +39,17 @@ def scripts_list():
         'deployr/triggers/manual_task_deploy.py'
     ]
 
+def get_template_base_dir():
+    if sys.platform == 'darwin':
+        template_dir = "{}/.deployr/templates".format(os.getenv("HOME"))
+    elif sys.platform == 'linux2':
+        template_dir = "/etc/deployr/templates"
+    else:
+        template_dir = "{}/.deployr/templates".format(os.getenv("HOME"))
+
+    return template_dir
+
+
 setup(
     name='deployr',
     version='0.1.1',
@@ -50,5 +62,8 @@ setup(
     keywords='deployr node manager apitrary application',
     packages=find_packages('deployr'),
     package_dir={'': 'deployr'},
+    data_files=[
+        (get_template_base_dir(), ['deployr/templates/supervisor_templates/genapi_base.tpl'])
+    ],
     scripts=scripts_list()
 )
