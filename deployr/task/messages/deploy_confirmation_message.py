@@ -10,6 +10,7 @@
 """
 import json
 import time
+from pika import log
 from constants.queue_settings import DEPLOY_CONFIRMATION_ROUTING_KEY
 from constants.queue_settings import GENAPI_DEPLOYMENT_CONFIRMATION_QUEUE
 

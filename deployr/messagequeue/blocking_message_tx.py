@@ -58,9 +58,9 @@ class BlockingMessageTx(object):
             Initialize for message and broker parameters
         """
         self.config = config
-        self.broker_host = self.config['BROKER_HOST'],
-        self.broker_port = self.config['BROKER_PORT'],
-        self.username = self.config['BROKER_USER'],
+        self.broker_host = self.config['BROKER_HOST']
+        self.broker_port = int(self.config['BROKER_PORT'])
+        self.username = self.config['BROKER_USER']
         self.password = self.config['BROKER_PASSWORD']
 
         self.credentials = pika.PlainCredentials(username=self.username, password=self.password)
