@@ -114,9 +114,9 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
         Start the consumer IOLoop
     """
     global connection
-    global activate_prefetch_count
-
-    activate_prefetch_count = activate_prefetch
+#    global activate_prefetch_count
+#
+#    activate_prefetch_count = activate_prefetch
 
     credentials = pika.PlainCredentials(username=username, password=password)
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)
