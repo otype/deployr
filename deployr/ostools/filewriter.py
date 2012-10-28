@@ -75,5 +75,6 @@ def write_supervisor_config_for_api(python_interpreter, genapi_start, logging_le
         genapi_user=genapi_user,
         genapi_log_file=genapi_log_file
     )
+    log.debug("Template: {}".format(tpl))
     write_file(filename=config_file_name, content=tpl)
     log.info('Supervisor configuration file written for API with id: {}'.format(genapi_api_id))
