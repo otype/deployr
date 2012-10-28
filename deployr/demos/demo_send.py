@@ -2,6 +2,7 @@ import json
 import sys
 import pika
 from pika import log
+from messagequeue.message_rx import SelectConnection
 
 pika.log.setup(color=True)
 

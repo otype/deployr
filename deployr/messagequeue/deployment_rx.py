@@ -125,11 +125,11 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
         log.info('Connected to broker: {}:{}'.format(broker_host, broker_port))
         connection.ioloop.start()
     except socket.gaierror, e:
-        log.error(e)
+        log.error("Socket.gaierror! Error: {}".format(e))
         if connection:
             connection.close()
     except socket.error, e:
-        log.error(e)
+        log.error("Socket.error! Error: {}".format(e))
         if connection:
             connection.close()
     except KeyboardInterrupt:
