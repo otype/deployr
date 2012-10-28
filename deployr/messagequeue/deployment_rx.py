@@ -58,13 +58,13 @@ def on_channel_open(channel_):
     )
 
 
-def set_prefetch_count():
-    """
-        Only accepting one message at a time ...
-    """
-    prefetch_count = 1
-    log.debug('Setting prefetch_count = {}'.format(prefetch_count))
-    channel.basic_qos(prefetch_count=prefetch_count)
+#def set_prefetch_count():
+#    """
+#        Only accepting one message at a time ...
+#    """
+#    prefetch_count = 1
+#    log.debug('Setting prefetch_count = {}'.format(prefetch_count))
+#    channel.basic_qos(prefetch_count=prefetch_count)
 
 
 def on_queue_declared(frame):
@@ -75,8 +75,8 @@ def on_queue_declared(frame):
     log.debug("Consuming message from queue=\'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
     log.debug('Frame: {}'.format(frame))
 
-    if activate_prefetch_count:
-        set_prefetch_count()
+#    if activate_prefetch_count:
+#        set_prefetch_count()
 
     log.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=GENAPI_DEPLOYMENT_QUEUE)
@@ -114,9 +114,9 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
         Start the consumer IOLoop
     """
     global connection
-    global activate_prefetch_count
-
-    activate_prefetch_count = activate_prefetch
+#    global activate_prefetch_count
+#
+#    activate_prefetch_count = activate_prefetch
 
     credentials = pika.PlainCredentials(username=username, password=password)
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)
