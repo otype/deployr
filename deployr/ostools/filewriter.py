@@ -33,7 +33,9 @@ def genapi_template(python_interpreter, genapi_start, logging_level, riak_host, 
                     genapi_version, genapi_entity_list, genapi_home_directory, genapi_user, genapi_log_file):
 
     env = Environment(loader=PackageLoader(TEMPLATES_BASE_DIR, SUPERVISOR_TEMPLATES_DIR))
+    log.debug("Template env: {}".format(env))
     template = env.get_template(GENAPI_CONFIG_TEMPLATE)
+    log.debug("Template read: {}".format(template))
 
     return template.render(
         genapi_api_id=genapi_api_id,
