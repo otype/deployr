@@ -126,13 +126,16 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
         connection.ioloop.start()
     except socket.gaierror, e:
         log.error(e)
+        if connection:
+            connection.close()
     except socket.error, e:
         log.error(e)
+        if connection:
+            connection.close()
     except KeyboardInterrupt:
         log.info('Orderly shutting down ...')
+        connection.close()
     except Exception, e:
         log.error('Unknown error! Better run away, now! Error: {}'.format(e))
     finally:
-        if connection:
-            connection.close()
-            log.info('Connection closed.')
+        log.info('Connection closed.')

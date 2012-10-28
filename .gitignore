@@ -21,4 +21,4 @@
 *.con
 
 # Build products
-.egg-info/
+*.egg-info/
