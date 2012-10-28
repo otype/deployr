@@ -18,5 +18,7 @@
 *.pyc
 
 # By-products
-*.conf
+*.con
 
+# Build products
+.egg-info/
