@@ -75,8 +75,8 @@ def on_queue_declared(frame):
     log.debug("Consuming message from queue=\'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
     log.debug('Frame: {}'.format(frame))
 
-    if activate_prefetch_count:
-        set_prefetch_count()
+#    if activate_prefetch_count:
+#        set_prefetch_count()
 
     log.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=GENAPI_DEPLOYMENT_QUEUE)
