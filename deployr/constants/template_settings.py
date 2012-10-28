@@ -7,10 +7,10 @@
 
 """
 # Templates base package name (directory)
-TEMPLATES_BASE_DIR = 'templates'
+TEMPLATES_BASE_DIR = 'deployr'
 
 # Templates package names
-SUPERVISOR_TEMPLATES_DIR = 'supervisor_templates'
+SUPERVISOR_TEMPLATES_DIR = 'templates'
 
 # Supervisor-related templates
 GENAPI_CONFIG_TEMPLATE = 'genapi_base.tpl'
