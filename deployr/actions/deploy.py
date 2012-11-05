@@ -81,7 +81,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     write_supervisor_config_for_api(
         genapi_api_id=api_id,
         python_interpreter=python_interpreter_path(),
-        genapi_start='/opt/genapi/pygenapi/genapi/genapi_runner.py',
+        genapi_start='/usr/bin/genapi_runner.py',
         logging_level=log_level,
         riak_host=db_host,
         app_port=assigned_port,
