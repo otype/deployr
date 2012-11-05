@@ -108,7 +108,7 @@ GLOBAL_CONF = {
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@app1.dev.apitrary.net:9001/RPC2'.format(
-            'UNSET', # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'UNSET',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
             'UNSET'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
