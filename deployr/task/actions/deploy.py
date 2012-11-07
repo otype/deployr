@@ -7,7 +7,7 @@
 
 """
 import sys
-from pika import log
+from config.logging_configuration import logger as log
 from config.genapi_template_settings import GENAPI_START_SCRIPT
 from config.genapi_template_settings import GENAPI_PYTHON_EXEC
 from config.genapi_template_settings import GENAPI_HOME_DIRECTORY

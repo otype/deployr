@@ -6,9 +6,8 @@
     Copyright (c) 2012 apitrary
 
 """
-import os
 import sys
-from pika import log
+from config.logging_configuration import logger as log
 from ostools import execute_shell_command
 from ostools import OS_INVALID_ARGUMENT
 from ostools import OS_CANNOT_INVOKE_COMMAND_ERROR

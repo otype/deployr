@@ -8,7 +8,7 @@
 """
 import socket
 import subprocess
-from pika import log
+from config.logging_configuration import logger as log
 
 ##############################################################################
 #

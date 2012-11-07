@@ -9,9 +9,8 @@
 
 """
 import sys
-import pika
-from pika import log
-from config import load_configuration
+from config.config_manager import load_configuration
+from config.logging_configuration import logger as log
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.deploy_message import DeployMessage
 
@@ -32,6 +31,7 @@ def send(host, message):
     """
         Simply send the message
     """
+    config['BROKER_HOST'] = host
     message_tx = BlockingMessageTx(config=config)
     message_tx.send(message=message)
 
@@ -39,8 +39,6 @@ def send(host, message):
 #
 #
 if __name__ == '__main__':
-    pika.log.setup(pika.log.DEBUG, color=True)
-
     host = (len(sys.argv) > 1) and sys.argv[1] or '127.0.0.1'
     log.info('Connecting to broker: {}'.format(host))
 

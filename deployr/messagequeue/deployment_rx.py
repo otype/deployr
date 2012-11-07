@@ -8,7 +8,7 @@
 """
 import socket
 import pika
-from pika import log
+from config.logging_configuration import logger as log
 from pika.adapters.select_connection import SelectConnection
 from ostools import OS_SUCCESS
 from task.task_execution import run_task

@@ -10,7 +10,9 @@
 """
 import json
 import pika
-from pika import log
+from pika.exceptions import AMQPConnectionError
+import sys
+from config.logging_configuration import logger as log
 from pika.adapters.blocking_connection import BlockingConnection
 from errors import UnacceptableMessageException
 from ostools import OS_SUCCESS, OS_ERROR
@@ -87,7 +89,15 @@ class BlockingMessageTx(object):
         """
             Establish connection to broker.
         """
-        self.connection = BlockingConnection(self.parameters)
+        try:
+            self.connection = BlockingConnection(self.parameters)
+        except AMQPConnectionError, e:
+            log.error("Could not connect to Message broker!")
+            log.error("Broker connection params: {}".format(self.parameters))
+            log.error("Error: {}".format(e))
+            log.error("Exiting.")
+            sys.exit(1)
+
         self.channel = self.connection.channel()
         log.debug('Connection established to broker: {}'.format(self.broker_host))
 

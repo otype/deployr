@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-from pika import log
+from config.logging_configuration import logger as log
 from errors import UnacceptableMessageException
 from errors import InvalidTaskTypeException
 from ostools import OS_ERROR, OS_SUCCESS

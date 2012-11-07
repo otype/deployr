@@ -9,7 +9,6 @@
 
 """
 
-
 class ENVIRONMENT:
     """
         Self-defined enumeration
@@ -22,15 +21,6 @@ class ENVIRONMENT:
 
     # for Live environment
     LIVE = 'live'
-
-
-class LOGGING_LEVEL:
-    """
-        Accepted log levels for pika.log
-    """
-    DEBUG = 'debug'
-    INFO = 'info'
-    WARN = 'warning'
 
 
 # GLOBAL CONFIGURATION HASH
@@ -80,7 +70,7 @@ GLOBAL_CONF = {
         'BROKER_PASSWORD': 'UNSET',
 
         # Default log level
-        'LOGGING': LOGGING_LEVEL.DEBUG
+        'LOGGING': 'DEBUG'
     },
 
     # DEV ENVIRONMENT
@@ -108,7 +98,7 @@ GLOBAL_CONF = {
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@app1.dev.apitrary.net:9001/RPC2'.format(
-            'UNSET',      # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'UNSET', # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
             'UNSET'       # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
@@ -128,7 +118,7 @@ GLOBAL_CONF = {
         'BROKER_PASSWORD': 'UNSET',
 
         # Default log level
-        'LOGGING': LOGGING_LEVEL.DEBUG
+        'LOGGING': 'DEBUG'
     },
 
     # LIVE ENVIRONMENT
@@ -156,7 +146,7 @@ GLOBAL_CONF = {
 
         # Contact XML-RPC on given address with given credentials
         'SUPERVISOR_XML_RPC_SERVER_ADDRESS': 'http://{}:{}@127.0.0.1:9001/RPC2'.format(
-            'UNSET',     # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
+            'UNSET', # USER NAME (see Chef recipe "supervisor" and role "pythonenv")
             'UNSET'      # PASSWORD  (see Chef recipe "supervisor" and role "pythonenv")
         ),
 
@@ -176,6 +166,6 @@ GLOBAL_CONF = {
         'BROKER_PASSWORD': 'UNSET',
 
         # Default log level
-        'LOGGING': LOGGING_LEVEL.INFO
+        'LOGGING': 'INFO'
     }
 }

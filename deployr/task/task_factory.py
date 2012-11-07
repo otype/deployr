@@ -7,7 +7,7 @@
 
 """
 import json
-from pika import log
+from config.logging_configuration import logger as log
 from config.config_manager import load_configuration
 from errors import InvalidTaskTypeException
 from errors import UnacceptableMessageException

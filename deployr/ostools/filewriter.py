@@ -9,7 +9,7 @@
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
 import os
-from pika import log
+from config.logging_configuration import logger as log
 import sys
 from config.genapi_template_settings import GENAPI_CONFIG_TEMPLATE
 from ostools import write_file

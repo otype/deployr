@@ -39,6 +39,7 @@ def scripts_list():
         'deployr/triggers/manual_task_deploy.py'
     ]
 
+
 def get_template_base_dir():
     if sys.platform == 'darwin':
         template_dir = "{}/.deployr/templates".format(os.getenv("HOME"))
@@ -52,7 +53,7 @@ def get_template_base_dir():
 
 setup(
     name='deployr',
-    version='0.1.2',
+    version='0.2',
     author='Hans-Gunther Schmidt',
     author_email='hgs@apitrary.com',
     description='apitrary deployr - the application node manager for GenAPIs',

@@ -12,8 +12,9 @@ import shutil
 import os
 import sys
 from configobj import ConfigObj
-from pika import log
-from config.default_configuration import GLOBAL_CONF, ENVIRONMENT
+from logging_configuration import logger as log
+from config.default_configuration import GLOBAL_CONF
+from config.default_configuration import ENVIRONMENT
 from ostools import OS_SUCCESS
 
 ##############################################################################
@@ -158,7 +159,7 @@ class ConfigManager(object):
             if not os.path.exists(fpath):
                 os.mkdir(fpath)
         except Exception, e:
-            log.error("Error when creating configuration directory {}".format(fpath))
+            log.error("Error when creating configuration directory {}! Error: {}".format(fpath, e))
             sys.exit(1)
 
         return OS_SUCCESS

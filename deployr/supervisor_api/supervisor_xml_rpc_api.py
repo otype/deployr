@@ -9,7 +9,7 @@
 
 """
 import xmlrpclib
-from pika import log
+from config.logging_configuration import logger as log
 from config.config_manager import load_configuration
 from ostools import OS_SUCCESS
 from ostools import OS_ERROR

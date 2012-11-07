@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-from pika import log
+from config.logging_configuration import logger as log
 from errors import InvalidTaskTypeException
 
 

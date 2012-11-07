@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-from pika import log
+from config.logging_configuration import logger as log
 from ostools import OS_ERROR
 from task.actions.deploy import deploy_api
 from messagequeue.blocking_message_tx import BlockingMessageTx

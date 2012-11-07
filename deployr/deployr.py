@@ -8,20 +8,15 @@
 
 """
 import argparse
-import pika
-from pika import log
+import logging
 import sys
-from config.config_manager import strip_out_sensitive_data, load_configuration, write_configuration
-from config.default_configuration import LOGGING_LEVEL, ENVIRONMENT
+from config.logging_configuration import logger as log
+from config.logging_configuration import get_log_level_from_config
+from config.config_manager import strip_out_sensitive_data
+from config.config_manager import load_configuration
+from config.config_manager import write_configuration
+from config.default_configuration import ENVIRONMENT
 
-##############################################################################
-#
-# GENERAL CONFIGURATION + SHELL PARAMETER DEFINITIONS
-#
-##############################################################################
-
-# Default log level
-pika.log.setup(pika.log.INFO, color=True)
 
 ##############################################################################
 #
@@ -42,19 +37,6 @@ def show_all_settings(config):
     config_to_show = strip_out_sensitive_data(config)
     log.info('Configuration: {}'.format(config_to_show))
     log.info('Logging level: {}'.format(config['LOGGING']))
-
-
-def set_log_level(log_level):
-    """
-        Sets the log level (use colored logging output).
-        This is a wrapper for python logging.
-    """
-    if log_level.lower() == LOGGING_LEVEL.DEBUG:
-        pika.log.setup(pika.log.DEBUG, color=True)
-    elif log_level.lower() == LOGGING_LEVEL.WARN:
-        pika.log.setup(pika.log.WARNING, color=True)
-    else:
-        pika.log.setup(pika.log.INFO, color=True)
 
 
 def parse_shell_args():
@@ -111,8 +93,8 @@ def main():
     # Show all configured handlers
     show_all_settings(config)
 
-    # Set the log level
-    set_log_level(config['LOGGING'])
+    # Set the app-wide logging level
+    log.setLevel(logging.getLevelName(get_log_level_from_config(config['LOGGING'])))
 
     # start the MQ consumer
     if args.mode == 'deploy':
