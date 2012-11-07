@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>
+    deployr
 
     by hgschmidt
 
