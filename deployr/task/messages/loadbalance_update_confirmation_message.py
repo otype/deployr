@@ -10,7 +10,7 @@
 """
 import json
 import time
-from constants.queue_settings import  LOADBALANCE_UPDATE_CONFIRMATION_ROUTING_KEY, LOADBALANCE_UPDATE_CONFIRMATION_QUEUE
+from messagequeue.queue_settings import  LOADBALANCE_UPDATE_CONFIRMATION_ROUTING_KEY, LOADBALANCE_UPDATE_CONFIRMATION_QUEUE
 
 
 class LoadbalanceUpdateConfirmationMessage(object):

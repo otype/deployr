@@ -11,8 +11,8 @@ from jinja2.loaders import FileSystemLoader
 import os
 from pika import log
 import sys
+from config.genapi_template_settings import GENAPI_CONFIG_TEMPLATE
 from ostools import write_file
-from constants.template_settings import GENAPI_CONFIG_TEMPLATE
 
 
 ##############################################################################

@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-from actions.undeploy import undeploy_api
+from task.actions.undeploy import undeploy_api
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.undeploy_confirmation_message import UndeployConfirmationMessage
 from task.task_types.base_task import BaseTask

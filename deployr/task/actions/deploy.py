@@ -8,11 +8,14 @@
 """
 import sys
 from pika import log
+from config.genapi_template_settings import GENAPI_START_SCRIPT
+from config.genapi_template_settings import GENAPI_PYTHON_EXEC
+from config.genapi_template_settings import GENAPI_HOME_DIRECTORY
+from config.genapi_template_settings import GENAPI_USER
 from ostools import OS_SUCCESS, OS_ERROR
 from ostools import get_local_public_ip_address
 from ostools import get_open_port
 from ostools.filewriter import write_supervisor_config_for_api
-from ostools.path_finders import python_interpreter_path
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_get_process_info
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_remove_group
@@ -80,16 +83,16 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
     log.info('Writing configuration for API: {}'.format(api_id))
     write_supervisor_config_for_api(
         genapi_api_id=api_id,
-        python_interpreter=python_interpreter_path(),
-        genapi_start='/usr/bin/genapi_runner.py',
+        python_interpreter=GENAPI_PYTHON_EXEC,
+        genapi_start=GENAPI_START_SCRIPT,
         logging_level=log_level,
         riak_host=db_host,
         app_port=assigned_port,
         genapi_version=genapi_version,
         genapi_entity_list=entities,
-        genapi_home_directory='/home/genapi',
-        genapi_user='genapi',
-        genapi_log_file='/home/genapi/genapi_{}.log'.format(api_id),
+        genapi_home_directory=GENAPI_HOME_DIRECTORY,
+        genapi_user=GENAPI_USER,
+        genapi_log_file='{}/genapi_{}.log'.format(GENAPI_HOME_DIRECTORY, api_id),
         config_file_name=config_file_name
     )
 

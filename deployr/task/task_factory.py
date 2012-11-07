@@ -12,8 +12,8 @@ from config.config_manager import load_configuration
 from errors import InvalidTaskTypeException
 from errors import UnacceptableMessageException
 from task.task_types.deploy_task import DeployTask
-from constants.task_settings import DEPLOY_TASK, LOADBALANCE_UPDATE_TASK
-from constants.task_settings import UNDEPLOY_TASK
+from messagequeue.task_settings import DEPLOY_TASK, LOADBALANCE_UPDATE_TASK
+from messagequeue.task_settings import UNDEPLOY_TASK
 from task.task_types.loadbalance_update_task import LoadbalanceUpdateTask
 from task.task_types.undeploy_task import UndeployTask
 

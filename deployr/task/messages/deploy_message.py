@@ -9,8 +9,8 @@
 
 """
 import json
-from constants.queue_settings import DEPLOY_ROUTING_KEY
-from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from messagequeue.queue_settings import DEPLOY_ROUTING_KEY
+from messagequeue.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 class DeployMessage(object):

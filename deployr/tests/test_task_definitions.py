@@ -6,10 +6,10 @@
     Copyright (c) 2012 apitrary
 
 """
-from constants.task_settings import DEPLOY_TASK
-from constants.task_settings import DEPLOY_CONFIRMATION_TASK
-from constants.task_settings import UNDEPLOY_TASK
-from constants.task_settings import UNDEPLOY_CONFIRMATION_TASK
+from messagequeue.task_settings import DEPLOY_TASK
+from messagequeue.task_settings import DEPLOY_CONFIRMATION_TASK
+from messagequeue.task_settings import UNDEPLOY_TASK
+from messagequeue.task_settings import UNDEPLOY_CONFIRMATION_TASK
 
 
 def setup_func():

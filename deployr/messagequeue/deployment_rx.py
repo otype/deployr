@@ -12,7 +12,7 @@ from pika import log
 from pika.adapters.select_connection import SelectConnection
 from ostools import OS_SUCCESS
 from task.task_execution import run_task
-from constants.queue_settings import GENAPI_DEPLOYMENT_QUEUE
+from messagequeue.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 
 
 #

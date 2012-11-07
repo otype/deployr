@@ -9,7 +9,7 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from constants.queue_settings import DEPLOY_ROUTING_KEY
+from messagequeue.queue_settings import DEPLOY_ROUTING_KEY
 from task.messages.deploy_message import DeployMessage
 
 deploy_message_dict = {

@@ -8,7 +8,7 @@
 """
 from pika import log
 from ostools import OS_ERROR
-from actions.deploy import deploy_api
+from task.actions.deploy import deploy_api
 from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.deploy_confirmation_message import DeployConfirmationMessage
 from task.task_types.base_task import BaseTask
