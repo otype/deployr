@@ -15,13 +15,13 @@ from messagequeue.blocking_message_tx import BlockingMessageTx
 from task.messages.deploy_message import DeployMessage
 
 msg = DeployMessage(
-    api_id='aoisdf8hjsd9vh8',
-    db_host='riak1.apitrary.net',
+    api_id='aaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    db_host='riak1.dev.apitrary.net',
     db_port=8098,
     genapi_version=1,
     log_level='debug',
-    entities=['users', 'dogs'],
-    api_key='aksdfj09sdfj0sdjf09sjd0jsdv0js0dvj'
+    entities=['jedis', 'wookies', 'stormtroopers'],
+    api_key='suchasecretapikeyyouwouldneverguess'
 )
 
 # Load the global configuration from config file
