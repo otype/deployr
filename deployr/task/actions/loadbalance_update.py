@@ -59,7 +59,7 @@ def get_frontends_config_file(api_id):
     return '{}/frontends/http_proxy/100-{}'.format(base_config_path(), api_id)
 
 def reload_haproxy():
-    return subprocess.call['/etc/init.d/haproxy', 'reload']
+    return subprocess.call(['/etc/init.d/haproxy', 'reload'])
 
 ##############################################################################
 #
