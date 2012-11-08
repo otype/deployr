@@ -64,7 +64,9 @@ setup(
     packages=find_packages('deployr'),
     package_dir={'': 'deployr'},
     data_files=[
-        (get_template_base_dir(), ['deployr/templates/supervisor_templates/genapi_base.tpl'])
+        (get_template_base_dir(), ['deployr/templates/supervisor_templates/genapi_base.tpl']),
+        (get_template_base_dir(), ['deployr/templates/haproxy_templates/genapi_backends.tpl']),
+        (get_template_base_dir(), ['deployr/templates/haproxy_templates/genapi_frontends.tpl'])
     ],
     scripts=scripts_list()
 )
