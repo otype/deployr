@@ -53,7 +53,7 @@ def get_template_base_dir():
 
 setup(
     name='deployr',
-    version='0.2',
+    version='0.3',
     author='Hans-Gunther Schmidt',
     author_email='hgs@apitrary.com',
     description='apitrary deployr - the application node manager for GenAPIs',
