@@ -39,7 +39,7 @@ def create_and_fetch_backends_directory(api_id):
         Creates the necessary /etc/haproxy/backends/<api_id>-cluster directory
         for the backends config file.
     """
-    backends_path = '{}/backends/{}-cluster'.format(base_config_path(), api_id)
+    backends_path = '{}/backends/{}_cluster'.format(base_config_path(), api_id)
     if not os.path.exists(backends_path):
         os.mkdir(backends_path, 0755)
     return backends_path
