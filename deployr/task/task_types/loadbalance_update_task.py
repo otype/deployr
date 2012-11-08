@@ -7,7 +7,7 @@
 
 """
 from messagequeue.blocking_message_tx import BlockingMessageTx
-from ostools import OS_SUCCESS
+from task.actions.loadbalance_update import loadbalance_update_api
 from task.messages.loadbalance_update_confirmation_message import LoadbalanceUpdateConfirmationMessage
 from task.task_types.base_task import BaseTask
 
@@ -37,8 +37,12 @@ class LoadbalanceUpdateTask(BaseTask):
         """
             Hooked-up method to run when undeploying an API
         """
-        # TODO: This is fake!
-        self.last_execution_status = OS_SUCCESS
+        self.last_execution_status = loadbalance_update_api(
+            api_id=self.api_id,
+            api_host=self.api_host,
+            api_port=self.api_port
+        )
+
         return self.last_execution_status
 
     def send_confirmation(self):
@@ -47,9 +51,9 @@ class LoadbalanceUpdateTask(BaseTask):
         """
         loadbalance_update_confirmation_message = LoadbalanceUpdateConfirmationMessage(
             api_id=self.api_id,
-            lb_host='fake.apitrary.com',
-            lb_api_port=9999,
-            api_domainname='fake.domain.apitrary.com'
+            lb_host='api.apitrary.com',
+            lb_api_port=80,
+            api_domainname='{}.api.apitrary.com'.format(self.api_id)
         )
 
         message_tx = BlockingMessageTx(self.config)

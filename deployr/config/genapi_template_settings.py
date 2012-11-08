@@ -16,10 +16,16 @@
 """
 from ostools.path_finders import python_interpreter_path
 
+##############################################################################
+#
+# genapi_base.tpl
+#
+##############################################################################
+
 # Supervisor-related template for pygenapi
 #
 #
-GENAPI_CONFIG_TEMPLATE = 'genapi_base.tpl'
+GENAPI_BASE_TEMPLATE = 'genapi_base.tpl'
 
 # The python executable to use for running Pygenapi (evaluated on start of pygenapi)
 #
@@ -40,3 +46,19 @@ GENAPI_HOME_DIRECTORY = '/home/genapi'
 #
 #
 GENAPI_USER = 'genapi'
+
+##############################################################################
+#
+# genapi_backends.tpl
+#
+##############################################################################
+
+GENAPI_BACKENDS_TEMPLATE = 'genapi_backends.tpl'
+
+##############################################################################
+#
+# genapi_frontends.tpl
+#
+##############################################################################
+
+GENAPI_FRONTENDS_TEMPLATE = 'genapi_frontends.tpl'

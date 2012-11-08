@@ -9,7 +9,7 @@
 from nose.tools.nontrivial import with_setup
 import os
 from ostools import write_file
-from ostools.filewriter import genapi_template, entity_list_as_csv
+from ostools.filewriter import entity_list_as_csv
 
 API_ID = '88sdhv98shdvlh123'
 
@@ -25,19 +25,21 @@ loglevel=info"""
 
 def setup_func():
     global tpl
-    tpl = genapi_template(
-        genapi_api_id='88sdhv98shdvlh123',
-        python_interpreter='/Users/hgschmidt/Development/virtualenvs/rmq/bin/python',
-        genapi_start='/opt/genapis/genapi/start.py',
-        logging_level='debug',
-        riak_host='db1.apitrary.net',
-        app_port=50702,
-        genapi_version=1,
-        genapi_entity_list=['user', 'object', 'contact'],
-        genapi_home_directory='/opt/genapi',
-        genapi_user='genapi',
-        genapi_log_file='/opt/genapis/genapi_88sdhv98shdvlh123.log'
-    )
+    tpl = ''
+    # TODO: Fix this! genapi_base_template was removed!
+#    tpl = genapi_base_template(
+#        genapi_api_id='88sdhv98shdvlh123',
+#        python_interpreter='/Users/hgschmidt/Development/virtualenvs/rmq/bin/python',
+#        genapi_start='/opt/genapis/genapi/start.py',
+#        logging_level='debug',
+#        riak_host='db1.apitrary.net',
+#        app_port=50702,
+#        genapi_version=1,
+#        genapi_entity_list=['user', 'object', 'contact'],
+#        genapi_home_directory='/opt/genapi',
+#        genapi_user='genapi',
+#        genapi_log_file='/opt/genapis/genapi_88sdhv98shdvlh123.log'
+#    )
 
 
 def teardown_func():

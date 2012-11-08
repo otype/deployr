@@ -6,13 +6,15 @@
     Copyright (c) 2012 apitrary
 
 """
+import os
+import sys
+from ostools import write_file
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
-import os
 from config.logging_configuration import logger as log
-import sys
-from config.genapi_template_settings import GENAPI_CONFIG_TEMPLATE
-from ostools import write_file
+from config.genapi_template_settings import GENAPI_BASE_TEMPLATE
+from config.genapi_template_settings import GENAPI_FRONTENDS_TEMPLATE
+from config.genapi_template_settings import GENAPI_BACKENDS_TEMPLATE
 
 
 ##############################################################################
@@ -30,6 +32,10 @@ def entity_list_as_csv(entity_list):
 
 
 def get_template_base_dir():
+    """
+        Depending on where deployr is run, we need to find the templates in
+        a defined location.
+    """
     if sys.platform == 'darwin':
         template_dir = "{}/.deployr/templates".format(os.getenv("HOME"))
     elif sys.platform == 'linux2':
@@ -40,14 +46,33 @@ def get_template_base_dir():
     return template_dir
 
 
-def genapi_template(python_interpreter, genapi_start, logging_level, riak_host, app_port, genapi_api_id,
-                    genapi_version, genapi_entity_list, genapi_home_directory, genapi_user, genapi_log_file):
-
+def load_template(template_name):
+    """
+        Use jinja2 template engine to load the corresponding template file
+    """
     env = Environment(loader=FileSystemLoader(get_template_base_dir()))
-    template = env.get_template(GENAPI_CONFIG_TEMPLATE)
+    template = env.get_template(template_name)
     log.debug("Template read: {}".format(template))
+    return template
 
-    return template.render(
+##############################################################################
+#
+# main call methods
+#
+##############################################################################
+
+
+def write_genapi_base_tpl(python_interpreter, genapi_start, logging_level, riak_host, app_port,
+                          genapi_api_id, genapi_version, genapi_entity_list, genapi_home_directory,
+                          genapi_user, genapi_log_file, config_file_name):
+    """
+        Write a configuration file for a given API that will be readable by supervisord.
+    """
+    # Load the template
+    template = load_template(GENAPI_BASE_TEMPLATE)
+
+    # Render the template with substituted values
+    tpl = template.render(
         genapi_api_id=genapi_api_id,
         python_interpreter=python_interpreter,
         genapi_start=genapi_start,
@@ -61,34 +86,41 @@ def genapi_template(python_interpreter, genapi_start, logging_level, riak_host, 
         genapi_log_file=genapi_log_file
     )
 
-##############################################################################
-#
-# main call methods
-#
-##############################################################################
-
-
-def write_supervisor_config_for_api(python_interpreter, genapi_start, logging_level, riak_host, app_port,
-                                    genapi_api_id, genapi_version, genapi_entity_list, genapi_home_directory,
-                                    genapi_user, genapi_log_file, config_file_name):
-    """
-        Write a configuration file for a given API that will be readable by supervisord.
-    """
-    tpl = genapi_template(
-        genapi_api_id=genapi_api_id,
-        python_interpreter=python_interpreter,
-        genapi_start=genapi_start,
-        logging_level=logging_level,
-        riak_host=riak_host,
-        app_port=app_port,
-        genapi_version=genapi_version,
-        genapi_entity_list=genapi_entity_list,
-        genapi_home_directory=genapi_home_directory,
-        genapi_user=genapi_user,
-        genapi_log_file=genapi_log_file
-    )
-
+    # And write the template.
     log.debug("Writing template: {}".format(tpl))
     write_file(filename=config_file_name, content=tpl)
-
     log.info('Supervisor configuration file written for API with id: {}'.format(genapi_api_id))
+
+
+def write_genapi_backends_tpl(config_file_name, api_id, api_host, api_port):
+    """
+        Write the haproxy backends part for an already deployed API in order
+        to create the routing (part 1) on the loadbalancer.
+    """
+    # Load the template
+    template = load_template(GENAPI_BACKENDS_TEMPLATE)
+
+    # Render the template with substituted values
+    tpl = template.render(api_id=api_id, api_host=api_host, api_port=api_port)
+
+    # And write the template.
+    log.debug("Writing template: {}".format(tpl))
+    write_file(filename=config_file_name, content=tpl)
+    log.info('Loadbalancer (haproxy) BACKENDS configuration written for API with id: {}'.format(api_id))
+
+
+def write_genapi_frontends_tpl(config_file_name, api_id):
+    """
+        Write the haproxy backends part for an already deployed API in order
+        to create the routing (part 1) on the loadbalancer.
+    """
+    # Load the template
+    template = load_template(GENAPI_FRONTENDS_TEMPLATE)
+
+    # Render the template with substituted values
+    tpl = template.render(api_id=api_id)
+
+    # And write the template.
+    log.debug("Writing template: {}".format(tpl))
+    write_file(filename=config_file_name, content=tpl)
+    log.info('Loadbalancer (haproxy) FRONTENDS configuration written for API with id: {}'.format(api_id))

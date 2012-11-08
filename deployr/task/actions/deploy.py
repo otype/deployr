@@ -15,7 +15,7 @@ from config.genapi_template_settings import GENAPI_USER
 from ostools import OS_SUCCESS, OS_ERROR
 from ostools import get_local_public_ip_address
 from ostools import get_open_port
-from ostools.filewriter import write_supervisor_config_for_api
+from ostools.filewriter import write_genapi_base_tpl
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_get_process_info
 from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_remove_group
@@ -81,7 +81,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
 
     # Write the supervisor config
     log.info('Writing configuration for API: {}'.format(api_id))
-    write_supervisor_config_for_api(
+    write_genapi_base_tpl(
         genapi_api_id=api_id,
         python_interpreter=GENAPI_PYTHON_EXEC,
         genapi_start=GENAPI_START_SCRIPT,
