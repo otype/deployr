@@ -63,8 +63,8 @@ def load_template(template_name):
 
 
 def write_genapi_base_tpl(python_interpreter, genapi_start, logging_level, riak_host, app_port,
-                          genapi_api_id, genapi_version, genapi_entity_list, genapi_home_directory,
-                          genapi_user, genapi_log_file, config_file_name):
+                          genapi_api_id, genapi_version, genapi_env, genapi_entity_list,
+                          genapi_home_directory, genapi_user, genapi_log_file, config_file_name):
     """
         Write a configuration file for a given API that will be readable by supervisord.
     """
@@ -80,6 +80,7 @@ def write_genapi_base_tpl(python_interpreter, genapi_start, logging_level, riak_
         riak_host=riak_host,
         app_port=app_port,
         genapi_version=genapi_version,
+        genapi_env=genapi_env,
         genapi_entity_list=entity_list_as_csv(genapi_entity_list),
         genapi_home_directory=genapi_home_directory,
         genapi_user=genapi_user,

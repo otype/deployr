@@ -25,6 +25,7 @@ class DeployTask(BaseTask):
         """
         attribute_list = ['task_type', 'api_id', 'db_host', 'db_port', 'genapi_version', 'log_level',
                           'entities', 'api_key']
+        self.config = config
         super(DeployTask, self).__init__(message, attribute_list, config)
 
     def parse_parameters(self):
@@ -59,6 +60,7 @@ class DeployTask(BaseTask):
             db_host=self.db_host,
             genapi_version=self.genapi_version,
             log_level=self.log_level,
+            environment=self.config['NAME'],
             entities=self.entities
         )
 

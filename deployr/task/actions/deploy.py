@@ -66,7 +66,7 @@ def is_already_running(api_id):
 ##############################################################################
 
 
-def deploy_api(api_id, db_host, genapi_version, log_level, entities):
+def deploy_api(api_id, db_host, genapi_version, log_level, environment, entities):
     """
         Deploy an GenAPI
     """
@@ -89,6 +89,7 @@ def deploy_api(api_id, db_host, genapi_version, log_level, entities):
         riak_host=db_host,
         app_port=assigned_port,
         genapi_version=genapi_version,
+        genapi_env=environment,
         genapi_entity_list=entities,
         genapi_home_directory=GENAPI_HOME_DIRECTORY,
         genapi_user=GENAPI_USER,
