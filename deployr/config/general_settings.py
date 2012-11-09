@@ -7,7 +7,7 @@
 
 """
 __name__ = 'deployr'
-__version__ = '0.3'
+__version__ = '0.3.1'
 __author__ = 'Hans-Gunther Schmidt'
 __author_email__ = 'hgs@apitrary.com'
 __company__ = 'apitrary'
