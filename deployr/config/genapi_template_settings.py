@@ -7,14 +7,14 @@
     Within the deployment a template file for supervisor is written into
     filesystem in order to successfully start a deployed Genapi.
 
-    These values here are used by the deploy_api() method in task/actions/deploy.py.
+    These values here are used by the deploy_api() method in task/actions/deploy_action.py.
 
     by hgschmidt
 
     Copyright (c) 2012 apitrary
 
 """
-from ostools.path_finders import python_interpreter_path
+from support.ostools.path_finders import python_interpreter_path
 
 ##############################################################################
 #

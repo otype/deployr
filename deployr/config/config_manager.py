@@ -15,7 +15,7 @@ from configobj import ConfigObj
 from logging_configuration import logger as log
 from config.default_configuration import GLOBAL_CONF
 from config.default_configuration import ENVIRONMENT
-from ostools import OS_SUCCESS
+from support.ostools import OS_SUCCESS
 
 ##############################################################################
 #

@@ -10,7 +10,7 @@
 """
 from nose.tools.nontrivial import with_setup
 from messagequeue.queue_settings import UNDEPLOY_ROUTING_KEY
-from task.messages.undeploy_message import UndeployMessage
+from undeploy_action.undeploy_message import UndeployMessage
 
 undeploy_message_dict = {
     'api_id': '88sdhv98shdvlh123',

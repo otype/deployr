@@ -98,11 +98,11 @@ def main():
 
     # start the MQ consumer
     if args.mode == 'deploy':
-        from messagequeue.deployment_rx import start_consumer
+        from features.deploy.deploy_mq_rx import start_consumer
     elif args.mode == 'balance':
-        from messagequeue.loadbalance_update_rx import start_consumer
+        from features.loadbalance_update.loadbalance_update_mq_rx import start_consumer
     else:
-        from messagequeue.deployment_rx import start_consumer
+        from features.deploy.deploy_mq_rx import start_consumer
 
     start_consumer(
         broker_host=config['BROKER_HOST'],
