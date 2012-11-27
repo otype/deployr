@@ -10,12 +10,8 @@
 import argparse
 import logging
 import sys
-from config.logging_configuration import logger as log
-from config.logging_configuration import get_log_level_from_config
-from config.config_manager import strip_out_sensitive_data
-from config.config_manager import load_configuration
-from config.config_manager import write_configuration
-from config.default_configuration import ENVIRONMENT
+from deployrlib.models.environments import ENVIRONMENT
+from deployrlib.services import deployr_config_service, logging_service
 
 
 ##############################################################################
@@ -29,14 +25,14 @@ def show_all_settings(config):
     """
         Show all configured constants
     """
-    log.info('Starting service: deployr')
-    log.info('Remote Broker: {}:{}'.format(config['BROKER_HOST'], config['BROKER_PORT']))
-    log.info('Deployr mode: {}'.format(args.mode))
-    log.info('Environment: {}'.format(config['NAME']))
+    logging.info('Starting service: deployr')
+    logging.info('Remote Broker: {}:{}'.format(config['BROKER_HOST'], config['BROKER_PORT']))
+    logging.info('Deployr mode: {}'.format(args.mode))
+    logging.info('Environment: {}'.format(config['NAME']))
 
-    config_to_show = strip_out_sensitive_data(config)
-    log.info('Configuration: {}'.format(config_to_show))
-    log.info('Logging level: {}'.format(config['LOGGING']))
+    config_to_show = deployr_config_service.strip_out_sensitive_data(config)
+    logging.info('Configuration: {}'.format(config_to_show))
+    logging.info('Logging level: {}'.format(config['LOGGING']))
 
 
 def parse_shell_args():
@@ -71,8 +67,8 @@ def check_for_config_write():
         Write configuration file if called via shell param
     """
     config_env = args.write_config
-    write_configuration(config_env)
-    log.info("Configuration file written! Now, edit config file and start deployr!")
+    deployr_config_service.write_configuration(config_env)
+    logging.info("Configuration file written! Now, edit config file and start deployr!")
     sys.exit(0)
 
 
@@ -88,21 +84,23 @@ def main():
         check_for_config_write()
 
     # Load configuration
-    config = load_configuration()
+    config = deployr_config_service.load_configuration()
 
     # Show all configured handlers
     show_all_settings(config)
 
     # Set the app-wide logging level
-    log.setLevel(logging.getLevelName(get_log_level_from_config(config['LOGGING'])))
+    # TODO: Set this correctly! Otherwise we have messed up logging.
+    log_level = logging_service.get_log_level_from_config(config['LOGGING'])
+    log = logging_service.setup_logging(log_level)
 
     # start the MQ consumer
     if args.mode == 'deploy':
-        from features.deploy.deploy_mq_rx import start_consumer
+        from app_deployr.deploy_mq_rx import start_consumer
     elif args.mode == 'balance':
-        from features.loadbalance_update.loadbalance_update_mq_rx import start_consumer
+        from lb_deployr.loadbalance_update_mq_rx import start_consumer
     else:
-        from features.deploy.deploy_mq_rx import start_consumer
+        from app_deployr.deploy_mq_rx import start_consumer
 
     start_consumer(
         broker_host=config['BROKER_HOST'],

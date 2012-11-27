@@ -37,6 +37,7 @@ def scripts_list():
     return [
         'deployr/deployr.py',
         'deployr/manual_scripts/manual_task_deploy.py'
+        'deployr/manual_scripts/manual_task_loadbalance_update.py'
     ]
 
 
@@ -53,7 +54,7 @@ def get_template_base_dir():
 
 setup(
     name='deployr',
-    version='0.3.1',
+    version='0.4.0',
     author='Hans-Gunther Schmidt',
     author_email='hgs@apitrary.com',
     description='apitrary deployr - the application node manager for GenAPIs',
@@ -64,9 +65,9 @@ setup(
     packages=find_packages('deployr'),
     package_dir={'': 'deployr'},
     data_files=[
-        (get_template_base_dir(), ['deployr/templates/supervisor_templates/genapi_base.tpl']),
-        (get_template_base_dir(), ['deployr/templates/haproxy_templates/genapi_backends.tpl']),
-        (get_template_base_dir(), ['deployr/templates/haproxy_templates/genapi_frontends.tpl'])
+        (get_template_base_dir(), ['app_deployr/templates/genapi_base.tpl']),
+        (get_template_base_dir(), ['lb_deployr/templates/genapi_backends.tpl']),
+        (get_template_base_dir(), ['lb_deployr/templates/genapi_frontends.tpl'])
     ],
     scripts=scripts_list()
 )
