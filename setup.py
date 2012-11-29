@@ -36,8 +36,8 @@ def read_requirements():
 def scripts_list():
     return [
         'deployr/deployr.py',
-        'deployr/manual_scripts/manual_task_deploy.py'
-        'deployr/manual_scripts/manual_task_loadbalance_update.py'
+        'deployr/app_deployr/manual_task_deploy.py'
+        'deployr/lb_deployr/manual_task_loadbalance_update.py'
     ]
 
 
