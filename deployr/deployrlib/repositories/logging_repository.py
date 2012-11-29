@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>    
+    <application_name>
 
     created by hgschmidt on 26.11.12, 23:40 CET
     
@@ -9,7 +9,10 @@
 
 """
 import logging
+import logging.handlers
+from deployrlib.config.logging_config import LOG_FORMAT
 from deployrlib.models.log_levels import LOGGING_LEVEL
+from deployrlib.services import deployr_config_service
 
 def get_log_level_from_config(log_level):
     """
@@ -31,20 +34,44 @@ def get_log_level_from_config(log_level):
         return logging.INFO
 
 
-def setup_logging(log_level=None):
+def setup_logging(log_level=None, file_writing_enabled=False):
     """
         Configure logging
     """
     if log_level is None:
         log_level = logging.DEBUG
 
-    # Initial config for logging
-    logging.basicConfig()
+    # create logger
+    logger = logging.getLogger('deployr')
+    logger.setLevel(log_level)
 
-    # Set logger name to 'deployr
-    log = logging.getLogger('deployr')
+    if file_writing_enabled:
+        # create console handler and set level to debug
+        ch = logging.handlers.RotatingFileHandler(filename='deployr.log', encoding='UTF-8')
+        ch.setLevel(log_level)
 
-    # Set the default log level
-    log.setLevel(log_level)
+        # create formatter
+        formatter = logging.Formatter(LOG_FORMAT)
 
-    return log
+        # add formatter to ch
+        ch.setFormatter(formatter)
+
+        # add ch to logger
+        logger.addHandler(ch)
+
+    return logger
+
+
+def get_logger(log_level=None):
+    """
+        Get the logger object
+    """
+    # Load the global configuration from config file
+    config = deployr_config_service.load_configuration()
+
+    if log_level is None:
+        # Extract the log level from the config object
+        log_level = get_log_level_from_config(config['LOGGING'])
+
+    return setup_logging(log_level)
+

@@ -9,9 +9,15 @@
 import logging
 from app_deployr.models.deploy_confirmation_message import DeployConfirmationMessage
 from app_deployr.services import deploy_service
+from deployrlib.config.logging_config import LOG_FORMAT
 from deployrlib.globals.return_codes import OS_ERROR
 from deployrlib.models.base_task import BaseTask
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
+from deployrlib.services import logging_service
+
+# Logger
+logging.basicConfig(format=LOG_FORMAT)
+log = logging_service.get_logger()
 
 
 class DeployTask(BaseTask):
@@ -77,7 +83,7 @@ class DeployTask(BaseTask):
             Send confirmation message
         """
         if self.last_execution_status == OS_ERROR:
-            logging.error('Cannot send confirmation. Last run had an error.')
+            log.error('Cannot send confirmation. Last run had an error.')
             return OS_ERROR
 
         deploy_confirmation_message = DeployConfirmationMessage(

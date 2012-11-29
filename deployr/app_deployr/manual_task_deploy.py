@@ -15,7 +15,7 @@ from deployrlib.models.blocking_message_tx import BlockingMessageTx
 from deployrlib.services import deployr_config_service
 
 msg = DeployMessage(
-    api_id='aaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    api_id='MANUAL_TASK_DEPLOY_API_ID',
     db_host='riak1.dev.apitrary.net',
     db_port=8098,
     genapi_version=1,

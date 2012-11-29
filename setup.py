@@ -36,7 +36,7 @@ def read_requirements():
 def scripts_list():
     return [
         'deployr/deployr.py',
-        'deployr/app_deployr/manual_task_deploy.py'
+        'deployr/app_deployr/manual_task_deploy.py',
         'deployr/lb_deployr/manual_task_loadbalance_update.py'
     ]
 
@@ -65,9 +65,9 @@ setup(
     packages=find_packages('deployr'),
     package_dir={'': 'deployr'},
     data_files=[
-        (get_template_base_dir(), ['app_deployr/templates/genapi_base.tpl']),
-        (get_template_base_dir(), ['lb_deployr/templates/genapi_backends.tpl']),
-        (get_template_base_dir(), ['lb_deployr/templates/genapi_frontends.tpl'])
+        (get_template_base_dir(), ['deployr/app_deployr/templates/genapi_base.tpl']),
+        (get_template_base_dir(), ['deployr/lb_deployr/templates/genapi_backends.tpl']),
+        (get_template_base_dir(), ['deployr/lb_deployr/templates/genapi_frontends.tpl'])
     ],
     scripts=scripts_list()
 )
