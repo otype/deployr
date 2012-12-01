@@ -8,10 +8,14 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 import xmlrpclib
 from deployrlib.globals.return_codes import OS_ERROR, OS_SUCCESS
-from deployrlib.services import deployr_config_service
+from deployrlib.services import deployr_config_service, logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 def get_supervisor_xml_rpc_server():
     """

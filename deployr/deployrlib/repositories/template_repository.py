@@ -10,11 +10,15 @@
 """
 import os
 import sys
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from jinja2.environment import Environment
 from jinja2.loaders import FileSystemLoader
 from deployrlib.config.template_config import GENAPI_TEMPLATES_CONFIG
-from deployrlib.services import filesystem_service
+from deployrlib.services import filesystem_service, logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 def entity_list_as_csv(entity_list):
     """

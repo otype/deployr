@@ -12,7 +12,6 @@ import sys
 import json
 import pika
 from pika.exceptions import AMQPConnectionError
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from pika.adapters.blocking_connection import BlockingConnection
 from app_deployr.models.deploy_confirmation_message import DeployConfirmationMessage
 from app_deployr.models.deploy_message import DeployMessage
@@ -20,8 +19,14 @@ from app_deployr.models.undeploy_confirmation_message import UndeployConfirmatio
 from app_deployr.models.undeploy_message import UndeployMessage
 from deployrlib.globals.return_codes import OS_ERROR, OS_SUCCESS
 from deployrlib.models.errors import UnacceptableMessageException
+from deployrlib.services import logging_service
 from lb_deployr.models.loadbalance_update_confirmation_message import LoadbalanceUpdateConfirmationMessage
 from lb_deployr.models.loadbalance_update_message import LoadbalanceUpdateMessage
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 class BlockingMessageTx(object):

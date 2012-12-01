@@ -10,10 +10,14 @@
 """
 import sys
 import os
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.globals.return_codes import OS_SUCCESS, OS_ERROR
-from deployrlib.services import template_service
+from deployrlib.services import template_service, logging_service
 from lb_deployr.services import haproxy_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 def define_haproxy_config_path():
     """

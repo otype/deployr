@@ -6,11 +6,15 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 import sys
 from deployrlib.config.supervisorctl_config import SUPERVISORCTL_CONFIG
 from deployrlib.globals.return_codes import OS_INVALID_ARGUMENT, OS_CANNOT_INVOKE_COMMAND_ERROR
-from deployrlib.services import os_service
+from deployrlib.services import os_service, logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 def get_supervisorctl_executable():

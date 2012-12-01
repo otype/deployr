@@ -8,13 +8,16 @@
 """
 import socket
 import pika
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from pika.adapters.select_connection import SelectConnection
 from deployrlib.globals.queue_settings import LOADBALANCE_UPDATE_QUEUE
 from deployrlib.globals.return_codes import OS_SUCCESS
-from deployrlib.services import task_service
+from deployrlib.services import task_service, logging_service
 
 
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 #
 # Global connection object, used for connecting to the broker
@@ -76,8 +79,8 @@ def on_queue_declared(frame):
     logger.debug("Consuming message from queue=\'{}\'".format(LOADBALANCE_UPDATE_QUEUE))
     logger.debug('Frame: {}'.format(frame))
 
-#    if activate_prefetch_count:
-#        set_prefetch_count()
+    #    if activate_prefetch_count:
+    #        set_prefetch_count()
 
     logger.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=LOADBALANCE_UPDATE_QUEUE)
@@ -115,9 +118,9 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
         Start the consumer IOLoop
     """
     global connection
-#    global activate_prefetch_count
-#
-#    activate_prefetch_count = activate_prefetch
+    #    global activate_prefetch_count
+    #
+    #    activate_prefetch_count = activate_prefetch
 
     credentials = pika.PlainCredentials(username=username, password=password)
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)

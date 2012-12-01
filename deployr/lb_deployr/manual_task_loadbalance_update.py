@@ -9,10 +9,14 @@
 
 """
 import sys
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
-from deployrlib.services import deployr_config_service
+from deployrlib.services import deployr_config_service, logging_service
 from lb_deployr.models.loadbalance_update_message import LoadbalanceUpdateMessage
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 msg = LoadbalanceUpdateMessage(
     api_id='aaaaaaaaaaaaaaaaaaaaaaaaaaa',

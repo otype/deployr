@@ -8,8 +8,13 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 import socket
+from deployrlib.services import logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 def get_host_name():
     """

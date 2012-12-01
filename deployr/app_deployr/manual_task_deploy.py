@@ -11,8 +11,12 @@
 import sys
 from app_deployr.models.deploy_message import DeployMessage
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
-from deployrlib.services import deployr_config_service
-from deployr.deployrlib.services.logging_service import get_logger as logger
+from deployrlib.services import deployr_config_service, logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 msg = DeployMessage(
     api_id='MANUAL_TASK_DEPLOY_API_ID',

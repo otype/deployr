@@ -6,10 +6,15 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.globals.return_codes import OS_SUCCESS, OS_ERROR
 from deployrlib.models.errors import UnacceptableMessageException, InvalidTaskTypeException
 from deployrlib.models.task_factory import TaskFactory
+from deployrlib.services import logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 def run_task(message):

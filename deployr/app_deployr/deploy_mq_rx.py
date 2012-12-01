@@ -8,12 +8,16 @@
 """
 import socket
 import pika
-from deployrlib.services import task_service
+from deployrlib.services import task_service, logging_service
 from pika.adapters.select_connection import SelectConnection
 from deployrlib.globals.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 from deployrlib.globals.return_codes import OS_SUCCESS
-from deployr.deployrlib.services.logging_service import get_logger as logger
 
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 #
 # Global connection object, used for connecting to the broker

@@ -7,13 +7,17 @@
 
 """
 import json
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from app_deployr.models.deploy_task import DeployTask
 from app_deployr.models.undeploy_task import UndeployTask
 from deployrlib.globals.task_aliases import DEPLOY_TASK, UNDEPLOY_TASK, LOADBALANCE_UPDATE_TASK
 from deployrlib.models.errors import InvalidTaskTypeException, UnacceptableMessageException
-from deployrlib.services import deployr_config_service
+from deployrlib.services import deployr_config_service, logging_service
 from lb_deployr.models.loadbalance_update_task import LoadbalanceUpdateTask
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 class TaskFactory(object):

@@ -6,8 +6,13 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.models.errors import InvalidTaskTypeException
+from deployrlib.services import logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 class BaseTask(object):

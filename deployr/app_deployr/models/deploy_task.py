@@ -10,8 +10,12 @@ from app_deployr.models.deploy_confirmation_message import DeployConfirmationMes
 from app_deployr.services import deploy_service
 from deployrlib.globals.return_codes import OS_ERROR
 from deployrlib.models.base_task import BaseTask
-from deployrlib.models.blocking_message_tx import BlockingMessageTx
-from deployr.deployrlib.services.logging_service import get_logger as logger
+from deployrlib.services import logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 class DeployTask(BaseTask):

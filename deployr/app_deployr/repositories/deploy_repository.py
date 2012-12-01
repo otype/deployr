@@ -9,8 +9,12 @@
 import sys
 from deployrlib.config.template_config import GENAPI_TEMPLATES_CONFIG
 from deployrlib.globals.return_codes import OS_ERROR, OS_SUCCESS
-from deployrlib.services import supervisor_xml_rpc_service, network_service, template_service
-from deployr.deployrlib.services.logging_service import get_logger as logger
+from deployrlib.services import supervisor_xml_rpc_service, network_service, template_service, logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
 
 
 def define_supervisor_config_file(api_id):

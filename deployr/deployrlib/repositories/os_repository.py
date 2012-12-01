@@ -8,11 +8,17 @@
     Copyright (c) 2012 apitrary
 
 """
-from deployr.deployrlib.services.logging_service import get_logger as logger
 import subprocess
 import os
 import sys
 from deployrlib.globals.return_codes import OS_ERROR
+from deployrlib.services import logging_service
+
+#
+# Logger
+#
+logger = logging_service.get_logger()
+
 
 def execute_shell_command(command):
     """
