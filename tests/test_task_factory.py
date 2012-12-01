@@ -8,6 +8,7 @@
 """
 import json
 from nose.tools.nontrivial import with_setup
+from deployrlib.globals.task_aliases import DEPLOY_TASK, UNDEPLOY_TASK
 from deployrlib.models.errors import UnacceptableMessageException
 from deployrlib.models.task_factory import TaskFactory
 
