@@ -8,8 +8,8 @@
     Copyright (c) 2012 apitrary
 
 """
-from ostools import OS_SUCCESS
-from supervisor_api.supervisor_xml_rpc_api import supervisor_xmlrpc_reload_config
+from deployrlib.globals.return_codes import OS_SUCCESS
+from deployrlib.services.supervisor_xml_rpc_service import reload_config
 
 
 def setup_func():
@@ -25,4 +25,4 @@ def test_supervisor_xmlrpc_reload_config():
         Works if the correct host settings and credentials are set in
         the current configuration hash.
     """
-    assert OS_SUCCESS == supervisor_xmlrpc_reload_config()
+    assert OS_SUCCESS == reload_config()

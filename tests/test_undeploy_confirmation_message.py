@@ -9,8 +9,8 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from messagequeue.queue_settings import UNDEPLOY_CONFIRMATION_ROUTING_KEY
-from undeploy_confirmation.undeploy_confirmation_message import UndeployConfirmationMessage
+from app_deployr.models.undeploy_confirmation_message import UndeployConfirmationMessage
+from deployrlib.globals.queue_settings import UNDEPLOY_CONFIRMATION_ROUTING_KEY
 
 undeploy_confirmation_message_dict = {
     'task_type': 'DEPLOY_CONFIRMATION',

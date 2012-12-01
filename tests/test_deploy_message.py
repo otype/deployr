@@ -9,8 +9,8 @@
 
 """
 from nose.tools.nontrivial import with_setup
-from messagequeue.queue_settings import DEPLOY_ROUTING_KEY
-from deploy_action.deploy_message import DeployMessage
+from app_deployr.models.deploy_message import DeployMessage
+from deployrlib.globals.queue_settings import DEPLOY_ROUTING_KEY
 
 deploy_message_dict = {
     'api_id': '88sdhv98shdvlh123',

@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-from ostools.port_acquisition import get_open_port
+from deployrlib.services.network_service import get_open_port
 
 
 def setup_func():

@@ -6,19 +6,21 @@
     Copyright (c) 2012 apitrary
 
 """
-from ostools import OS_INVALID_ARGUMENT
-from ostools import OS_SUCCESS
-from supervisor_api.supervisorctl_api import parse_supervisorctl_params
-from supervisor_api.supervisorctl_api import supervisorctl_reread
-from supervisor_api.supervisorctl_api import run_supervisorctl_command
+from deployrlib.globals.return_codes import OS_INVALID_ARGUMENT, OS_SUCCESS
+from deployrlib.repositories.supervisorctl_repository import parse_supervisorctl_params, run_supervisorctl_command, supervisorctl_reread
 
 
 def setup_func():
-    "set up test fixtures"
-
+    """
+        set up test fixtures
+    """
+    pass
 
 def teardown_func():
-    "tear down test fixtures"
+    """
+        tear down test fixtures
+    """
+    pass
 
 
 def test_parse_supervisorctl_params():

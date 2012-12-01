@@ -8,8 +8,8 @@
 """
 from nose.tools.nontrivial import with_setup
 import os
-from ostools import write_file
-from ostools.filewriter import entity_list_as_csv
+from deployrlib.repositories.template_repository import entity_list_as_csv
+from deployrlib.services.filesystem_service import write_file
 
 API_ID = '88sdhv98shdvlh123'
 

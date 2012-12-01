@@ -8,10 +8,8 @@
 """
 import json
 from nose.tools.nontrivial import with_setup
-from errors import UnacceptableMessageException
-from messagequeue.task_settings import DEPLOY_TASK
-from messagequeue.task_settings import UNDEPLOY_TASK
-from task.task_factory import TaskFactory
+from deployrlib.models.errors import UnacceptableMessageException
+from deployrlib.models.task_factory import TaskFactory
 
 
 def setup_func():
