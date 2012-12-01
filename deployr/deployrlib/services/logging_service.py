@@ -13,7 +13,7 @@ from deployrlib.repositories import logging_repository
 def get_log_level_from_config(log_level):
     """
         Sets the log level (use colored logging output).
-        This is a wrapper for python logging.
+        This is a wrapper for python logger.
     """
     return logging_repository.get_log_level_from_config(log_level=log_level)
 

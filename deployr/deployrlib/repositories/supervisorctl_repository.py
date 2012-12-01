@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 import sys
 from deployrlib.config.supervisorctl_config import SUPERVISORCTL_CONFIG
 from deployrlib.globals.return_codes import OS_INVALID_ARGUMENT, OS_CANNOT_INVOKE_COMMAND_ERROR
@@ -52,7 +52,7 @@ def run_supervisorctl_command(command, params=None):
         Reread the supervisor_api configuration files
     """
     if command is None:
-        logging.error('Missing supervisorctl command as parameter!')
+        logger.error('Missing supervisorctl command as parameter!')
         return OS_INVALID_ARGUMENT
 
     # all supervisorctl commands are lower case ... just in case:
@@ -60,15 +60,15 @@ def run_supervisorctl_command(command, params=None):
 
     # check if command is an acceptable one ...
     if command[0].upper() not in SUPERVISORCTL_CONFIG.keys():
-        logging.error('Unknown supervisorctl command: {}'.format(command))
+        logger.error('Unknown supervisorctl command: {}'.format(command))
         return OS_CANNOT_INVOKE_COMMAND_ERROR
 
     if params:
         checked_params = parse_supervisorctl_params(params)
-        logging.debug('Adding command params: {}'.format(checked_params))
+        logger.debug('Adding command params: {}'.format(checked_params))
         command += checked_params
 
-    logging.debug('Running supervisorctl command: {}'.format(command))
+    logger.debug('Running supervisorctl command: {}'.format(command))
     return os_service.execute_shell_command([get_supervisorctl_executable()] + command)
 
 
@@ -76,7 +76,7 @@ def supervisorctl_reread():
     """
         Reread the supervisor_api configuration files
     """
-    logging.debug('SUPERVISORCTL: Reread the supervisor_api configurations files')
+    logger.debug('SUPERVISORCTL: Reread the supervisor_api configurations files')
     return run_supervisorctl_command('REREAD')
 
 
@@ -84,7 +84,7 @@ def supervisorctl_start(app_name):
     """
         Start given application via supervisor_api
     """
-    logging.debug('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting start of application: {}'.format(app_name))
     return run_supervisorctl_command('START', app_name)
 
 
@@ -92,7 +92,7 @@ def supervisorctl_stop(app_name):
     """
         Stop given application via supervisor_api
     """
-    logging.debug('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting stop of application: {}'.format(app_name))
     return run_supervisorctl_command('STOP', app_name)
 
 
@@ -100,7 +100,7 @@ def supervisorctl_restart(app_name):
     """
         Start given application via supervisor_api
     """
-    logging.debug('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting restart of application: {}'.format(app_name))
     return run_supervisorctl_command('RESTART', app_name)
 
 
@@ -108,7 +108,7 @@ def supervisorctl_add(app_name):
     """
         Add new application to supervisor_api configuration
     """
-    logging.debug('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting addition of application: {}'.format(app_name))
     return run_supervisorctl_command('ADD', app_name)
 
 
@@ -116,7 +116,7 @@ def supervisorctl_status(app_name):
     """
         Request status of given application
     """
-    logging.debug('SUPERVISORCTL: Requesting status of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting status of application: {}'.format(app_name))
     return run_supervisorctl_command('STATUS', app_name)
 
 
@@ -124,5 +124,5 @@ def supervisorctl_remove(app_name):
     """
         Remove application from supervisor_api context
     """
-    logging.debug('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
+    logger.debug('SUPERVISORCTL: Requesting removal of application: {}'.format(app_name))
     return run_supervisorctl_command('REMOVE', app_name)

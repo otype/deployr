@@ -8,8 +8,8 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
 import sys
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
 from deployrlib.services import deployr_config_service
 from lb_deployr.models.loadbalance_update_message import LoadbalanceUpdateMessage
@@ -36,7 +36,7 @@ def send(host, message):
 #
 if __name__ == '__main__':
     host = (len(sys.argv) > 1) and sys.argv[1] or '127.0.0.1'
-    logging.info('Connecting to broker: {}'.format(host))
+    logger.info('Connecting to broker: {}'.format(host))
 
-    logging.info('Sending message from manual loadbalance update script')
+    logger.info('Sending message from manual loadbalance update script')
     send(host=host, message=msg)

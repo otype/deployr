@@ -10,9 +10,9 @@
 """
 import sys
 import json
-import logging
 import pika
 from pika.exceptions import AMQPConnectionError
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from pika.adapters.blocking_connection import BlockingConnection
 from app_deployr.models.deploy_confirmation_message import DeployConfirmationMessage
 from app_deployr.models.deploy_message import DeployMessage
@@ -71,7 +71,7 @@ class BlockingMessageTx(object):
             port=self.broker_port,
             credentials=self.credentials
         )
-        logging.debug('Broker host = \'{}\', Broker port = {}, Broker user = {}'.format(
+        logger.debug('Broker host = \'{}\', Broker port = {}, Broker user = {}'.format(
             self.broker_host,
             self.broker_port,
             self.username
@@ -92,20 +92,20 @@ class BlockingMessageTx(object):
         try:
             self.connection = BlockingConnection(self.parameters)
         except AMQPConnectionError, e:
-            logging.error("Could not connect to Message broker!")
-            logging.error("Broker connection params: {}".format(self.parameters))
-            logging.error("Error: {}".format(e))
-            logging.error("Exiting.")
+            logger.error("Could not connect to Message broker!")
+            logger.error("Broker connection params: {}".format(self.parameters))
+            logger.error("Error: {}".format(e))
+            logger.error("Exiting.")
             sys.exit(1)
 
         self.channel = self.connection.channel()
-        logging.debug('Connection established to broker: {}'.format(self.broker_host))
+        logger.debug('Connection established to broker: {}'.format(self.broker_host))
 
     def setup_queue(self, queue_name):
         """
             Declaring exchange for sending the deployment confirmation messages
         """
-        logging.debug('Declaring queue=\'{}\''.format(queue_name))
+        logger.debug('Declaring queue=\'{}\''.format(queue_name))
         self.channel.queue_declare(
             queue=queue_name,
             durable=self.durable,
@@ -116,7 +116,7 @@ class BlockingMessageTx(object):
         """
             Encode the message into the right format before sending.
         """
-        logging.debug('Encoding message: {}'.format(self.message.to_dict()))
+        logger.debug('Encoding message: {}'.format(self.message.to_dict()))
         return json.dumps(self.message.to_dict())
 
     def publish(self, routing_key):
@@ -128,13 +128,13 @@ class BlockingMessageTx(object):
 
         # do we have a message?
         if not self.message:
-            logging.error('Missing message to publish!')
+            logger.error('Missing message to publish!')
             return OS_ERROR
 
         # encode the message into correct format
         msg = self.encoded_message()
 
-        logging.info("Sending message: {}".format(msg))
+        logger.info("Sending message: {}".format(msg))
         self.channel.basic_publish(
             exchange='',
             routing_key=self.routing_key,
@@ -151,7 +151,7 @@ class BlockingMessageTx(object):
             Close the connection to the broker.
         """
         self.connection.close()
-        logging.debug('Connection to broker: {} closed'.format(self.broker_host))
+        logger.debug('Connection to broker: {} closed'.format(self.broker_host))
 
     def send(self, message):
         """
@@ -176,5 +176,5 @@ class BlockingMessageTx(object):
         # 4. tear down the connection
         self.tear_down()
 
-        logging.debug('Message sent.')
+        logger.debug('Message sent.')
         return status

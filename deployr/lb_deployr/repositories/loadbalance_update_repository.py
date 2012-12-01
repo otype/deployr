@@ -8,9 +8,9 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
 import sys
 import os
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.globals.return_codes import OS_SUCCESS, OS_ERROR
 from deployrlib.services import template_service
 from lb_deployr.services import haproxy_service
@@ -62,20 +62,20 @@ def loadbalance_update_api(api_id, api_host, api_port):
     frontends_config = get_frontends_config_file(api_id=api_id)
 
     # Write the backends config
-    logging.info('Writing configuration {} for API: {}'.format(backends_config, api_id))
+    logger.info('Writing configuration {} for API: {}'.format(backends_config, api_id))
     template_service.write_genapi_backends_tpl(config_file_name=backends_config, api_id=api_id, api_host=api_host,
         api_port=api_port)
 
     # write the frontends config
-    logging.info('Writing configuration {} for API: {}'.format(frontends_config, api_id))
+    logger.info('Writing configuration {} for API: {}'.format(frontends_config, api_id))
     template_service.write_genapi_frontends_tpl(config_file_name=frontends_config, api_id=api_id)
 
     # add the config (implicitly starts the genapi)
-    logging.info('Trying to reload loadbalancer (haproxy), now ...')
+    logger.info('Trying to reload loadbalancer (haproxy), now ...')
 
     status_code = OS_SUCCESS
     if not haproxy_service.reload_haproxy():
-        logging.error("Error on reloading haproxy.")
+        logger.error("Error on reloading haproxy.")
         status_code = OS_ERROR
 
     return status_code

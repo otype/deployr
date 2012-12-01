@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.globals.return_codes import OS_SUCCESS, OS_ERROR
 from deployrlib.models.errors import UnacceptableMessageException, InvalidTaskTypeException
 from deployrlib.models.task_factory import TaskFactory
@@ -26,21 +26,21 @@ def run_task(message):
         # get the task object
         task = task_factory.get_task()
 
-        logging.info('Running task: {}'.format(task_factory.message))
+        logger.info('Running task: {}'.format(task_factory.message))
         status = task.run()
-        logging.info('Task status: {}'.format(status))
+        logger.info('Task status: {}'.format(status))
 
         # Send out the confirmation message
-        logging.info('Confirming task execution for API: {}'.format(task.api_id))
+        logger.info('Confirming task execution for API: {}'.format(task.api_id))
         task.send_confirmation()
 
         return OS_SUCCESS
     except UnacceptableMessageException, e:
-        logging.error('Could not create task factory for spawning tasks! Error: {}'.format(e))
+        logger.error('Could not create task factory for spawning tasks! Error: {}'.format(e))
         return OS_ERROR
     except InvalidTaskTypeException, e:
-        logging.error(e)
+        logger.error(e)
         return OS_ERROR
     except AttributeError, e:
-        logging.error(e)
+        logger.error(e)
         return OS_ERROR

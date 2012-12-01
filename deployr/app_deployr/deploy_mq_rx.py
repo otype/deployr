@@ -6,13 +6,13 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
 import socket
 import pika
 from deployrlib.services import task_service
 from pika.adapters.select_connection import SelectConnection
 from deployrlib.globals.queue_settings import GENAPI_DEPLOYMENT_QUEUE
 from deployrlib.globals.return_codes import OS_SUCCESS
+from deployr.deployrlib.services.logging_service import get_logger as logger
 
 
 #
@@ -37,7 +37,7 @@ def on_connected(connection):
         Callback method when connection to broker has been
         established.
     """
-    logging.debug('Connected to Broker! Establishing channel.')
+    logger.debug('Connected to Broker! Establishing channel.')
     connection.channel(on_channel_open)
 
 
@@ -48,7 +48,7 @@ def on_channel_open(channel_):
     global channel
     channel = channel_
 
-    logging.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_QUEUE))
+    logger.debug("Declaring queue: {}".format(GENAPI_DEPLOYMENT_QUEUE))
     channel.queue_declare(
         queue=GENAPI_DEPLOYMENT_QUEUE,
         callback=on_queue_declared,
@@ -63,7 +63,7 @@ def on_channel_open(channel_):
 #        Only accepting one message at a time ...
 #    """
 #    prefetch_count = 1
-#    logging.debug('Setting prefetch_count = {}'.format(prefetch_count))
+#    logger.debug('Setting prefetch_count = {}'.format(prefetch_count))
 #    channel.basic_qos(prefetch_count=prefetch_count)
 
 
@@ -72,13 +72,13 @@ def on_queue_declared(frame):
         Queue has been declared. Now start to consume messages
         from the queue ...
     """
-    logging.debug("Consuming message from queue=\'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
-    logging.debug('Frame: {}'.format(frame))
+    logger.debug("Consuming message from queue=\'{}\'".format(GENAPI_DEPLOYMENT_QUEUE))
+    logger.debug('Frame: {}'.format(frame))
 
 #    if activate_prefetch_count:
 #        set_prefetch_count()
 
-    logging.debug('Now consuming from broker.')
+    logger.debug('Now consuming from broker.')
     channel.basic_consume(consumer_callback=handle_delivery, queue=GENAPI_DEPLOYMENT_QUEUE)
 
 
@@ -86,7 +86,7 @@ def handle_delivery(channel, method_frame, header_frame, body):
     """
         Handle an incoming message.
     """
-    logging.info(
+    logger.info(
         "Received new task: content-type=\"%s\", delivery-tag=\"%i\", body=%s",
         header_frame.content_type,
         method_frame.delivery_tag,
@@ -96,10 +96,10 @@ def handle_delivery(channel, method_frame, header_frame, body):
     # Run the task from parsed message
     status = task_service.run_task(body)
     if status == OS_SUCCESS:
-        logging.debug('Acknowledging received message.')
+        logger.debug('Acknowledging received message.')
         channel.basic_ack(delivery_tag=method_frame.delivery_tag)
     else:
-        logging.error('Error running task!')
+        logger.error('Error running task!')
 
 
 ##############################################################################
@@ -122,20 +122,20 @@ def start_consumer(broker_host, broker_port, username, password, activate_prefet
     parameters = pika.ConnectionParameters(host=broker_host, port=broker_port, credentials=credentials)
     try:
         connection = SelectConnection(parameters, on_connected)
-        logging.info('Connected to broker: {}:{}'.format(broker_host, broker_port))
+        logger.info('Connected to broker: {}:{}'.format(broker_host, broker_port))
         connection.ioloop.start()
     except socket.gaierror, e:
-        logging.error("Socket.gaierror! Error: {}".format(e))
+        logger.error("Socket.gaierror! Error: {}".format(e))
         if connection:
             connection.close()
     except socket.error, e:
-        logging.error("Socket.error! Error: {}".format(e))
+        logger.error("Socket.error! Error: {}".format(e))
         if connection:
             connection.close()
     except KeyboardInterrupt:
-        logging.info('Orderly shutting down ...')
+        logger.info('Orderly shutting down ...')
         connection.close()
     except Exception, e:
-        logging.error('Unknown error! Better run away, now! Error: {}'.format(e))
+        logger.error('Unknown error! Better run away, now! Error: {}'.format(e))
     finally:
-        logging.info('Connection closed.')
+        logger.info('Connection closed.')

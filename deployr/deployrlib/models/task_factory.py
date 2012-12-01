@@ -7,7 +7,7 @@
 
 """
 import json
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from app_deployr.models.deploy_task import DeployTask
 from app_deployr.models.undeploy_task import UndeployTask
 from deployrlib.globals.task_aliases import DEPLOY_TASK, UNDEPLOY_TASK, LOADBALANCE_UPDATE_TASK
@@ -50,10 +50,10 @@ class TaskFactory(object):
             elif self.task_type() == LOADBALANCE_UPDATE_TASK:
                 return LoadbalanceUpdateTask(self.message, self.config)
         except InvalidTaskTypeException, e:
-            logging.error('Could not create a valid task! Error: {}'.format(e))
+            logger.error('Could not create a valid task! Error: {}'.format(e))
             return None
         except TypeError, e:
-            logging.error('Task type is not identifiable! Error: {}'.format(e))
+            logger.error('Task type is not identifiable! Error: {}'.format(e))
             return None
 
     def validate_task(self):
@@ -61,10 +61,10 @@ class TaskFactory(object):
             Is the incoming message a valid task?
         """
         if 'task_type' not in self.message:
-            logging.error('Missing task type in message: {}'.format(self.message))
+            logger.error('Missing task type in message: {}'.format(self.message))
             raise UnacceptableMessageException('Missing task type in message')
 
-        logging.debug('Valid task of type: {}'.format(self.task_type()))
+        logger.debug('Valid task of type: {}'.format(self.task_type()))
 
     def task_type(self):
         """

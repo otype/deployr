@@ -8,7 +8,7 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 import socket
 
 def get_host_name():
@@ -36,7 +36,7 @@ def get_open_port():
     s.listen(1)
     port = s.getsockname()[1]
     s.close()
-    logging.debug('Port {} is available.'.format(port))
+    logger.debug('Port {} is available.'.format(port))
     return port
 
 

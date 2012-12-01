@@ -10,13 +10,14 @@
 import logging
 import sys
 import argparse
-from tornado.options import enable_pretty_logging
+from deployrlib.config.logging_config import LOG_FORMAT
 from deployrlib.models.environments import ENVIRONMENT
-from deployrlib.services import deployr_config_service
+from deployrlib.services import deployr_config_service, logging_service
 
 
-# Enable pretty logging
-enable_pretty_logging()
+# Logger
+logging.basicConfig(format=LOG_FORMAT)
+logger = logging_service.get_logger()
 
 ##############################################################################
 #
@@ -29,14 +30,14 @@ def show_all_settings(config):
     """
         Show all configured constants
     """
-    logging.info('Starting service: deployr')
-    logging.info('Remote Broker: {}:{}'.format(config['BROKER_HOST'], config['BROKER_PORT']))
-    logging.info('Deployr mode: {}'.format(args.mode))
-    logging.info('Environment: {}'.format(config['NAME']))
+    logger.info('Starting service: deployr')
+    logger.info('Remote Broker: {}:{}'.format(config['BROKER_HOST'], config['BROKER_PORT']))
+    logger.info('Deployr mode: {}'.format(args.mode))
+    logger.info('Environment: {}'.format(config['NAME']))
 
     config_to_show = deployr_config_service.strip_out_sensitive_data(config)
-    logging.info('Configuration: {}'.format(config_to_show))
-    logging.info('Logging level: {}'.format(config['LOGGING']))
+    logger.info('Configuration: {}'.format(config_to_show))
+    logger.info('Logging level: {}'.format(config['LOGGING']))
 
 
 def parse_shell_args():
@@ -72,7 +73,7 @@ def check_for_config_write():
     """
     config_env = args.write_config
     deployr_config_service.write_configuration(config_env)
-    logging.info("Configuration file written! Now, edit config file and start deployr!")
+    logger.info("Configuration file written! Now, edit config file and start deployr!")
     sys.exit(0)
 
 

@@ -6,7 +6,7 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from deployrlib.models.errors import InvalidTaskTypeException
 
 
@@ -22,7 +22,7 @@ class BaseTask(object):
         self.message = message
         self.config = config
         if not self.is_valid_deploy_message(attribute_list=attribute_list):
-            logging.error('Task type {} is unknown.'.format(self.get_task_type()))
+            logger.error('Task type {} is unknown.'.format(self.get_task_type()))
             raise InvalidTaskTypeException('Task type {} is unknown.'.format(self.get_task_type()))
 
         # parse the message for necessary parameters
@@ -51,7 +51,7 @@ class BaseTask(object):
         """
         for item in attribute_list:
             if item not in self.message:
-                logging.warning('Missing attribute {} in message.'.format(item))
+                logger.warning('Missing attribute {} in message.'.format(item))
                 return False
 
         return True

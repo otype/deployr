@@ -10,7 +10,7 @@
 """
 import os
 import sys
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 from jinja2.environment import Environment
 from jinja2.loaders import FileSystemLoader
 from deployrlib.config.template_config import GENAPI_TEMPLATES_CONFIG
@@ -44,7 +44,7 @@ def load_template(template_name):
     """
     env = Environment(loader=FileSystemLoader(get_template_base_dir()))
     template = env.get_template(template_name)
-    logging.debug("Template read: {}".format(template))
+    logger.debug("Template read: {}".format(template))
     return template
 
 
@@ -75,11 +75,11 @@ def write_genapi_base_tpl(python_interpreter, genapi_start, logging_level, riak_
     )
 
     # And write the template.
-    logging.debug("Writing template: {}".format(tpl))
+    logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
 
     # TODO: Put this message into supervisor service
-    logging.info('Supervisor configuration file written for API with id: {}'.format(genapi_api_id))
+    logger.info('Supervisor configuration file written for API with id: {}'.format(genapi_api_id))
 
 
 def write_genapi_backends_tpl(config_file_name, api_id, api_host, api_port):
@@ -94,11 +94,11 @@ def write_genapi_backends_tpl(config_file_name, api_id, api_host, api_port):
     tpl = template.render(api_id=api_id, api_host=api_host, api_port=api_port)
 
     # And write the template.
-    logging.debug("Writing template: {}".format(tpl))
+    logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
 
     # TODO: Put this message into supervisor service
-    logging.info('Loadbalancer (haproxy) BACKENDS configuration written for API with id: {}'.format(api_id))
+    logger.info('Loadbalancer (haproxy) BACKENDS configuration written for API with id: {}'.format(api_id))
 
 
 def write_genapi_frontends_tpl(config_file_name, api_id):
@@ -113,8 +113,8 @@ def write_genapi_frontends_tpl(config_file_name, api_id):
     tpl = template.render(api_id=api_id)
 
     # And write the template.
-    logging.debug("Writing template: {}".format(tpl))
+    logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
 
     # TODO: Put this message into supervisor service
-    logging.info('Loadbalancer (haproxy) FRONTENDS configuration written for API with id: {}'.format(api_id))
+    logger.info('Loadbalancer (haproxy) FRONTENDS configuration written for API with id: {}'.format(api_id))

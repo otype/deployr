@@ -6,16 +6,12 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
-from tornado.options import enable_pretty_logging
 from app_deployr.models.deploy_confirmation_message import DeployConfirmationMessage
 from app_deployr.services import deploy_service
 from deployrlib.globals.return_codes import OS_ERROR
 from deployrlib.models.base_task import BaseTask
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
-
-# Enable pretty logging
-enable_pretty_logging()
+from deployr.deployrlib.services.logging_service import get_logger as logger
 
 
 class DeployTask(BaseTask):
@@ -81,7 +77,7 @@ class DeployTask(BaseTask):
             Send confirmation message
         """
         if self.last_execution_status == OS_ERROR:
-            logging.error('Cannot send confirmation. Last run had an error.')
+            logger.error('Cannot send confirmation. Last run had an error.')
             return OS_ERROR
 
         deploy_confirmation_message = DeployConfirmationMessage(

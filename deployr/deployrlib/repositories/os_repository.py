@@ -8,7 +8,7 @@
     Copyright (c) 2012 apitrary
 
 """
-import logging
+from deployr.deployrlib.services.logging_service import get_logger as logger
 import subprocess
 import os
 import sys
@@ -26,7 +26,7 @@ def execute_shell_command(command):
     try:
         return subprocess.call(command)
     except OSError, e:
-        logging.error('Had trouble executing command: {}! Error: {}'.format(command, e))
+        logger.error('Had trouble executing command: {}! Error: {}'.format(command, e))
         return OS_ERROR
 
 
