@@ -10,6 +10,7 @@ from app_deployr.models.undeploy_confirmation_message import UndeployConfirmatio
 from app_deployr.services import undeploy_service
 from deployrlib.models.base_task import BaseTask
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
+from deployrlib.stats.event_reporter import EventReporter
 
 
 class UndeployTask(BaseTask):
@@ -46,6 +47,10 @@ class UndeployTask(BaseTask):
             api_id=self.api_id,
             status=self.last_execution_status
         )
+
+        # Report this deployment back to Event Reporter
+        event_reporter = EventReporter()
+        event_reporter.send(undeploy_confirmation_message.to_json())
 
         message_tx = BlockingMessageTx(config=self.config)
         return message_tx.send(message=undeploy_confirmation_message)

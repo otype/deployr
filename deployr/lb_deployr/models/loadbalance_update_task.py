@@ -8,6 +8,7 @@
 """
 from deployrlib.models.base_task import BaseTask
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
+from deployrlib.stats.event_reporter import EventReporter
 from lb_deployr.models.loadbalance_update_confirmation_message import LoadbalanceUpdateConfirmationMessage
 from lb_deployr.services import loadbalance_update_service
 
@@ -55,6 +56,10 @@ class LoadbalanceUpdateTask(BaseTask):
             lb_api_port=80,
             api_domainname='{}.api.apitrary.com'.format(self.api_id)
         )
+
+        # Report this deployment back to Event Reporter
+        event_reporter = EventReporter()
+        event_reporter.send(loadbalance_update_confirmation_message.to_json())
 
         message_tx = BlockingMessageTx(self.config)
         return message_tx.send(message=loadbalance_update_confirmation_message)

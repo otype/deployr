@@ -16,6 +16,8 @@ from deployrlib.services import logging_service
 #
 # Logger
 #
+from deployrlib.stats.event_reporter import EventReporter
+
 logger = logging_service.get_logger()
 
 
@@ -93,5 +95,10 @@ class DeployTask(BaseTask):
             status=self.last_execution_status
         )
 
+        # Report this deployment back to Event Reporter
+        event_reporter = EventReporter()
+        event_reporter.send(deploy_confirmation_message.to_json())
+
+        # Now, send the message to rmq
         message_tx = BlockingMessageTx(config=self.config)
         return message_tx.send(message=deploy_confirmation_message)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 
-    <application_name>    
+    deployr
 
     created by hgschmidt on 27.11.12, 01:14 CET
     
