@@ -37,7 +37,9 @@ class EventReporter(object):
         # Load configuration
         self.config = deployr_config_service.load_configuration()
         self.env = EVENT_REPORTER_CONFIG[self.config['NAME']]
+        logger.debug("EventReporter env = {}".format(self.env))
         self.url = self.env['EVENT_REPORTER_URL']
+        logger.debug("EventReporter API BASE URL = {}".format(self.url))
 
         # Setup the Async HTTP client for calling Riak asynchronously
         self.http_client = tornado.httpclient.HTTPClient()
@@ -56,19 +58,22 @@ class EventReporter(object):
         """
             Send a message to API URL
         """
-
         send_url = '{}/{}'.format(self.url, self.get_api_path_equivalent(message=message))
+        logger.debug("EventReporter API URL = {}".format(send_url))
         request = HTTPRequest(url=send_url)
         request.method = 'POST'
         request.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
         request.body = message.to_json()
 
+        response = None
         try:
             #noinspection PyTypeChecker
             response = self.http_client.fetch(request=request)
             logger.debug("Response from Event Reporter: {}".format(response.body))
         except httpclient.HTTPError, e:
             logger.error("Error when trying to contact Event Reporter! Error: {}".format(e))
+
+        return response
 
 ##############################################################################
 #
