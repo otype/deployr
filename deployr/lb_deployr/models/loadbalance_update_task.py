@@ -59,7 +59,7 @@ class LoadbalanceUpdateTask(BaseTask):
 
         # Report this deployment back to Event Reporter
         event_reporter = EventReporter()
-        event_reporter.send(loadbalance_update_confirmation_message.to_json())
+        event_reporter.send(loadbalance_update_confirmation_message)
 
         message_tx = BlockingMessageTx(self.config)
         return message_tx.send(message=loadbalance_update_confirmation_message)

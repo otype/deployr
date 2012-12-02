@@ -97,7 +97,7 @@ class DeployTask(BaseTask):
 
         # Report this deployment back to Event Reporter
         event_reporter = EventReporter()
-        event_reporter.send(deploy_confirmation_message.to_json())
+        event_reporter.send(deploy_confirmation_message)
 
         # Now, send the message to rmq
         message_tx = BlockingMessageTx(config=self.config)

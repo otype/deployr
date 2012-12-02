@@ -11,10 +11,13 @@
 import logging
 import tornado
 from tornado.httpclient import HTTPRequest
+from app_deployr.models.deploy_message import DeployMessage
+from app_deployr.models.undeploy_message import UndeployMessage
 from deployrlib.config.event_reporter_config import EVENT_REPORTER_CONFIG
 from deployrlib.config.logging_config import LOG_FORMAT
 from deployrlib.services import deployr_config_service, logging_service
 from tornado import httpclient
+from lb_deployr.models.loadbalance_update_message import LoadbalanceUpdateMessage
 
 # Logger
 logging.basicConfig(format=LOG_FORMAT)
@@ -34,20 +37,31 @@ class EventReporter(object):
         # Load configuration
         self.config = deployr_config_service.load_configuration()
         self.env = EVENT_REPORTER_CONFIG[self.config['NAME']]
-        self.deploy_url = '{}/deploys'.format(self.env['EVENT_REPORTER_URL'])
+        self.url = self.env['EVENT_REPORTER_URL']
 
         # Setup the Async HTTP client for calling Riak asynchronously
         self.http_client = tornado.httpclient.HTTPClient()
 
+    def get_api_path_equivalent(self, message):
+        if message is DeployMessage:
+            return 'deploys'
+        elif message is UndeployMessage:
+            return 'undeploys'
+        elif message is LoadbalanceUpdateMessage:
+            return 'loadbalance_updates'
+        else:
+            return 'deploys'
 
     def send(self, message):
         """
             Send a message to API URL
         """
-        request = HTTPRequest(url=self.deploy_url)
+
+        send_url = '{}/{}'.format(self.url, self.get_api_path_equivalent(message=message))
+        request = HTTPRequest(url=send_url)
         request.method = 'POST'
         request.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
-        request.body = message
+        request.body = message.to_json()
 
         try:
             #noinspection PyTypeChecker
