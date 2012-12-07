@@ -81,8 +81,6 @@ def write_genapi_base_tpl(python_interpreter, genapi_start, logging_level, riak_
     # And write the template.
     logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
-
-    # TODO: Put this message into supervisor service
     logger.info('Supervisor configuration file written for API with id: {}'.format(genapi_api_id))
 
 
@@ -100,8 +98,6 @@ def write_genapi_backends_tpl(config_file_name, api_id, api_host, api_port):
     # And write the template.
     logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
-
-    # TODO: Put this message into supervisor service
     logger.info('Loadbalancer (haproxy) BACKENDS configuration written for API with id: {}'.format(api_id))
 
 
@@ -119,6 +115,4 @@ def write_genapi_frontends_tpl(config_file_name, api_id):
     # And write the template.
     logger.debug("Writing template: {}".format(tpl))
     filesystem_service.write_file(filename=config_file_name, content=tpl)
-
-    # TODO: Put this message into supervisor service
     logger.info('Loadbalancer (haproxy) FRONTENDS configuration written for API with id: {}'.format(api_id))

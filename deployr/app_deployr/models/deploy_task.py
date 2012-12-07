@@ -12,12 +12,11 @@ from deployrlib.globals.return_codes import OS_ERROR
 from deployrlib.models.base_task import BaseTask
 from deployrlib.models.blocking_message_tx import BlockingMessageTx
 from deployrlib.services import logging_service
+from deployrlib.stats.event_reporter import EventReporter
 
 #
 # Logger
 #
-from deployrlib.stats.event_reporter import EventReporter
-
 logger = logging_service.get_logger()
 
 
