@@ -32,7 +32,7 @@ class LoadbalanceUpdateConfirmationMessage(object):
         self.lb_host = lb_host
         self.lb_api_port = lb_api_port
         self.api_domainname = api_domainname
-        self.created_at = time.time()
+        self.created_at = time.strftime('%d %b %Y %H:%M:%S +0000', time.gmtime())
 
     def to_dict(self):
         """

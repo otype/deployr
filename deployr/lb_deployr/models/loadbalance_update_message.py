@@ -32,7 +32,7 @@ class LoadbalanceUpdateMessage(object):
         self.api_id = api_id
         self.api_host = api_host
         self.api_port = api_port
-        self.created_at = time.time()
+        self.created_at = time.strftime('%d %b %Y %H:%M:%S +0000', time.gmtime())
 
     def to_dict(self):
         """

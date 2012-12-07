@@ -33,7 +33,7 @@ class DeployConfirmationMessage(object):
         self.host = host
         self.port = port
         self.status = status
-        self.created_at = time.time()
+        self.created_at = time.strftime('%d %b %Y %H:%M:%S +0000', time.gmtime())
 
     def to_dict(self):
         """
