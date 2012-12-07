@@ -52,6 +52,7 @@ class LoadbalanceUpdateTask(BaseTask):
         """
         loadbalance_update_confirmation_message = LoadbalanceUpdateConfirmationMessage(
             api_id=self.api_id,
+            # TODO: Incorrect for staging environment! Update this host!
             lb_host='api.apitrary.com',
             lb_api_port=80,
             api_domainname='{}.api.apitrary.com'.format(self.api_id)
